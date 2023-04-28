@@ -52,9 +52,9 @@ El proyecto está estructurado de la siguiente manera:
 - Click derecho en cualquier lugar dentro de la carpeta y seleccionar **"Git Bash Here"** <break> 
 - En la consola de Git ingtroducir siguiente comandos: <break> 
   - `git init` <break> 
-  - `git clone https://github.com/SESNA-Inteligencia/Dashboard.git` <break>
+  - `git clone https://githuabrir el archivo segalmex.py con VSCode o anaconda ia/Dashboard.git` <break> en el encabezado modificar rl root
   - Esperar unos minutos a que descargue los archivos. 
-  
+  - Finalmente, ya descargados los archivos en la carpeta, abrir el archivo `segalmex.py` con **VSCode** o anaconda `Carpeta/app/segalmex.py` en el encabezado modificar el `root` con la ruta de la carpeta creada. (Se recomienda que la ruta sea cercana a la unidad raíz; por ejemplo en `C:\Users\jcmartinez\Desktop\Carpeta` Carpeta está cercana a la unidad raíz C, de lo contrario no se podrán ejecutar los scripts .py)
   
 # 3.- Creación de ambiente virtual
 

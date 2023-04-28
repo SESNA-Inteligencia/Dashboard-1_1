@@ -1,0 +1,19 @@
+
+body {
+  background-color:#F4F6F6;
+  margin: 0;
+  padding: 0;
+}
+
+segalmex .body{
+  background-color:#154360;
+  margin: 0;
+  padding: 0;
+
+}
+
+style_cell = {
+  'font_family': 'cursive',
+  'font_size': '26px',
+  'text_align': 'center'
+},

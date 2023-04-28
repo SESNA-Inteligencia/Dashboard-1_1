@@ -20,24 +20,24 @@ El proyecto está estructurado de la siguiente manera:
      
     .
     ├── apps  
-    |   ├── home.py  
-    |   └── segalmex.py  
+    |   ├── home.py       # contiene la página de inicio
+    |   └── segalmex.py   # contiene el dashboard de segalmex
     ├── assets  
-    |   ├── logo.svg  
-    |   ├── Logotipo_blanco 
+    |   ├── logo.svg         # sección de imágenes utilizadas en el dashboard
+    |   ├── Logotipo_blanco  
     |   └── Segalmex2.jpg  
     ├── datasets  
-    |   ├── base_beneficiarios_dashboard_v2.csv 
-    |   ├── base_prodAgricola_con_claves_inegi.xlsx 
+    |   ├── base_beneficiarios_dashboard_v2.csv       # base necesarias para el dashboard
+    |   ├── base_prodAgricola_con_claves_inegi.xlsx  
     |   ├── base_centros_inegi.xlsx 
     |   └──  produccion_estados.csv 
     ├── scripts 
     |   ├── Base_beneficiarios_dashboard.ipynb 
-    |   └──  Base_ProduccionAgricola_dashboard.ipynb 
-    ├── app.py 
-    ├── index.py  
-    ├── costumFunctions.py 
-    └──  Readme.md
+    |   └── Base_ProduccionAgricola_dashboard.ipynb 
+    ├── app.py      # programa para en lazar las diversas páginas 
+    ├── index.py    # script para ejecutar el dashboard en ambiente local
+    ├── costumFunctions.py   # funciones empleadas en el dashboard
+    └──  Readme.md           # descripción y estructura del proyecto
 
  # 1.- Intalación de Python y otras dependencias
  
@@ -69,9 +69,13 @@ Una vez que el directorio de la consola se encuentre dentro de la carpeta ejecut
  
 1.- `conda update conda`, y enter
  
-2.- `conda create -n segalmex python=3.11.3 anaconda`, y enter# crea el ambien virtual con nombre segalmex (se puede elegir cualquier otro nombre) 
+2.- `conda create -n dashboard python=3.11.3`, y enter # crea el ambien virtual con nombre dashboard (se puede elegir cualquier otro nombre) 
  
-3.- `conda activate segalmex` y enter (activa el ambiente virtual) 
+3.- `conda activate dashboard` y enter (activa el ambiente virtual) <break> 
+ 
+      `conda deactivate` # desactiva ambiente virtual 
+      `conda env list`   # despliega lista de ambientes virtuales  
+
 
 Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dependencias en línea de comandos con el ambiente virtual activado:
  

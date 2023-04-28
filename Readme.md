@@ -1,7 +1,7 @@
 [![My Skills](https://skillicons.dev/icons?i=py,html,css,git,mysql,vscode)](https://skillicons.dev)
 
-# 📁 **Proyecto : Dashboard - SESNA**
-
+# 📁 **Proyecto : Dashboard**
+# Secreatía Ejecutiva del Sistema Nacional Anticorrupción (SESNA)
 
 
 # Ejecución del proyecto

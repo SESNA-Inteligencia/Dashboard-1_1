@@ -48,21 +48,24 @@ mx_est_geo = requests.get(repo_est_url).json()
 mx_mun_geo = requests.get(repo_mun_url).json()
 
 
+# RUTA DE CARPETA DEL PROYECTO SEGALMEX
+root = 'C:/Users/jcmartinez/Desktop/Dashboard3'
+
 
 # base beneficiarios
 #df_benef= pd.read_csv('C:/Users/jcmartinez/Desktop/Dashboard_v2/datasets/base_beneficiarios_dashboard_v5.csv', encoding='utf-8')
-df_benef = pd.read_excel('C:/Users/jcmartinez/Desktop/Dashboard_v2/datasets/base_beneficiarios_dashboard_v5.xlsx')
+df_benef = pd.read_excel(root + '/datasets/base_beneficiarios_dashboard_v5.xlsx')
 #df_benef.dropna(subset = ['LAT_DECIMAL'], inplace=True)
 #df_benef.dropna()
 # base centros de acopio
-df_centros = pd.read_excel('C:/Users/jcmartinez/Desktop/Dashboard_v2/datasets/base_centros_inegi.xlsx')
+df_centros = pd.read_excel(root + '/datasets/base_centros_inegi.xlsx')
 df_centros = df_centros.dropna()
 # base producción agrícola
-df_produccion = pd.read_excel('C:/Users/jcmartinez/Desktop/Dashboard_v2/datasets/base_prodAgricola_con_claves_inegi.xlsx')
+df_produccion = pd.read_excel(root + '/datasets/base_prodAgricola_con_claves_inegi.xlsx')
 df_produccion = df_produccion.dropna()
 
 # georeferenciación de base producción - estados
-df_prod_est = pd.read_csv('C:/Users/jcmartinez/Desktop/Dashboard_v2/datasets/produccion_estados.csv')
+df_prod_est = pd.read_csv(root + '/datasets/produccion_estados.csv')
 
 # opciones 
 list_year = ['2019', '2020', '2021']

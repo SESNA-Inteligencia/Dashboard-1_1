@@ -43,7 +43,7 @@ pio.renderers.default = 'firefox'
 root = "C:/Users/jcmartinez/Desktop/Dashboard2"
 
 # urls
-repo_est_url = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json' 
+repo_est_url = 'https://github.com/SESNA-Inteligencia/Dashboard-1_1/blob/master/datasets/estados_mexico.json' 
 
 # read 
 mx_est_geo = requests.get(repo_est_url).json()

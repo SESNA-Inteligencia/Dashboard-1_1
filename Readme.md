@@ -52,7 +52,7 @@ El proyecto está estructurado de la siguiente manera:
 - Click derecho en cualquier lugar dentro de la carpeta y seleccionar **"Git Bash Here"** <break> 
 - En la consola de Git ingtroducir siguiente comandos: <break> 
   - `git init` <break> 
-  - `git clone https://github.com/SESNA-Inteligencia/Dashboard.git` <break>
+  - `git clone https://github.com/SESNA-Inteligencia/Dashboard-1_1.git` <break>
   - Esperar unos minutos a que descargue los archivos. 
   
   

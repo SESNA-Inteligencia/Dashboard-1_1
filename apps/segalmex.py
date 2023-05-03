@@ -47,7 +47,7 @@ repo_est_url = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexi
 
 # read 
 mx_est_geo = requests.get(repo_est_url).json()
-mx_mun_geo = requests.get(repo_mun_url).json()
+#mx_mun_geo = requests.get(repo_mun_url).json()
 
 # base beneficiarios
 df_benef = pd.read_excel(root + '/datasets/base_beneficiarios_dashboard_v5.xlsx')

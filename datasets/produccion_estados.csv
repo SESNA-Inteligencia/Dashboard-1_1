@@ -1,254 +1,389 @@
 ﻿Anio,Entidad,Producto,Nomunidad,Volumenproduccion
-2019,Aguascalientes,Frijol,Tonelada,3383.95
-2019,Aguascalientes,Maíz,Tonelada,1168390.41
-2019,Baja California,Maíz,Tonelada,49487.85
-2019,Baja California,Trigo,Tonelada,277033.63
-2019,Baja California Sur,Frijol,Tonelada,787.18
-2019,Baja California Sur,Maíz,Tonelada,62179.92999999999
-2019,Baja California Sur,Trigo,Tonelada,23084.2
-2019,Campeche,Arroz,Tonelada,48608.65
-2019,Campeche,Frijol,Tonelada,868.6800000000001
-2019,Campeche,Maíz,Tonelada,450581.23
-2019,Chiapas,Arroz,Tonelada,637.64
-2019,Chiapas,Frijol,Tonelada,65217.4
-2019,Chiapas,Maíz,Tonelada,1255419.51
-2019,Chiapas,Trigo,Tonelada,64.5
-2019,Chihuahua,Frijol,Tonelada,64592.01
-2019,Chihuahua,Maíz,Tonelada,2206443.92
-2019,Chihuahua,Trigo,Tonelada,96662.04
-2019,Ciudad de México,Frijol,Tonelada,69.35000000000001
-2019,Ciudad de México,Maíz,Tonelada,5417.58
-2019,Coahuila,Frijol,Tonelada,581.09
-2019,Coahuila,Maíz,Tonelada,965096.49
-2019,Coahuila,Trigo,Tonelada,24732.979999999996
-2019,Colima,Arroz,Tonelada,19275.52
-2019,Colima,Frijol,Tonelada,3.84
-2019,Colima,Maíz,Tonelada,76305.14
-2019,Durango,Frijol,Tonelada,53225.21
-2019,Durango,Maíz,Tonelada,2241013.31
-2019,Durango,Trigo,Tonelada,17491.36
-2019,Guanajuato,Frijol,Tonelada,51352.8
-2019,Guanajuato,Maíz,Tonelada,2179471.07
-2019,Guanajuato,Trigo,Tonelada,386985.83
-2019,Guerrero,Arroz,Tonelada,2333.91
-2019,Guerrero,Frijol,Tonelada,14971.72
-2019,Guerrero,Maíz,Tonelada,1304647.24
-2019,Hidalgo,Frijol,Tonelada,15873.1
-2019,Hidalgo,Maíz,Tonelada,739445.04
-2019,Hidalgo,Trigo,Tonelada,3760.05
-2019,Jalisco,Arroz,Tonelada,10460.08
-2019,Jalisco,Frijol,Tonelada,9233.73
-2019,Jalisco,Maíz,Tonelada,9327612.45
-2019,Jalisco,Trigo,Tonelada,138243.1
-2019,Michoacán,Arroz,Tonelada,31730.15
-2019,Michoacán,Frijol,Tonelada,18423.09
-2019,Michoacán,Maíz,Tonelada,1946041.75
-2019,Michoacán,Trigo,Tonelada,188931.57
-2019,Morelos,Arroz,Tonelada,6305.27
-2019,Morelos,Frijol,Tonelada,943.5699999999999
-2019,Morelos,Maíz,Tonelada,162325.91999999998
-2019,Morelos,Trigo,Tonelada,395.1
-2019,México,Arroz,Tonelada,180.21
-2019,México,Frijol,Tonelada,5374.39
-2019,México,Maíz,Tonelada,2968747.47
-2019,México,Trigo,Tonelada,12141.01
-2019,Nayarit,Arroz,Tonelada,81878.34999999999
-2019,Nayarit,Frijol,Tonelada,71883.16
-2019,Nayarit,Maíz,Tonelada,394733.1
-2019,Nuevo León,Frijol,Tonelada,1503.5
-2019,Nuevo León,Maíz,Tonelada,64811.82
-2019,Nuevo León,Trigo,Tonelada,50370.36
-2019,Oaxaca,Frijol,Tonelada,23394.86
-2019,Oaxaca,Maíz,Tonelada,653922.28
-2019,Oaxaca,Trigo,Tonelada,10342.89
-2019,Puebla,Frijol,Tonelada,36837.83
-2019,Puebla,Maíz,Tonelada,1340815.48
-2019,Puebla,Trigo,Manojo,11028.0
-2019,Puebla,Trigo,Tonelada,5397.21
-2019,Querétaro,Frijol,Tonelada,4236.18
-2019,Querétaro,Maíz,Tonelada,976200.59
-2019,Querétaro,Trigo,Tonelada,2835.0
-2019,Quintana Roo,Frijol,Tonelada,2423.1
-2019,Quintana Roo,Maíz,Tonelada,28675.27
-2019,San Luis Potosí,Frijol,Tonelada,8169.030000000001
-2019,San Luis Potosí,Maíz,Tonelada,284648.35
-2019,Sinaloa,Frijol,Tonelada,132112.84
-2019,Sinaloa,Maíz,Tonelada,6482077.38
-2019,Sinaloa,Trigo,Tonelada,209632.01
-2019,Sonora,Frijol,Tonelada,15751.43
-2019,Sonora,Maíz,Tonelada,696686.67
-2019,Sonora,Trigo,Tonelada,1817421.99
-2019,Tabasco,Arroz,Tonelada,7944.18
-2019,Tabasco,Frijol,Tonelada,1886.53
-2019,Tabasco,Maíz,Tonelada,146997.43
-2019,Tamaulipas,Arroz,Tonelada,12376.2
-2019,Tamaulipas,Frijol,Tonelada,2004.31
-2019,Tamaulipas,Maíz,Tonelada,844352.16
-2019,Tamaulipas,Trigo,Tonelada,1500.6
-2019,Tlaxcala,Frijol,Tonelada,2805.6
-2019,Tlaxcala,Maíz,Tonelada,560389.66
-2019,Tlaxcala,Trigo,Tonelada,62585.63
-2019,Veracruz,Arroz,Tonelada,23487.25
-2019,Veracruz,Frijol,Tonelada,27913.05
-2019,Veracruz,Maíz,Tonelada,1150081.35
-2019,Veracruz,Trigo,Tonelada,992.7
-2019,Yucatán,Frijol,Tonelada,1013.5
-2019,Yucatán,Maíz,Tonelada,142716.21
-2019,Zacatecas,Frijol,Tonelada,259501.91999999998
-2019,Zacatecas,Maíz,Tonelada,2041795.25
-2019,Zacatecas,Trigo,Tonelada,5165.82
-2020,Aguascalientes,Frijol,Tonelada,11128.64
-2020,Aguascalientes,Leche,Miles de lts,425832.07
-2020,Aguascalientes,Maíz,Tonelada,2864920.38
-2020,Baja California,Leche,Miles de lts,206878.664
-2020,Baja California,Maíz,Tonelada,59926.6
-2020,Baja California,Trigo,Tonelada,452531.18
-2020,Baja California Sur,Frijol,Tonelada,3363.0
-2020,Baja California Sur,Leche,Miles de lts,34435.77
-2020,Baja California Sur,Maíz,Tonelada,82681.76
-2020,Baja California Sur,Trigo,Tonelada,43235.4
-2020,Campeche,Arroz,Tonelada,144460.0
-2020,Campeche,Frijol,Tonelada,1692.5600000000002
-2020,Campeche,Leche,Miles de lts,43599.066
-2020,Campeche,Maíz,Tonelada,1040973.4600000001
-2020,Chiapas,Arroz,Tonelada,1345.26
-2020,Chiapas,Frijol,Tonelada,135199.12
-2020,Chiapas,Leche,Miles de lts,436062.089
-2020,Chiapas,Maíz,Tonelada,2515766.7
-2020,Chiapas,Trigo,Tonelada,14.8
-2020,Chihuahua,Frijol,Tonelada,65606.98
-2020,Chihuahua,Leche,Miles de lts,1189304.213
-2020,Chihuahua,Maíz,Tonelada,3995932.46
-2020,Chihuahua,Trigo,Tonelada,127313.9
-2020,Ciudad de México,Frijol,Tonelada,116.86
-2020,Ciudad de México,Leche,Miles de lts,12179.581
-2020,Ciudad de México,Maíz,Tonelada,16661.84
-2020,Coahuila,Frijol,Tonelada,2751.38
-2020,Coahuila,Maíz,Tonelada,1986649.3599999999
-2020,Coahuila,Trigo,Tonelada,37773.56
-2020,Colima,Arroz,Tonelada,38012.94
-2020,Colima,Frijol,Tonelada,8.56
-2020,Colima,Leche,Miles de lts,42470.324
-2020,Colima,Maíz,Tonelada,144521.78
-2020,Durango,Frijol,Tonelada,101737.1
-2020,Durango,Leche,Miles de lts,1290458.781
-2020,Durango,Maíz,Tonelada,4810700.34
-2020,Durango,Trigo,Tonelada,25768.6
-2020,Guanajuato,Frijol,Tonelada,97531.76
-2020,Guanajuato,Leche,Miles de lts,873907.711
-2020,Guanajuato,Maíz,Tonelada,4418723.58
-2020,Guanajuato,Trigo,Tonelada,825901.06
-2020,Guerrero,Arroz,Tonelada,4724.540000000001
-2020,Guerrero,Frijol,Tonelada,30508.16
-2020,Guerrero,Leche,Miles de lts,88539.496
-2020,Guerrero,Maíz,Tonelada,2863747.2199999997
-2020,Hidalgo,Frijol,Tonelada,30828.36
-2020,Hidalgo,Leche,Miles de lts,413145.37700000004
-2020,Hidalgo,Maíz,Tonelada,1516081.92
-2020,Hidalgo,Trigo,Tonelada,7740.5
-2020,Jalisco,Arroz,Tonelada,34259.18
-2020,Jalisco,Frijol,Tonelada,19778.32
-2020,Jalisco,Leche,Miles de lts,2625726.401
-2020,Jalisco,Maíz,Tonelada,19367275.52
-2020,Jalisco,Trigo,Tonelada,215189.88
-2020,Michoacán,Arroz,Tonelada,60111.44
-2020,Michoacán,Frijol,Tonelada,7114.68
-2020,Michoacán,Maíz,Tonelada,4125203.18
-2020,Michoacán,Trigo,Tonelada,375332.42
-2020,Morelos,Arroz,Tonelada,17677.48
-2020,Morelos,Frijol,Tonelada,2478.7
-2020,Morelos,Leche,Miles de lts,21372.521
-2020,Morelos,Maíz,Tonelada,327226.08
-2020,Morelos,Trigo,Tonelada,807.56
-2020,México,Arroz,Tonelada,667.56
-2020,México,Frijol,Tonelada,9079.56
-2020,México,Leche,Miles de lts,431193.82300000003
-2020,México,Maíz,Tonelada,5871575.38
-2020,México,Trigo,Tonelada,14658.24
-2020,Nayarit,Arroz,Tonelada,177655.94
-2020,Nayarit,Frijol,Tonelada,200214.8
-2020,Nayarit,Leche,Miles de lts,38098.861
-2020,Nayarit,Maíz,Tonelada,738695.5599999999
-2020,Nuevo León,Frijol,Tonelada,1078.4
-2020,Nuevo León,Leche,Miles de lts,22823.831
-2020,Nuevo León,Maíz,Tonelada,110431.1
-2020,Nuevo León,Trigo,Tonelada,46298.88
-2020,Oaxaca,Frijol,Tonelada,50783.2
-2020,Oaxaca,Leche,Miles de lts,146466.925
-2020,Oaxaca,Maíz,Tonelada,1495254.34
-2020,Oaxaca,Trigo,Tonelada,22594.54
-2020,Puebla,Frijol,Tonelada,73971.5
-2020,Puebla,Leche,Miles de lts,449088.068
-2020,Puebla,Maíz,Tonelada,2723508.06
-2020,Puebla,Trigo,Tonelada,9817.04
-2020,Querétaro,Frijol,Tonelada,5950.18
-2020,Querétaro,Leche,Miles de lts,403234.37200000003
-2020,Querétaro,Maíz,Tonelada,1761037.76
-2020,Querétaro,Trigo,Tonelada,10559.2
-2020,Quintana Roo,Frijol,Tonelada,3978.48
-2020,Quintana Roo,Leche,Miles de lts,5434.472000000001
-2020,Quintana Roo,Maíz,Tonelada,92605.0
-2020,San Luis Potosí,Frijol,Tonelada,92458.7
-2020,San Luis Potosí,Leche,Miles de lts,153237.205
-2020,San Luis Potosí,Maíz,Tonelada,706738.88
-2020,Sinaloa,Frijol,Tonelada,281925.96
-2020,Sinaloa,Leche,Miles de lts,97204.19900000001
-2020,Sinaloa,Maíz,Tonelada,12596738.08
-2020,Sinaloa,Trigo,Tonelada,477944.94
-2020,Sonora,Frijol,Tonelada,43141.1
-2020,Sonora,Leche,Miles de lts,112770.472
-2020,Sonora,Maíz,Tonelada,1279970.68
-2020,Sonora,Trigo,Tonelada,3065514.58
-2020,Tabasco,Arroz,Tonelada,14842.8
-2020,Tabasco,Frijol,Tonelada,3898.38
-2020,Tabasco,Leche,Miles de lts,104389.60699999999
-2020,Tabasco,Maíz,Tonelada,299475.3
-2020,Tamaulipas,Arroz,Tonelada,28080.0
-2020,Tamaulipas,Frijol,Tonelada,7165.400000000001
-2020,Tamaulipas,Leche,Miles de lts,20764.58
-2020,Tamaulipas,Maíz,Tonelada,1178778.58
-2020,Tamaulipas,Trigo,Tonelada,5741.8
-2020,Tlaxcala,Frijol,Tonelada,4999.06
-2020,Tlaxcala,Leche,Miles de lts,82849.721
-2020,Tlaxcala,Maíz,Tonelada,1254650.42
-2020,Tlaxcala,Trigo,Tonelada,184780.86000000002
-2020,Veracruz,Arroz,Tonelada,68838.54
-2020,Veracruz,Frijol,Tonelada,60112.74
-2020,Veracruz,Maíz,Tonelada,2674443.34
-2020,Veracruz,Trigo,Tonelada,2434.26
-2020,Yucatán,Frijol,Tonelada,197.24
-2020,Yucatán,Leche,Miles de lts,2741.636
-2020,Yucatán,Maíz,Tonelada,200443.0
-2020,Zacatecas,Frijol,Tonelada,763342.34
-2020,Zacatecas,Leche,Miles de lts,185556.594
-2020,Zacatecas,Maíz,Tonelada,5264580.24
-2020,Zacatecas,Trigo,Tonelada,21425.28
-2021,Aguascalientes,Leche,Miles de lts,429785.209
-2021,Baja California,Leche,Miles de lts,204870.467
-2021,Baja California Sur,Leche,Miles de lts,34485.988000000005
-2021,Campeche,Leche,Miles de lts,44836.878
-2021,Chiapas,Leche,Miles de lts,451491.72000000003
-2021,Chihuahua,Leche,Miles de lts,1212844.776
-2021,Ciudad de México,Leche,Miles de lts,11902.68
-2021,Colima,Leche,Miles de lts,45052.008
-2021,Durango,Leche,Miles de lts,1444931.865
-2021,Guanajuato,Leche,Miles de lts,882065.333
-2021,Guerrero,Leche,Miles de lts,89024.707
-2021,Hidalgo,Leche,Miles de lts,411186.3
-2021,Jalisco,Leche,Miles de lts,2706304.071
-2021,Morelos,Leche,Miles de lts,21607.895
-2021,México,Leche,Miles de lts,427719.279
-2021,Nayarit,Leche,Miles de lts,39615.765
-2021,Nuevo León,Leche,Miles de lts,22300.906
-2021,Oaxaca,Leche,Miles de lts,148806.43
-2021,Puebla,Leche,Miles de lts,453082.849
-2021,Querétaro,Leche,Miles de lts,406787.525
-2021,Quintana Roo,Leche,Miles de lts,6019.049
-2021,San Luis Potosí,Leche,Miles de lts,154089.309
-2021,Sinaloa,Leche,Miles de lts,98203.618
-2021,Sonora,Leche,Miles de lts,113566.02
-2021,Tabasco,Leche,Miles de lts,105101.18
-2021,Tamaulipas,Leche,Miles de lts,20815.269
-2021,Tlaxcala,Leche,Miles de lts,81467.295
-2021,Yucatán,Leche,Miles de lts,2157.093
-2021,Zacatecas,Leche,Miles de lts,188787.511
+2019,Aguascalientes,Frijol,Tonelada,747634.05
+2019,Aguascalientes,Leche,Miles de lts,0
+2019,Aguascalientes,Maíz,Tonelada,433923844.3
+2019,Baja California,Leche,Miles de lts,0
+2019,Baja California,Maíz,Tonelada,114220777.8
+2019,Baja California,Trigo,Tonelada,639828675.3
+2019,Baja California Sur,Frijol,Tonelada,760305.55
+2019,Baja California Sur,Leche,Miles de lts,0
+2019,Baja California Sur,Maíz,Tonelada,60323971.68
+2019,Baja California Sur,Trigo,Tonelada,22137747.8
+2019,Campeche,Arroz,Tonelada,24550394
+2019,Campeche,Frijol,Tonelada,646821.67
+2019,Campeche,Leche,Miles de lts,0
+2019,Campeche,Maíz,Tonelada,143431258.8
+2019,Chiapas,Arroz,Tonelada,110593.5
+2019,Chiapas,Frijol,Tonelada,33504890.17
+2019,Chiapas,Leche,Miles de lts,0
+2019,Chiapas,Maíz,Tonelada,703956321.4
+2019,Chiapas,Trigo,Tonelada,23879.5
+2019,Chihuahua,Frijol,Tonelada,24899741.97
+2019,Chihuahua,Leche,Miles de lts,0
+2019,Chihuahua,Maíz,Tonelada,1044071441
+2019,Chihuahua,Trigo,Tonelada,36035409.48
+2019,Ciudad de México,Frijol,Tonelada,12447.32
+2019,Ciudad de México,Leche,Miles de lts,0
+2019,Ciudad de México,Maíz,Tonelada,1048391.9
+2019,Coahuila de Zaragoza,Frijol,Tonelada,269213.98
+2019,Coahuila de Zaragoza,Leche,Miles de lts,0
+2019,Coahuila de Zaragoza,Maíz,Tonelada,282308554.5
+2019,Coahuila de Zaragoza,Trigo,Tonelada,7300043.01
+2019,Colima,Arroz,Tonelada,7184264.8
+2019,Colima,Frijol,Tonelada,1370.88
+2019,Colima,Leche,Miles de lts,0
+2019,Colima,Maíz,Tonelada,22480098.5
+2019,Durango,Frijol,Tonelada,11592587.45
+2019,Durango,Leche,Miles de lts,0
+2019,Durango,Maíz,Tonelada,1097928361
+2019,Durango,Trigo,Tonelada,2634883.77
+2019,Guanajuato,Frijol,Tonelada,18111171.57
+2019,Guanajuato,Leche,Miles de lts,0
+2019,Guanajuato,Maíz,Tonelada,767089705.8
+2019,Guanajuato,Trigo,Tonelada,127183495.8
+2019,Guerrero,Arroz,Tonelada,70430.23
+2019,Guerrero,Frijol,Tonelada,2323954.44
+2019,Guerrero,Leche,Miles de lts,0
+2019,Guerrero,Maíz,Tonelada,227339220.5
+2019,Hidalgo,Frijol,Tonelada,1208034.85
+2019,Hidalgo,Leche,Miles de lts,0
+2019,Hidalgo,Maíz,Tonelada,46654129.45
+2019,Hidalgo,Trigo,Tonelada,172675.07
+2019,Jalisco,Arroz,Tonelada,2492452.64
+2019,Jalisco,Frijol,Tonelada,1677954.22
+2019,Jalisco,Leche,Miles de lts,0
+2019,Jalisco,Maíz,Tonelada,2275201069
+2019,Jalisco,Trigo,Tonelada,20291829.28
+2019,Michoacán de Ocampo,Arroz,Tonelada,2156366.62
+2019,Michoacán de Ocampo,Frijol,Tonelada,3988770.24
+2019,Michoacán de Ocampo,Leche,Miles de lts,0
+2019,Michoacán de Ocampo,Maíz,Tonelada,190537715.1
+2019,Michoacán de Ocampo,Trigo,Tonelada,8928082.09
+2019,Morelos,Arroz,Tonelada,424708.33
+2019,Morelos,Frijol,Tonelada,54220.59
+2019,Morelos,Leche,Miles de lts,0
+2019,Morelos,Maíz,Tonelada,10862655.32
+2019,Morelos,Trigo,Tonelada,10608.3
+2019,México,Arroz,Tonelada,6983.51
+2019,México,Frijol,Tonelada,246202.6
+2019,México,Leche,Miles de lts,0
+2019,México,Maíz,Tonelada,199934451.3
+2019,México,Trigo,Tonelada,553691.96
+2019,Nayarit,Arroz,Tonelada,19991866.08
+2019,Nayarit,Frijol,Tonelada,14408414.4
+2019,Nayarit,Leche,Miles de lts,0
+2019,Nayarit,Maíz,Tonelada,149322476.6
+2019,Nuevo León,Frijol,Tonelada,670733.1
+2019,Nuevo León,Leche,Miles de lts,0
+2019,Nuevo León,Maíz,Tonelada,23906255.88
+2019,Nuevo León,Trigo,Tonelada,21587904.43
+2019,Oaxaca,Frijol,Tonelada,924627.09
+2019,Oaxaca,Leche,Miles de lts,0
+2019,Oaxaca,Maíz,Tonelada,35322054.24
+2019,Oaxaca,Trigo,Tonelada,254042.34
+2019,Puebla,Frijol,Tonelada,2030032.54
+2019,Puebla,Leche,Miles de lts,0
+2019,Puebla,Maíz,Tonelada,78333174.61
+2019,Puebla,Trigo,Manojo,88224
+2019,Puebla,Trigo,Tonelada,457266.48
+2019,Querétaro,Frijol,Tonelada,783065.85
+2019,Querétaro,Leche,Miles de lts,0
+2019,Querétaro,Maíz,Tonelada,216752207.9
+2019,Querétaro,Trigo,Tonelada,498910
+2019,Quintana Roo,Frijol,Tonelada,1040536.09
+2019,Quintana Roo,Leche,Miles de lts,0
+2019,Quintana Roo,Maíz,Tonelada,20356919.34
+2019,San Luis Potosí,Frijol,Tonelada,1313643.91
+2019,San Luis Potosí,Leche,Miles de lts,0
+2019,San Luis Potosí,Maíz,Tonelada,50381243.37
+2019,Sinaloa,Frijol,Tonelada,88197344.2
+2019,Sinaloa,Leche,Miles de lts,0
+2019,Sinaloa,Maíz,Tonelada,4817468548
+2019,Sinaloa,Trigo,Tonelada,131315784.9
+2019,Sonora,Frijol,Tonelada,9369848.66
+2019,Sonora,Leche,Miles de lts,0
+2019,Sonora,Maíz,Tonelada,666450565.3
+2019,Sonora,Trigo,Tonelada,1288769408
+2019,Tabasco,Arroz,Tonelada,924077.46
+2019,Tabasco,Frijol,Tonelada,335399.44
+2019,Tabasco,Leche,Miles de lts,0
+2019,Tabasco,Maíz,Tonelada,38690380.75
+2019,Tamaulipas,Arroz,Tonelada,5597270.4
+2019,Tamaulipas,Frijol,Tonelada,566450.35
+2019,Tamaulipas,Leche,Miles de lts,0
+2019,Tamaulipas,Maíz,Tonelada,525966637.7
+2019,Tamaulipas,Trigo,Tonelada,480007.5
+2019,Tlaxcala,Frijol,Tonelada,189489.83
+2019,Tlaxcala,Leche,Miles de lts,0
+2019,Tlaxcala,Maíz,Tonelada,38462830.96
+2019,Tlaxcala,Trigo,Tonelada,4655358.95
+2019,Veracruz de Ignacio de la Llave,Arroz,Tonelada,9598694.1
+2019,Veracruz de Ignacio de la Llave,Frijol,Tonelada,6223341.66
+2019,Veracruz de Ignacio de la Llave,Leche,Miles de lts,0
+2019,Veracruz de Ignacio de la Llave,Maíz,Tonelada,274622863
+2019,Veracruz de Ignacio de la Llave,Trigo,Tonelada,84705.3
+2019,Yucatán,Frijol,Tonelada,234648.03
+2019,Yucatán,Leche,Miles de lts,0
+2019,Yucatán,Maíz,Tonelada,75050469.39
+2019,Zacatecas,Frijol,Tonelada,72053861.76
+2019,Zacatecas,Leche,Miles de lts,0
+2019,Zacatecas,Maíz,Tonelada,552591938.8
+2019,Zacatecas,Trigo,Tonelada,1164247.35
+2020,Aguascalientes,Frijol,Tonelada,1252548.88
+2020,Aguascalientes,Leche,Miles de lts,147791150.2
+2020,Aguascalientes,Maíz,Tonelada,514947235.9
+2020,Baja California,Leche,Miles de lts,231679397.8
+2020,Baja California,Maíz,Tonelada,69189841.4
+2020,Baja California,Trigo,Tonelada,522488063.9
+2020,Baja California Sur,Frijol,Tonelada,1614872.44
+2020,Baja California Sur,Leche,Miles de lts,35901903.35
+2020,Baja California Sur,Maíz,Tonelada,40447407.92
+2020,Baja California Sur,Trigo,Tonelada,20731374.3
+2020,Campeche,Arroz,Tonelada,50596473.4
+2020,Campeche,Frijol,Tonelada,646309.02
+2020,Campeche,Leche,Miles de lts,27788032.65
+2020,Campeche,Maíz,Tonelada,157997709.9
+2020,Chiapas,Arroz,Tonelada,115244.52
+2020,Chiapas,Frijol,Tonelada,35551707.48
+2020,Chiapas,Leche,Miles de lts,337065646.4
+2020,Chiapas,Maíz,Tonelada,693299706.1
+2020,Chiapas,Trigo,Tonelada,495.8
+2020,Chihuahua,Frijol,Tonelada,12171415.62
+2020,Chihuahua,Leche,Miles de lts,620150246.5
+2020,Chihuahua,Maíz,Tonelada,989313985.8
+2020,Chihuahua,Trigo,Tonelada,21581812.05
+2020,Ciudad de México,Frijol,Tonelada,9612.54
+2020,Ciudad de México,Leche,Miles de lts,1899439.839
+2020,Ciudad de México,Maíz,Tonelada,1704202.96
+2020,Coahuila de Zaragoza,Frijol,Tonelada,581324.62
+2020,Coahuila de Zaragoza,Leche,Miles de lts,369558302.6
+2020,Coahuila de Zaragoza,Maíz,Tonelada,290719381.6
+2020,Coahuila de Zaragoza,Trigo,Tonelada,6301809.46
+2020,Colima,Arroz,Tonelada,7126651.26
+2020,Colima,Frijol,Tonelada,1527.96
+2020,Colima,Leche,Miles de lts,15011871.13
+2020,Colima,Maíz,Tonelada,21209046.69
+2020,Durango,Frijol,Tonelada,9362957.26
+2020,Durango,Leche,Miles de lts,582627761.2
+2020,Durango,Maíz,Tonelada,1050022313
+2020,Durango,Trigo,Tonelada,1159758.02
+2020,Guanajuato,Frijol,Tonelada,17076024.9
+2020,Guanajuato,Leche,Miles de lts,285347346.3
+2020,Guanajuato,Maíz,Tonelada,776304088.2
+2020,Guanajuato,Trigo,Tonelada,130357552.6
+2020,Guerrero,Arroz,Tonelada,69472.28
+2020,Guerrero,Frijol,Tonelada,2406910.26
+2020,Guerrero,Leche,Miles de lts,17178054.83
+2020,Guerrero,Maíz,Tonelada,247565772
+2020,Hidalgo,Frijol,Tonelada,1159291.96
+2020,Hidalgo,Leche,Miles de lts,23584583.33
+2020,Hidalgo,Maíz,Tonelada,49568260.71
+2020,Hidalgo,Trigo,Tonelada,167342.54
+2020,Jalisco,Arroz,Tonelada,2991309.45
+2020,Jalisco,Frijol,Tonelada,1781161.04
+2020,Jalisco,Leche,Miles de lts,589542267.1
+2020,Jalisco,Maíz,Tonelada,2392146816
+2020,Jalisco,Trigo,Tonelada,15522689.96
+2020,Michoacán de Ocampo,Arroz,Tonelada,2017272.29
+2020,Michoacán de Ocampo,Frijol,Tonelada,620546.96
+2020,Michoacán de Ocampo,Leche,Miles de lts,35503262.32
+2020,Michoacán de Ocampo,Maíz,Tonelada,196150709.1
+2020,Michoacán de Ocampo,Trigo,Tonelada,9117157.46
+2020,Morelos,Arroz,Tonelada,541872.26
+2020,Morelos,Frijol,Tonelada,74468.31
+2020,Morelos,Leche,Miles de lts,1331614.949
+2020,Morelos,Maíz,Tonelada,10823485.14
+2020,Morelos,Trigo,Tonelada,11119.74
+2020,México,Arroz,Tonelada,13689.86
+2020,México,Frijol,Tonelada,195258.14
+2020,México,Leche,Miles de lts,20699597.69
+2020,México,Maíz,Tonelada,194279162.5
+2020,México,Trigo,Tonelada,341166.95
+2020,Nayarit,Arroz,Tonelada,20859729.66
+2020,Nayarit,Frijol,Tonelada,19393569.45
+2020,Nayarit,Leche,Miles de lts,9396858.951
+2020,Nayarit,Maíz,Tonelada,140580916.6
+2020,Nuevo León,Frijol,Tonelada,197042.5
+2020,Nuevo León,Leche,Miles de lts,7402581.157
+2020,Nuevo León,Maíz,Tonelada,20604342.95
+2020,Nuevo León,Trigo,Tonelada,9082662.82
+2020,Oaxaca,Frijol,Tonelada,1007067.36
+2020,Oaxaca,Leche,Miles de lts,11153986.38
+2020,Oaxaca,Maíz,Tonelada,41795667.66
+2020,Oaxaca,Trigo,Tonelada,250679.23
+2020,Puebla,Frijol,Tonelada,2009778.86
+2020,Puebla,Leche,Miles de lts,24776208.2
+2020,Puebla,Maíz,Tonelada,79860472.06
+2020,Puebla,Trigo,Tonelada,432278.71
+2020,Querétaro,Frijol,Tonelada,567651.99
+2020,Querétaro,Leche,Miles de lts,83004189.46
+2020,Querétaro,Maíz,Tonelada,199453444.9
+2020,Querétaro,Trigo,Tonelada,968137.6
+2020,Quintana Roo,Frijol,Tonelada,789317.7
+2020,Quintana Roo,Leche,Miles de lts,5398826.918
+2020,Quintana Roo,Maíz,Tonelada,24017329.25
+2020,San Luis Potosí,Frijol,Tonelada,6267571.64
+2020,San Luis Potosí,Leche,Miles de lts,37553542.89
+2020,San Luis Potosí,Maíz,Tonelada,72224759.03
+2020,Sinaloa,Frijol,Tonelada,84776296.88
+2020,Sinaloa,Leche,Miles de lts,73357883.3
+2020,Sinaloa,Maíz,Tonelada,4603054497
+2020,Sinaloa,Trigo,Tonelada,151830800
+2020,Sonora,Frijol,Tonelada,15086277.78
+2020,Sonora,Leche,Miles de lts,90142872.66
+2020,Sonora,Maíz,Tonelada,636707226.4
+2020,Sonora,Trigo,Tonelada,1138303657
+2020,Tabasco,Arroz,Tonelada,660504.6
+2020,Tabasco,Frijol,Tonelada,358074.77
+2020,Tabasco,Leche,Miles de lts,26082491.72
+2020,Tabasco,Maíz,Tonelada,39477418.84
+2020,Tamaulipas,Arroz,Tonelada,6903144
+2020,Tamaulipas,Frijol,Tonelada,2107344.42
+2020,Tamaulipas,Leche,Miles de lts,9913352.015
+2020,Tamaulipas,Maíz,Tonelada,314238345.4
+2020,Tamaulipas,Trigo,Tonelada,1885337.2
+2020,Tlaxcala,Frijol,Tonelada,171792.37
+2020,Tlaxcala,Leche,Miles de lts,6649191.177
+2020,Tlaxcala,Maíz,Tonelada,45344345.19
+2020,Tlaxcala,Trigo,Tonelada,9878105.73
+2020,Veracruz de Ignacio de la Llave,Arroz,Tonelada,12882874.94
+2020,Veracruz de Ignacio de la Llave,Frijol,Tonelada,6523851.7
+2020,Veracruz de Ignacio de la Llave,Leche,Miles de lts,227509030.3
+2020,Veracruz de Ignacio de la Llave,Maíz,Tonelada,329631586
+2020,Veracruz de Ignacio de la Llave,Trigo,Tonelada,90072.82
+2020,Yucatán,Frijol,Tonelada,117537.35
+2020,Yucatán,Leche,Miles de lts,1005222.562
+2020,Yucatán,Maíz,Tonelada,46235574.79
+2020,Zacatecas,Frijol,Tonelada,93618490.04
+2020,Zacatecas,Leche,Miles de lts,32864431.8
+2020,Zacatecas,Maíz,Tonelada,641644999.7
+2020,Zacatecas,Trigo,Tonelada,2249156.48
+2021,Aguascalientes,Frijol,Tonelada,1249526.3
+2021,Aguascalientes,Leche,Miles de lts,146649112.9
+2021,Aguascalientes,Maíz,Tonelada,542127761.9
+2021,Baja California,Leche,Miles de lts,225119373.8
+2021,Baja California,Maíz,Tonelada,60638670.88
+2021,Baja California,Trigo,Tonelada,723625162.8
+2021,Baja California Sur,Frijol,Tonelada,1134530.34
+2021,Baja California Sur,Leche,Miles de lts,35929425.72
+2021,Baja California Sur,Maíz,Tonelada,29178152.89
+2021,Baja California Sur,Trigo,Tonelada,22522115
+2021,Campeche,Arroz,Tonelada,47057697
+2021,Campeche,Frijol,Tonelada,562590.88
+2021,Campeche,Leche,Miles de lts,28648979.68
+2021,Campeche,Maíz,Tonelada,134604248.2
+2021,Chiapas,Arroz,Tonelada,94214.89
+2021,Chiapas,Frijol,Tonelada,34837400.96
+2021,Chiapas,Leche,Miles de lts,342006402.9
+2021,Chiapas,Maíz,Tonelada,710913227
+2021,Chiapas,Trigo,Tonelada,10911.77
+2021,Chihuahua,Frijol,Tonelada,42599633.99
+2021,Chihuahua,Leche,Miles de lts,632168332.9
+2021,Chihuahua,Maíz,Tonelada,1194988224
+2021,Chihuahua,Trigo,Tonelada,29615986.58
+2021,Ciudad de México,Frijol,Tonelada,9038.04
+2021,Ciudad de México,Leche,Miles de lts,1867389.98
+2021,Ciudad de México,Maíz,Tonelada,1605763.66
+2021,Coahuila de Zaragoza,Frijol,Tonelada,95665.31
+2021,Coahuila de Zaragoza,Leche,Miles de lts,370767876.9
+2021,Coahuila de Zaragoza,Maíz,Tonelada,269614537.7
+2021,Coahuila de Zaragoza,Trigo,Tonelada,3066046
+2021,Colima,Arroz,Tonelada,7217890.4
+2021,Colima,Frijol,Tonelada,1213.8
+2021,Colima,Leche,Miles de lts,15923350.5
+2021,Colima,Maíz,Tonelada,23707296.47
+2021,Durango,Frijol,Tonelada,25232793.35
+2021,Durango,Leche,Miles de lts,654980031.5
+2021,Durango,Maíz,Tonelada,1268726970
+2021,Durango,Trigo,Tonelada,896146.05
+2021,Guanajuato,Frijol,Tonelada,19605459.96
+2021,Guanajuato,Leche,Miles de lts,286630607.5
+2021,Guanajuato,Maíz,Tonelada,826097067.9
+2021,Guanajuato,Trigo,Tonelada,117361607.4
+2021,Guerrero,Arroz,Tonelada,69130.66
+2021,Guerrero,Frijol,Tonelada,2389342.03
+2021,Guerrero,Leche,Miles de lts,17114887
+2021,Guerrero,Maíz,Tonelada,253677611.5
+2021,Hidalgo,Frijol,Tonelada,986522.52
+2021,Hidalgo,Leche,Miles de lts,23475096.61
+2021,Hidalgo,Maíz,Tonelada,49024217.43
+2021,Hidalgo,Trigo,Tonelada,95561.44
+2021,Jalisco,Arroz,Tonelada,3444631.01
+2021,Jalisco,Frijol,Tonelada,1803336.7
+2021,Jalisco,Leche,Miles de lts,608052277.6
+2021,Jalisco,Maíz,Tonelada,2375641897
+2021,Jalisco,Trigo,Tonelada,21258184.9
+2021,Michoacán de Ocampo,Arroz,Tonelada,2597121.06
+2021,Michoacán de Ocampo,Frijol,Tonelada,757183.5
+2021,Michoacán de Ocampo,Leche,Miles de lts,36329210.1
+2021,Michoacán de Ocampo,Maíz,Tonelada,191451694.9
+2021,Michoacán de Ocampo,Trigo,Tonelada,10308642.16
+2021,Morelos,Arroz,Tonelada,560206.94
+2021,Morelos,Frijol,Tonelada,88058.17
+2021,Morelos,Leche,Miles de lts,1329857.288
+2021,Morelos,Maíz,Tonelada,10664806.15
+2021,Morelos,Trigo,Tonelada,12808.8
+2021,México,Arroz,Tonelada,13729.76
+2021,México,Frijol,Tonelada,228962.59
+2021,México,Leche,Miles de lts,20279711.22
+2021,México,Maíz,Tonelada,202864885.1
+2021,México,Trigo,Tonelada,604077.97
+2021,Nayarit,Arroz,Tonelada,12058540.2
+2021,Nayarit,Frijol,Tonelada,17018715.14
+2021,Nayarit,Leche,Miles de lts,9888248.007
+2021,Nayarit,Maíz,Tonelada,141613708
+2021,Nuevo León,Frijol,Tonelada,397756.5
+2021,Nuevo León,Leche,Miles de lts,7338547.557
+2021,Nuevo León,Maíz,Tonelada,20850167.4
+2021,Nuevo León,Trigo,Tonelada,1687271.5
+2021,Oaxaca,Frijol,Tonelada,1021153.79
+2021,Oaxaca,Leche,Miles de lts,11715091.8
+2021,Oaxaca,Maíz,Tonelada,42726369.25
+2021,Oaxaca,Trigo,Tonelada,251346.56
+2021,Puebla,Frijol,Tonelada,2238424.49
+2021,Puebla,Leche,Miles de lts,24905955.67
+2021,Puebla,Maíz,Tonelada,86394264.84
+2021,Puebla,Trigo,Tonelada,440779.6
+2021,Querétaro,Frijol,Tonelada,846831.28
+2021,Querétaro,Leche,Miles de lts,84031049.25
+2021,Querétaro,Maíz,Tonelada,199017997.1
+2021,Querétaro,Trigo,Tonelada,483306.34
+2021,Quintana Roo,Frijol,Tonelada,1239365.48
+2021,Quintana Roo,Leche,Miles de lts,6066166.908
+2021,Quintana Roo,Maíz,Tonelada,29754996.72
+2021,San Luis Potosí,Frijol,Tonelada,7857736.06
+2021,San Luis Potosí,Leche,Miles de lts,37743423.83
+2021,San Luis Potosí,Maíz,Tonelada,91389760.72
+2021,Sinaloa,Frijol,Tonelada,92264670.82
+2021,Sinaloa,Leche,Miles de lts,74586635.57
+2021,Sinaloa,Maíz,Tonelada,3950027820
+2021,Sinaloa,Trigo,Tonelada,145445370.4
+2021,Sonora,Frijol,Tonelada,19144798.94
+2021,Sonora,Leche,Miles de lts,91604263.84
+2021,Sonora,Maíz,Tonelada,745238386.9
+2021,Sonora,Trigo,Tonelada,1167193244
+2021,Tabasco,Arroz,Tonelada,783694.95
+2021,Tabasco,Frijol,Tonelada,373143.15
+2021,Tabasco,Leche,Miles de lts,26167686.91
+2021,Tabasco,Maíz,Tonelada,44827783.77
+2021,Tamaulipas,Arroz,Tonelada,6414414.93
+2021,Tamaulipas,Frijol,Tonelada,566183.26
+2021,Tamaulipas,Leche,Miles de lts,9812199.357
+2021,Tamaulipas,Maíz,Tonelada,192143070.4
+2021,Tamaulipas,Trigo,Tonelada,2301594.54
+2021,Tlaxcala,Frijol,Tonelada,154703.47
+2021,Tlaxcala,Leche,Miles de lts,6625659.078
+2021,Tlaxcala,Maíz,Tonelada,46064799.4
+2021,Tlaxcala,Trigo,Tonelada,4748784.99
+2021,Veracruz de Ignacio de la Llave,Arroz,Tonelada,10563880.43
+2021,Veracruz de Ignacio de la Llave,Frijol,Tonelada,5911642.07
+2021,Veracruz de Ignacio de la Llave,Leche,Miles de lts,231523240.5
+2021,Veracruz de Ignacio de la Llave,Maíz,Tonelada,328382490.4
+2021,Veracruz de Ignacio de la Llave,Trigo,Tonelada,86325.22
+2021,Yucatán,Frijol,Tonelada,128127.08
+2021,Yucatán,Leche,Miles de lts,899826.77
+2021,Yucatán,Maíz,Tonelada,74361304.35
+2021,Zacatecas,Frijol,Tonelada,106781827.1
+2021,Zacatecas,Leche,Miles de lts,33503712.79
+2021,Zacatecas,Maíz,Tonelada,655940217.1
+2021,Zacatecas,Trigo,Tonelada,5429246.89

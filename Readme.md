@@ -1,7 +1,7 @@
 [![My Skills](https://skillicons.dev/icons?i=py,html,css,git,mysql,vscode)](https://skillicons.dev)
 
-# 📁 **Proyecto : Dashboard**
-# Secreatía Ejecutiva del Sistema Nacional Anticorrupción (SESNA)
+# 📁 **Proyecto : Dashboard - SESNA**
+
 
 
 # Ejecución del proyecto
@@ -20,24 +20,24 @@ El proyecto está estructurado de la siguiente manera:
      
     .
     ├── apps  
-    |   ├── home.py       # contiene la página de inicio
-    |   └── segalmex.py   # contiene el dashboard de segalmex
+    |   ├── home.py  
+    |   └── segalmex.py  
     ├── assets  
-    |   ├── logo.svg         # sección de imágenes utilizadas en el dashboard
-    |   ├── Logotipo_blanco  
+    |   ├── logo.svg  
+    |   ├── Logotipo_blanco 
     |   └── Segalmex2.jpg  
     ├── datasets  
-    |   ├── base_beneficiarios_dashboard_v2.csv       # base necesarias para el dashboard
-    |   ├── base_prodAgricola_con_claves_inegi.xlsx  
+    |   ├── base_beneficiarios_dashboard_v2.csv 
+    |   ├── base_prodAgricola_con_claves_inegi.xlsx 
     |   ├── base_centros_inegi.xlsx 
     |   └──  produccion_estados.csv 
     ├── scripts 
     |   ├── Base_beneficiarios_dashboard.ipynb 
-    |   └── Base_ProduccionAgricola_dashboard.ipynb 
-    ├── app.py      # programa para en lazar las diversas páginas 
-    ├── index.py    # script para ejecutar el dashboard en ambiente local
-    ├── costumFunctions.py   # funciones empleadas en el dashboard
-    └──  Readme.md           # descripción y estructura del proyecto
+    |   └──  Base_ProduccionAgricola_dashboard.ipynb 
+    ├── app.py 
+    ├── index.py  
+    ├── costumFunctions.py 
+    └──  Readme.md
 
  # 1.- Intalación de Python y otras dependencias
  
@@ -52,10 +52,9 @@ El proyecto está estructurado de la siguiente manera:
 - Click derecho en cualquier lugar dentro de la carpeta y seleccionar **"Git Bash Here"** <break> 
 - En la consola de Git ingtroducir siguiente comandos: <break> 
   - `git init` <break> 
-  - `git clone https://github.com/SESNA-Inteligencia/Dashboard-1_1.git` <break> 
-  - Abrir el archivo `segalmex.py` con VSCode o anaconda en el encabezado modificar el root
+  - `git clone https://github.com/SESNA-Inteligencia/Dashboard.git` <break>
   - Esperar unos minutos a que descargue los archivos. 
-  - Finalmente, ya descargados los archivos en la carpeta, abrir el archivo `segalmex.py` con **VSCode** o anaconda `Carpeta/app/segalmex.py` en el encabezado modificar el `root` con la ruta de la carpeta creada. (Se recomienda que la ruta sea cercana a la unidad raíz; por ejemplo en `C:\Users\jcmartinez\Desktop\Carpeta` Carpeta está cercana a la unidad raíz C, de lo contrario no se podrán ejecutar los scripts .py)
+  
   
 # 3.- Creación de ambiente virtual
 
@@ -70,13 +69,9 @@ Una vez que el directorio de la consola se encuentre dentro de la carpeta ejecut
  
 1.- `conda update conda`, y enter
  
-2.- `conda create -n dashboard python=3.11.3`, y enter # crea el ambien virtual con nombre dashboard (se puede elegir cualquier otro nombre) 
+2.- `conda create -n segalmex python=3.11.3 anaconda`, y enter# crea el ambien virtual con nombre segalmex (se puede elegir cualquier otro nombre) 
  
-3.- `conda activate dashboard` y enter (activa el ambiente virtual) <break> 
- 
-      `conda deactivate` # desactiva ambiente virtual 
-      `conda env list`   # despliega lista de ambientes virtuales  
-
+3.- `conda activate segalmex` y enter (activa el ambiente virtual) 
 
 Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dependencias en línea de comandos con el ambiente virtual activado:
  
@@ -96,13 +91,10 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     conda install -c conda-forge pymysql
     conda install -c conda-forge requests
     conda install -c conda-forge openpyxl
-    conda config --add channels conda-forge
-    conda config --set channel_priority strict
-    conda install zstandard
+    conda install -c conda-forge install zstandard
     pip install dash-mantine-components==0.12.1
 
 Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desplegar el proyecto.
- 
  
 4.- `python index.py` y enter (cuando aparezca (segalmex) al inicio de la línea de comandos se ejcuta el index), p.e.
  

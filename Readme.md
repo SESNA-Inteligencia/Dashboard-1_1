@@ -103,7 +103,6 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
 
 Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desplegar el proyecto.
  
- 
 4.- `python index.py` y enter (cuando aparezca (segalmex) al inicio de la línea de comandos se ejcuta el index), p.e.
  
      (segalmex) C:\Users\jcmartinez\Desktop\Dashboard_v2>python index.py 

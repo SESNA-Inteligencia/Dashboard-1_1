@@ -52,7 +52,8 @@ El proyecto está estructurado de la siguiente manera:
 - Click derecho en cualquier lugar dentro de la carpeta y seleccionar **"Git Bash Here"** <break> 
 - En la consola de Git ingtroducir siguiente comandos: <break> 
   - `git init` <break> 
-  - `git clone https://githuabrir el archivo segalmex.py con VSCode o anaconda ia/Dashboard.git` <break> en el encabezado modificar rl root
+  - `git clone https://github.com/SESNA-Inteligencia/Dashboard-1_1.git` <break> 
+  - Abrir el archivo `segalmex.py` con VSCode o anaconda en el encabezado modificar el root
   - Esperar unos minutos a que descargue los archivos. 
   - Finalmente, ya descargados los archivos en la carpeta, abrir el archivo `segalmex.py` con **VSCode** o anaconda `Carpeta/app/segalmex.py` en el encabezado modificar el `root` con la ruta de la carpeta creada. (Se recomienda que la ruta sea cercana a la unidad raíz; por ejemplo en `C:\Users\jcmartinez\Desktop\Carpeta` Carpeta está cercana a la unidad raíz C, de lo contrario no se podrán ejecutar los scripts .py)
   
@@ -101,6 +102,7 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     pip install dash-mantine-components==0.12.1
 
 Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desplegar el proyecto.
+ 
  
 4.- `python index.py` y enter (cuando aparezca (segalmex) al inicio de la línea de comandos se ejcuta el index), p.e.
  

@@ -29,40 +29,36 @@ import plotly.io as pio
 pio.renderers.default = 'firefox'
 
 
-# CONFIG BASE DATOS AMERICANO
-hostname="localhost"
-dbname=["nombre bases separadas por comas"]
-uname="root"
-pwd="myadmin"
+# CONFIG BASE DATOS (No activo)
+#hostname="localhost"
+#dbname=["nombre bases separadas por comas"]
+#uname="root"
+#pwd="myadmin"
 
 # --- Only run on the server
 #engine = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}".format(host=hostname, db=dbname[0], user=uname, pw=pwd))
-#base = pd.read_sql(sql="select * from close_price where Date > '2020-01-01'", con = engine, index_col="Date", parse_dates=True)
+#base = pd.read_sql(sql="select * from", con = engine, index_col="Date", parse_dates=True)
+
+# introducir directorio de la carpeta
+root = "C:/Users/jcmartinez/Desktop/Dashboard2"
 
 # urls
 repo_est_url = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json' 
-repo_mun_url = 'https://raw.githubusercontent.com/angelnmara/geojson/master/MunicipiosMexico.json'
 
 # read 
 mx_est_geo = requests.get(repo_est_url).json()
 mx_mun_geo = requests.get(repo_mun_url).json()
 
-
-
 # base beneficiarios
-#df_benef= pd.read_csv('C:/Users/jcmartinez/Desktop/Dashboard_v2/datasets/base_beneficiarios_dashboard_v5.csv', encoding='utf-8')
-df_benef = pd.read_excel('C:/Users/jcmartinez/Desktop/Dashboard2/datasets/base_beneficiarios_dashboard_v5.xlsx')
-#df_benef.dropna(subset = ['LAT_DECIMAL'], inplace=True)
-#df_benef.dropna()
+df_benef = pd.read_excel(root + '/datasets/base_beneficiarios_dashboard_v5.xlsx')
 # base centros de acopio
-df_centros = pd.read_excel('C:/Users/jcmartinez/Desktop/Dashboard2/datasets/base_centros_inegi.xlsx')
+df_centros = pd.read_excel(root + '/datasets/base_centros_inegi.xlsx')
 df_centros = df_centros.dropna()
 # base producción agrícola
-df_produccion = pd.read_excel('C:/Users/jcmartinez/Desktop/Dashboard2/datasets/base_prodAgricola_con_claves_inegi.xlsx')
+df_produccion = pd.read_excel(root + '/datasets/base_prodAgricola_con_claves_inegi.xlsx')
 df_produccion = df_produccion.dropna()
-
 # georeferenciación de base producción - estados
-df_prod_est = pd.read_csv('C:/Users/jcmartinez/Desktop/Dashboard2/datasets/produccion_estados.csv')
+df_prod_est = pd.read_csv(root + '/datasets/produccion_estados.csv')
 
 # opciones 
 list_year = ['2019', '2020', '2021']
@@ -70,13 +66,7 @@ list_products = ['Arroz', 'Frijol', 'Leche', 'Maíz', 'Trigo']
 list_grado_marginacion = ['Muy bajo', 'Bajo', 'Medio', 'Alto', 'Muy alto']
 list_tamano_productor = ['Pequeño', 'Mediano', 'Grande']
 list_states = df_benef['NOM_ENT'].unique()
-'''
-all_options = {
-    'Americano': df_benef[df_benef['Anio'] == 'Americano']['simbolo'].unique(),
-    'Europeo': base[base['mercado'] == 'Europeo']['simbolo'].unique(),
-    'Mexicano': base[base['mercado'] == 'Mexicano']['simbolo'].unique()
-}
-'''
+
 
 #------------------------------------------------------------------------------
 #                        layout

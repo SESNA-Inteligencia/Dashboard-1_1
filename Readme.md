@@ -58,8 +58,7 @@ El proyecto está estructurado de la siguiente manera:
   - Abierto el archivo `segalmex.py`  agregar la ruta de la carpeta del proyecto en la variable `root` guardar cambios y cerrar.
   
  
- 
- 
+     .
      introducir directorio de la carpeta
      root = "C:/Users/jcmartinez/Desktop/Dashboard3"
   

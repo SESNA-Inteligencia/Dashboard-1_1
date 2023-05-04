@@ -57,8 +57,9 @@ El proyecto está estructurado de la siguiente manera:
   - Una vez descargados los archivos, entrar a la carpeta y abrir el archivo `segalmex.py` en la siguiente ruta `segalmex.py` en VSCode o bien o en anaconda.
   - Abierto el archivo `segalmex.py`  agregar la ruta de la carpeta del proyecto en la variable `root` guardar cambios y cerrar.
   
-      # introducir directorio de la carpeta
-      root = "C:/Users/jcmartinez/Desktop/Dashboard3"
+ 
+     introducir directorio de la carpeta
+     root = "C:/Users/jcmartinez/Desktop/Dashboard3"
   
   
 # 3.- Creación de ambiente virtual

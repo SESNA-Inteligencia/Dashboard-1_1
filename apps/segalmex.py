@@ -47,9 +47,7 @@ root = "C:/Users/jcmartinez/Desktop/Dashboard3"
 #repo_est_url = ""
 estados_json = open(root + '/datasets/estadosMexico.json')
 mx_est_geo = json.load(estados_json)
-# read 
-#mx_est_geo = requests.get(repo_est_url).json()
-#mx_mun_geo = requests.get(repo_mun_url).json()
+
 
 # base beneficiarios
 df_benef = pd.read_excel(root + '/datasets/base_beneficiarios_dashboard_v5.xlsx')
@@ -162,7 +160,7 @@ sidebar_1eft = html.Div([
                 #             ),
                 dmc.MultiSelect(
                     id='grado_marginacion', 
-                    value= ['Muy bajo'],
+                    value= ['Muy bajo','Bajo','Medio','Alto','Muy alto'],
                     data=list_grado_marginacion,
                     clearable=True,
                     style={"width": 250}  
@@ -193,7 +191,7 @@ sidebar_1eft = html.Div([
                 dmc.MultiSelect(
                     id='t_productor', 
                     data=list_tamano_productor,
-                    value= ["Pequeño"],
+                    value= ["Pequeño","Mediano","Grande"],
                     clearable=True,
                     style={"width": 250}  
                 ),       
@@ -521,7 +519,7 @@ def actualizar_mapa(clicks, tproductor_sel, gmarginacion_sel, producto_sel, anio
     est_color = est_color [est_color['Producto']==producto_sel]
     
     
-    max_vol_prod = est_color['Volumenproduccion'].max()
+    max_vol_prod = np.max(est_color['Volumenproduccion'])
     #if isinstance(ticker_sel, str):
     #    stks = [ticker_sel]
     #else:
@@ -533,7 +531,7 @@ def actualizar_mapa(clicks, tproductor_sel, gmarginacion_sel, producto_sel, anio
     # Traza areas de producción
     fig.add_trace(go.Choroplethmapbox(name='Mexico', geojson=mx_est_geo, ids=est_color['Entidad'], z=est_color['Volumenproduccion'],
                                         locations=est_color['Entidad'], featureidkey='properties.name', colorscale='greens',
-                                        zmin=0, zmax=max_vol_prod, 
+                                        zmin=0, zmax=600000000, 
                                         marker=dict(line=dict(color='black'), opacity=0.6)))
 
     # Traza de centros de acopio

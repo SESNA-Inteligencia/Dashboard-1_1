@@ -69,7 +69,7 @@ Una vez que el directorio de la consola se encuentre dentro de la carpeta ejecut
  
 1.- `conda update conda`, y enter
  
-2.- `conda create -n segalmex python=3.11.3 anaconda`, y enter# crea el ambien virtual con nombre segalmex (se puede elegir cualquier otro nombre) 
+2.- `conda create -n segalmex python=3.11.3`, y enter# crea el ambien virtual con nombre segalmex (se puede elegir cualquier otro nombre) 
  
 3.- `conda activate segalmex` y enter (activa el ambiente virtual) 
 
@@ -93,8 +93,8 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     conda install -c conda-forge openpyxl
     conda config --add channels conda-forge
     conda config --set channel_priority strict
-    conda install -c conda-forge install zstandard
     conda install zstandard
+    conda install -c conda-forge install zstandard
     pip install dash-mantine-components==0.12.1
 
 Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desplegar el proyecto.

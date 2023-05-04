@@ -36,65 +36,82 @@ layout = dbc.Container([
                     className="text-center"), className="mb-5 mt-5")
             ]),
     
-
+    # first row 
     dbc.Row([
-            dbc.Col(html.Div(
-                [
-                    #html.Div("SEGALMEX", className="display-6",
-                    #        style={'color': 'black'}),
-                    dmc.Text("SEGALMEX", color='blue', weight=500, style={"fontSize": 45}),
-                    html.Hr(className="my-2",style={'borderColor': 'black'}),
-                    html.P(
-                        '''
-                En esta sección se presenta ...
-                '''
-                    ),
+            dbc.Col(html.Div([
+                    dmc.Text("SEGALMEX", color='blue', weight=500, style={"fontSize": 30}),
+                ]),
+           md=8),   
+            dbc.Col(html.Div([
                     dbc.Button("Ver", color="dark",
                                outline=True, href="/segalmex"),
-                ],
-                className="h-100 p-5 text-black rounded-3 ", style={'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'},
-            ),
-                md=4, className="mb-3"),
-
-            dbc.Col(html.Div(
-                [
-                    #html.Div("LICONSA", className="display-6",
-                    #        style={'color': 'black'}),
-                    dmc.Text("LICONSA", color='blue', weight=500, style={"fontSize": 45}),
-                    html.Hr(className="my-2",style={'borderColor': 'black'}),
-                    html.P(
-                        '''
-                En esta sección se presenta ...
-                '''
-                    ),
+                ]),
+            md=2),
+            dbc.Col(html.Div([
+                    dbc.Button("Descarga", color="dark",
+                               outline=True, href="#"),
+                ]),
+            md=2),
+    ], className="mb-1 p-3 text-black rounded-3 ", style={'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'}),
+    # second row
+    dbc.Row([
+            dbc.Col(html.Div([
+                    dmc.Text("LICONSA", color='blue', weight=500, style={"fontSize": 30}),
+                ]),
+           md=8),   
+            dbc.Col(html.Div([
                     dbc.Button("Ver", color="dark",
-                               outline=True, href="/page2"),
-                ],
-                className="h-100 p-5 text-black rounded-3 ", style={'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'},
-            ),
-                md=4, className="mb-3"),
-            
-            dbc.Col(html.Div(
-                [
-                    #html.Div("DICONSA", className="display-6",
-                    #        style={'color': 'black'}),
-                    dmc.Text("DICONSA", color='blue', weight=500, style={"fontSize": 45}),
-                    html.Hr(className="my-2",style={'borderColor': 'black'}),
-                    html.P(
-                        '''
-                En esta sección se presenta ...
-                '''
-                    ),
+                               outline=True, href="/segalmex"),
+                ]),
+            md=2),
+            dbc.Col(html.Div([
+                    dbc.Button("Descarga", color="dark",
+                               outline=True, href="#"),
+                ]),
+            md=2),
+    ], className="mb-1 p-3 text-black rounded-3 ", style={'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'}),
+  
+    # third row 
+    dbc.Row([
+            dbc.Col(html.Div([
+                    dmc.Text("SEGALMEX", color='blue', weight=500, style={"fontSize": 30}),
+                ]),
+           md=8),   
+            dbc.Col(html.Div([
                     dbc.Button("Ver", color="dark",
-                               outline=True, href="/page3"),
-                ],
-                className="h-100 p-5 text-black rounded-3 ", style={'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'},
-            ),
-                md=4, className="mb-3"),
+                               outline=True, href="/segalmex"),
+                ]),
+            md=2),
+            dbc.Col(html.Div([
+                    dbc.Button("Descarga", color="dark",
+                               outline=True, href="#"),
+                ]),
+            md=2),
+    ], className="mb-1 p-3 text-black rounded-3 ", style={'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'}),
+  
+    #        dbc.Col(html.Div(
+    #            [
+    #                #html.Div("DICONSA", className="display-6",
+    #                #        style={'color': 'black'}),
+    #                dmc.Text("DICONSA", color='blue', weight=500, style={"fontSize": 45}),
+    #                html.Hr(className="my-2",style={'borderColor': 'black'}),
+    #                html.P(
+    #                    '''
+    #            En esta sección se presenta ...
+    #            '''
+    #                ),
+    #                dbc.Button("Ver", color="dark",
+    #                           outline=True, href="/page3"),
+    #            ],
+    #            className="h-100 p-5 text-black rounded-3 ", style={'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'},
+    #        ),
+    #            md=4, className="mb-3"),
             
-            ], className="mb-5")
+    #        ], className="mb-10")
 
-    
+    html.Br(),
+    html.Br(),
+    html.Br(),
      
 
 ])

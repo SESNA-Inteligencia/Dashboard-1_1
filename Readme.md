@@ -91,7 +91,10 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     conda install -c conda-forge pymysql
     conda install -c conda-forge requests
     conda install -c conda-forge openpyxl
+    conda config --add channels conda-forge
+    conda config --set channel_priority strict
     conda install -c conda-forge install zstandard
+    conda install zstandard
     pip install dash-mantine-components==0.12.1
 
 Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desplegar el proyecto.

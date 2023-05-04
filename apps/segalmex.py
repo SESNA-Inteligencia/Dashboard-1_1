@@ -19,6 +19,7 @@ from sqlalchemy import create_engine
 from app import app
 import requests
 import random
+import json
 import folium
 from folium.plugins import HeatMap
 from folium.plugins import MarkerCluster
@@ -40,13 +41,14 @@ pio.renderers.default = 'firefox'
 #base = pd.read_sql(sql="select * from", con = engine, index_col="Date", parse_dates=True)
 
 # introducir directorio de la carpeta
-root = "C:/Users/jcmartinez/Desktop/Dashboard2"
+root = "C:/Users/jcmartinez/Desktop/Dashboard3"
 
 # urls
-repo_est_url = 'https://raw.githubusercontent.com/SESNA-Inteligencia/Dashboard-1_1/master/datasets/estados_mexico.json?token=GHSAT0AAAAAACB75G7LLCADE73CVDWMCZRAZCSW7MA' 
-
+#repo_est_url = ""
+estados_json = open(root + '/datasets/estadosMexico.json')
+mx_est_geo = json.load(estados_json)
 # read 
-mx_est_geo = requests.get(repo_est_url).json()
+#mx_est_geo = requests.get(repo_est_url).json()
 #mx_mun_geo = requests.get(repo_mun_url).json()
 
 # base beneficiarios
@@ -576,7 +578,7 @@ def actualizar_mapa(clicks, tproductor_sel, gmarginacion_sel, producto_sel, anio
                     paper_bgcolor='white',
                     plot_bgcolor='white')
 
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.update_layout(legend_title_text='', margin={"r":0,"t":0,"l":0,"b":0})
 
     fig.update_traces(colorbar_orientation='v',
                     colorbar_x=-0.1,

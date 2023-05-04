@@ -55,7 +55,10 @@ El proyecto está estructurado de la siguiente manera:
   - `git clone https://github.com/SESNA-Inteligencia/Dashboard-1_1.git` <break>
   - Esperar unos minutos a que descargue los archivos en la carpeta
   - Una vez descargados los archivos, entrar a la carpeta y abrir el archivo `segalmex.py` en la siguiente ruta `segalmex.py` en VSCode o bien o en anaconda.
-  - Abierto el archivo `segalmex.py`  el la línea 44 (aprox.)  agregar la ruta de la carpeta del proyecto en la variable `root` guardar cambios y cerrar.
+  - Abierto el archivo `segalmex.py`  agregar la ruta de la carpeta del proyecto en la variable `root` guardar cambios y cerrar.
+  
+      # introducir directorio de la carpeta
+      root = "C:/Users/jcmartinez/Desktop/Dashboard3"
   
   
 # 3.- Creación de ambiente virtual

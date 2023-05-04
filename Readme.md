@@ -59,6 +59,7 @@ El proyecto está estructurado de la siguiente manera:
   
  
      `#Introducir directorio de la carpeta`
+ 
      `root = "C:/Users/jcmartinez/Desktop/Dashboard3"`
   
   

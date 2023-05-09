@@ -32,7 +32,7 @@ layout = dbc.Container([
         )
     ]),
     dbc.Row([
-            dbc.Col(html.H1("Bienvenidos al ",
+            dbc.Col(html.H1(" ... ",
                     className="text-center"), className="mb-5 mt-5")
             ]),
     
@@ -47,11 +47,11 @@ layout = dbc.Container([
                                outline=True, href="/segalmex"),
                 ]),
             md=2),
-            dbc.Col(html.Div([
-                    dbc.Button("Descarga", color="dark",
-                               outline=True, href="#"),
-                ]),
-            md=2),
+            #dbc.Col(html.Div([
+            #        dbc.Button("", color="dark",
+            #                   outline=True, href="#"),
+            #    ]),
+            #md=2),
     ], className="mb-1 p-3 text-black rounded-3 ", style={'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'}),
     # second row
     dbc.Row([
@@ -64,11 +64,11 @@ layout = dbc.Container([
                                outline=True, href="/segalmex"),
                 ]),
             md=2),
-            dbc.Col(html.Div([
-                    dbc.Button("Descarga", color="dark",
-                               outline=True, href="#"),
-                ]),
-            md=2),
+            #dbc.Col(html.Div([
+            #        dbc.Button("Descarga", color="dark",
+            #                   outline=True, href="#"),
+            #    ]),
+            #md=2),
     ], className="mb-1 p-3 text-black rounded-3 ", style={'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'}),
   
     # third row 
@@ -82,11 +82,11 @@ layout = dbc.Container([
                                outline=True, href="/segalmex"),
                 ]),
             md=2),
-            dbc.Col(html.Div([
-                    dbc.Button("Descarga", color="dark",
-                               outline=True, href="#"),
-                ]),
-            md=2),
+            #dbc.Col(html.Div([
+            #        dbc.Button("Descarga", color="dark",
+            #                   outline=True, href="#"),
+            #    ]),
+            #md=2),
     ], className="mb-1 p-3 text-black rounded-3 ", style={'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'}),
   
     #        dbc.Col(html.Div(

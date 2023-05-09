@@ -19,8 +19,8 @@ dropdown = dbc.DropdownMenu(
     children=[
         #dbc.DropdownMenuItem("Home", href="/home"),
         dbc.DropdownMenuItem("SEGALMEX", href="/segalmex"),
-        dbc.DropdownMenuItem("Page2", href="/page2"),
-        dbc.DropdownMenuItem("Page3", href="/page3"),
+        dbc.DropdownMenuItem("LICONSA", href="/page2"),
+        dbc.DropdownMenuItem("DICONSA", href="/page3"),
     ],
     nav = True,
     in_navbar = True,

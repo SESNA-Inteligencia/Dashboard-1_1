@@ -63,23 +63,41 @@ El proyecto está estructurado de la siguiente manera:
   
   
  
-
 # 3.- Creación de ambiente virtual
 
  El primer paso es ingresar al directorio (carpeta que contiene los archivos)
   - En la barra inferior de inicio de windows teclear `cmd` en el ícono **buscar**.
   - Después teclearlos siguientes comandos:
     `cd Desktop`  y enter <break>
-    `cd Dashboard` y enter <break>
-    
  
+    `cd Dashboard` y enter <break>
+ 
+     **Observación**
+ 
+     Otra opción es introducir la ruta completa, p.e. `cd Desktop/Dashboard`. Note la dirección del ícono slash `/`, si copia la ruta desde la carpeta compruebe que sea la correcta en caso contrario realizar la sustitución manualmente.
 Una vez que el directorio de la consola se encuentre dentro de la carpeta ejecutar los siguientes comandos, uno a la vez,  en consola (cmd para windown o bien en terminal de linux) 
  
 1.- `conda update conda`, y enter
  
-2.- `conda create -n segalmex python=3.11.3`, y enter# crea el ambien virtual con nombre segalmex (se puede elegir cualquier otro nombre) 
+     Nota:
+     Sólo si la consola devuelve 
+     `ModuleNotFoundError: No module named 'conda'`
+     Hay que hacer el siguiente paso extra, en caso contrario pasar al paso 2. El paso extra consiste en egragar conda a variables de entorno:
  
-3.- `conda activate segalmex` y enter (activa el ambiente virtual) 
+     # Agregar las siguientes líneas en la consola, una a la vez:
+     # path de conda library
+     SITE_PACKAGES=C:/Users/jcmartinez/Anaconda3/Library/bin/conda.bat
+     # path del actual interprete de python
+     PYTHON_BASE=C:/Users/jcmartinez/Anaconda3/python.exe
+     
+     Para hallar las ubicaciones de conda y python puede ayudarse de los siguientes comandos en consola: `where python`, `where conda`. 
+ 
+2.- `conda create -n dashboard python=3.11.3`, y enter # crea el ambien virtual con nombre dashboard (se puede elegir cualquier otro nombre) 
+ 
+3.- `conda activate dashboard` y enter (activa el ambiente virtual) <break> 
+ 
+      `conda deactivate` # desactiva ambiente virtual 
+      `conda env list`   # despliega lista de ambientes virtuales  
 
 Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dependencias en línea de comandos con el ambiente virtual activado:
  
@@ -102,13 +120,14 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     conda config --add channels conda-forge
     conda config --set channel_priority strict
     conda install zstandard
-    conda install -c conda-forge install zstandard
     pip install dash-mantine-components==0.12.1
+  
+
 
 Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desplegar el proyecto.
  
-4.- `python index.py` y enter (cuando aparezca (segalmex) al inicio de la línea de comandos se ejcuta el index), p.e.
+4.- `python index.py` y enter (cuando aparezca (dashboard) al inicio de la línea de comandos se ejcuta el index), p.e.
  
-     (segalmex) C:\Users\jcmartinez\Desktop\Dashboard_v2>python index.py 
+     (dashboard) C:\Users\jcmartinez\Desktop\Dashboard_v2>python index.py 
  
      En el ejemplo anterior, la carpeta que contiene 

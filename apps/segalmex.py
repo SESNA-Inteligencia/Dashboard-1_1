@@ -519,7 +519,14 @@ def actualizar_mapa(clicks, tproductor_sel, gmarginacion_sel, producto_sel, anio
     est_color = est_color [est_color['Producto']==producto_sel]
     
     
-    max_vol_prod = np.max(est_color['Volumenproduccion'])
+    max_vol_prods =  {'Arroz': 50000000, 
+                                     'Frijol':100000000, 
+                                     'Leche':600000000, 
+                                     'Maíz':4700000000000, 
+                                     'Trigo':1200000000000}
+    
+    max_vol_prod = max_vol_prods[producto_sel]
+    
     #if isinstance(ticker_sel, str):
     #    stks = [ticker_sel]
     #else:
@@ -531,7 +538,7 @@ def actualizar_mapa(clicks, tproductor_sel, gmarginacion_sel, producto_sel, anio
     # Traza areas de producción
     fig.add_trace(go.Choroplethmapbox(name='Mexico', geojson=mx_est_geo, ids=est_color['Entidad'], z=est_color['Volumenproduccion'],
                                         locations=est_color['Entidad'], featureidkey='properties.name', colorscale='greens',
-                                        zmin=0, zmax=600000000, 
+                                        zmin=0, zmax=max_benef, 
                                         marker=dict(line=dict(color='black'), opacity=0.6)))
 
     # Traza de centros de acopio

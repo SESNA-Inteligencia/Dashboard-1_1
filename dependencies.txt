@@ -1,0 +1,16 @@
+pandas 
+numpy 
+dash 
+dash-table 
+plotly
+folium
+dash-mantine-components
+matplotlib
+seaborn
+dash-bootstrap-components
+dash-leaflet
+sqlalchemy 
+datetime 
+pymysql
+requests
+openpyxl

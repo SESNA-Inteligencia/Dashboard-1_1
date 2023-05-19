@@ -7,6 +7,7 @@ import dash_mantine_components as dmc
 
 import numpy as np
 import pandas as pd
+from millify import millify
 from datetime import datetime, timedelta
 import plotly.express as px
 import plotly.graph_objects as go
@@ -14,7 +15,10 @@ from dash import dcc, html
 from dash import dash_table as dt
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
-#import dash_leaflet as dl
+#from dash_extensions import Download
+#from dash_extensions.snippets import send_file
+from dash_iconify import DashIconify
+import dash_leaflet as dl
 from sqlalchemy import create_engine
 from app import app
 import requests
@@ -53,7 +57,7 @@ mx_est_geo = json.load(estados_json)
 df_benef = pd.read_excel(root + '/datasets/base_beneficiarios_dashboard_v5.xlsx')
 # base centros de acopio
 df_centros = pd.read_excel(root + '/datasets/base_centros_inegi.xlsx')
-df_centros = df_centros.dropna()
+df_centros = df_centros
 # base producción agrícola
 df_produccion = pd.read_excel(root + '/datasets/base_prodAgricola_con_claves_inegi.xlsx')
 df_produccion = df_produccion.dropna()
@@ -66,171 +70,324 @@ list_products = ['Arroz', 'Frijol', 'Leche', 'Maíz', 'Trigo']
 list_grado_marginacion = ['Muy bajo', 'Bajo', 'Medio', 'Alto', 'Muy alto']
 list_tamano_productor = ['Pequeño', 'Mediano', 'Grande']
 list_states = df_benef['NOM_ENT'].unique()
+list_layers = ['Centros de acopio','Nivel de marginación', 'Tamaño del productor']
+
+
+
+
 
 
 #------------------------------------------------------------------------------
 #                        layout
-####################      sidebar left: control bar
-sidebar_1eft = html.Div([
-    # filtro año
- 
-        dbc.Row([
-                html.H6('Año', style={'color':'#2C3E50', 'marginLeft':'1.5rem', 'marginRight':'1.5rem', 'marginTop':'3rem'})
-                ],
-            style={ 'marginBottom':'0.2rem'},
-            ),
-        dbc.Row([
-            html.Div([
-                #dcc.Dropdown(id='anio', options=[
-                #    {'label': i, 'value': i} for i in list_year], value=list_year[0], multi=False, 
-                #             ),
-                #dmc.RadioGroup(
-                #    [dmc.Radio(x, value=x) for x in list_year],
-                #    id="anio",
-                #    value='2020',
-                #),
-                #dcc.RadioItems(
-                #    id='anio',
-                #    options=[{'label': i, 'value': i} for i in list_year],
-                #    value=2020,
-                #    labelStyle={'display': 'inline-block', "font-size": "20px"},
-                #),
-                
-                #html.Div([
-                dmc.ChipGroup(
-                    [dmc.Chip(k, value=k) for k in list_year],
-                    id='anio',
-                    value='2020',
-                ),
-                #]),
-                
-                #dbc.Popover(
-                #    dbc.PopoverBody("Selecciona el año "),
-                #    target="anio",
-                #    trigger="focus",
-                #    placement="top",
-                #    className="text-center"
-                #),
-            ], style={"color": "grey", "width": "80%", 'marginLeft':'1.5rem', 'marginTop':'0.1rem', 'marginRight':'1.5rem'}),
-            
-            ], className="mt-0"),
-        # filtro producto
-        dbc.Row([
-                html.H6('Producto', style={'color':'#2C3E50', 'marginLeft':'1.5rem', 'marginRight':'1.5rem', 'marginTop':'2rem'})
-                ],
-            style={'marginBottom':'0.2rem'},
-            ),
-        dbc.Row([
-            html.Div([
-                #dcc.Dropdown(id='producto', options=[
-                #    {'label': i, 'value': i} for i in list_products], value=list_products[0], multi=False, 
-                #             ),
-                
-                dmc.Select(
-                    id="producto",
-                    data=list_products,
-                    value='Frijol',
-                    searchable=True,
-                    nothingFound="No options found",
-                    style={"width": 250},
-                ),
-                
-                dbc.Popover(
-                    dbc.PopoverBody("Selecciona el producto "),
-                    target="producto",
-                    trigger="focus",
-                    placement="top",
-                    className="text-center"
-                ),
-            ], style={"color": "grey", "width": "80%", 'marginLeft':'1.5rem', 'marginTop':'0.1rem', 'marginRight':'1.5rem'}),
-            
+####################    header
+sidebar_header = html.Div([
+    dbc.Row([
+        #primero
+        dbc.Col([
+            dbc.Row([
+                dbc.Col([
+                    html.Img(id='image', src='../assets/dollar.svg', width="65", height="65"),
+                ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
+                dbc.Col([
+                    dbc.Row([html.Center(html.Div([
+                    "1,332",
+                    ], style={'marginTop':'0em',"textAling":"center", "color":"blue", 'font-size': '32px'}),
+                    )]),
+                    dbc.Row([html.Div([
+                        dmc.Text("No. Benef.", color='gray', weight=500, align='center', style={"fontSize": 16}),
+                        ]),
+                    ]),
+                ], className="card col-9 border-0 bg-transparent"), 
+            ]),
+                 
+            ],className="card col-12 col-md-2", style={'padding':'.3rem', 'marginTop':'0rem', 'marginLeft':'0rem', 'border-radius': '10px', 'backgroundColor': '#F4F6F6', }),
+        # segundo
+        dbc.Col([
+            dbc.Row([
+                dbc.Col([
+                    html.Img(id='image', src='../assets/bank.svg', width="65", height="65"),
+                ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
+                dbc.Col([
+                    dbc.Row([html.Center(html.Div([
+                    "1,332",
+                    ], style={'marginTop':'0em',"textAling":"center", "color":"blue", 'font-size': '32px'}),
+                    )]),
+                    dbc.Row([html.Div([
+                        dmc.Text("No. Benef.", color='gray', weight=500, align='center', style={"fontSize": 16}),
+                        ]),
+                    ]),
+                ], className="card col-9 border-0 bg-transparent"), 
+            ]),
+                 
+            ],className="card col-12 col-md-2", style={'padding':'.3rem', 'marginTop':'0rem', 'marginLeft':'0rem', 'border-radius': '10px', 'backgroundColor': '#F4F6F6', }),
+        # tercero
+        dbc.Col([
+            dbc.Row([
+                dbc.Col([
+                    html.Img(id='image', src='../assets/chart-histogram.svg', width="65", height="65"),
+                ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
+                dbc.Col([
+                    dbc.Row([html.Center(html.Div([
+                    "1,332",
+                    ], style={'marginTop':'0em',"textAling":"center", "color":"blue", 'font-size': '32px'}),
+                    )]),
+                    dbc.Row([html.Div([
+                        dmc.Text("No. Benef.", color='gray', weight=500, align='center', style={"fontSize": 16}),
+                        ]),
+                    ]),
+                ], className="card col-9 border-0 bg-transparent"), 
+            ]),  
+            ],className="card col-12 col-md-2", style={'padding':'1rem', 'marginTop':'0rem', 'marginLeft':'0rem', 'border-radius': '10px', 'backgroundColor': '#F4F6F6', }),
+        # Cuarto
+        dbc.Col([
+            dbc.Row([
+                dbc.Col([
+                    html.Img(id='image', src='../assets/chart-histogram.svg', width="65", height="65"),
+                ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
+                dbc.Col([
+                    dbc.Row([html.Center(html.Div([
+                    "1,332",
+                    ], style={'marginTop':'0em',"textAling":"center", "color":"blue", 'font-size': '32px'}),
+                    )]),
+                    dbc.Row([html.Div([
+                        dmc.Text("No. Benef.", color='gray', weight=500, align='center', style={"fontSize": 16}),
+                        ]),
+                    ]),
+                ], className="card col-9 border-0 bg-transparent"), 
+            ]),  
+            ],className="card col-12 col-md-2", style={'padding':'.3rem', 'marginTop':'0rem', 'marginLeft':'0rem', 'border-radius': '10px', 'backgroundColor': '#F4F6F6', }),
+        # quinto
+        dbc.Col([
+            dbc.Row([
+                dbc.Col([
+                    html.Img(id='image', src='../assets/chart-histogram.svg', width="65", height="65"),
+                ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
+                dbc.Col([
+                    dbc.Row([html.Center(html.Div([
+                    "1,332",
+                    ], style={'marginTop':'0em',"textAling":"center", "color":"blue", 'font-size': '32px'}),
+                    )]),
+                    dbc.Row([html.Div([
+                        dmc.Text("No. Benef.", color='gray', weight=500, align='center', style={"fontSize": 16}),
+                        ]),
+                    ]),
+                ], className="card col-9 border-0 bg-transparent"), 
+            ]),  
+            ],className="card col-12 col-md-2", style={'padding':'.3rem', 'marginTop':'0rem', 'marginLeft':'0rem', 'border-radius': '10px', 'backgroundColor': '#F4F6F6', }),
+        # sexto
+        dbc.Col([
+            dbc.Row([
+                dbc.Col([
+                    html.Img(id='image', src='../assets/chart-histogram.svg', width="65", height="65"),
+                ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
+                dbc.Col([
+                    dbc.Row([html.Center(html.Div([
+                    "1,332",
+                    ], style={'marginTop':'0em',"textAling":"center", "color":"blue", 'font-size': '32px'}),
+                    )]),
+                    dbc.Row([html.Div([
+                        dmc.Text("No. Benef.", color='gray', weight=500, align='center', style={"fontSize": 16}),
+                        ]),
+                    ]),
+                ], className="card col-9 border-0 bg-transparent"), 
+            ]),  
+            ],className="card col-12 col-md-2", style={'padding':'.3rem', 'marginTop':'0rem', 'marginLeft':'0rem', 'border-radius': '10px', 'backgroundColor': '#F4F6F6',}),
+    ]), 
+], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem','marginRight': '2rem','marginTop': '0rem'})
 
-            ], className="mt-0"),
-        
-        # filtro Grado de marginacion
-        dbc.Row([
-                html.H6('Grado de marginación', style={'color':'#2C3E50', 'marginLeft':'1.5rem', 'marginRight':'1.5rem', 'marginTop':'2rem'})
-                ],
-            style={'marginBottom':'0.2rem'},
-            ),
-        dbc.Row([
-            html.Div([
-                #dcc.Dropdown(id='grado_marginacion',  options=[
-                #    {'label': i, 'value': i} for i in list_grado_marginacion], value=list_grado_marginacion[0], multi=True, searchable=True,
-                #             ),
-                dmc.MultiSelect(
-                    id='grado_marginacion', 
-                    value= ['Muy bajo','Bajo','Medio','Alto','Muy alto'],
-                    data=list_grado_marginacion,
-                    clearable=True,
-                    style={"width": 250}  
-                ),       
-                dbc.Popover(
-                    dbc.PopoverBody("Selecciona el grado de marginación"),
-                    target="grado_marginacion",
-                    trigger="focus",
-                    placement="top",
-                    className="text-center"
-                ),
-            ], style={"color": "grey", "width": "80%", 'marginLeft':'1.5rem', 'marginTop':'0.1rem', 'marginRight':'1.5rem'}),
-            
+# Filtros proncipales
+main_filters = html.Div([
 
-            ], className="mt-0"),
-        
-        # filtro Tamaño del productor
-        dbc.Row([
-                html.H6('Tamaño del productor', style={'color':'#2C3E50', 'marginLeft':'1.5rem', 'marginRight':'1.5rem', 'marginTop':'2rem'})
-                ],
-            style={'marginBottom':'0.2rem'},
-            ),
-        dbc.Row([
-            html.Div([
-                #dcc.Dropdown(id='t_productor', options=[
-                #    {'label': i, 'value': i} for i in list_tamano_productor], value=list_tamano_productor[0], multi=True, searchable=True,
-                #             ),
-                dmc.MultiSelect(
-                    id='t_productor', 
-                    data=list_tamano_productor,
-                    value= ["Pequeño","Mediano","Grande"],
-                    clearable=True,
-                    style={"width": 250}  
-                ),       
+    dbc.Row([
+        dbc.Col([            
+            ], className="card col-4 border-0 bg-transparent"),
+        dbc.Col([ 
+            dbc.Row([
+                dbc.Col([
+                    
+                    html.Div([
+                        dmc.Select(
+                            icon=DashIconify(icon="material-symbols:filter-list-rounded"),
+                            label="Seleccione el año",
+                            id="anio",
+                            data=list_year,
+                            value='2020',
+                            searchable=True,
+                            nothingFound="No options found",
+                            #style={"width": 250},
+                        ), 
+                    ]),
+                    ], className="card col-12 col-md-6 border-0 bg-transparent", style={'padding':'.3rem', 'border-radius': '0px',  'backgroundColor': '#F4F6F6', }
+                ),
                 
-                dbc.Popover(
-                    dbc.PopoverBody("Selecciona el tamaño del productor"),
-                    target="t_productor",
-                    trigger="focus",
-                    placement="top",
-                    className="text-center"
-                ),
-            ], style={"color": "grey", "width": "80%", 'marginLeft':'1.5rem', 'marginTop':'0.1rem', 'marginRight':'1.5rem'}),
-            
-
-            ], className="mt-0"),
+                dbc.Col([
+                    html.Div([
+                        dmc.Select(
+                            icon=DashIconify(icon="material-symbols:filter-list-rounded"),
+                            label="Seleccione el producto",
+                            id="producto",
+                            data=list_products,
+                            value='Frijol',
+                            searchable=True,
+                            nothingFound="No options found",
+                            #style={"width": 250},
+                        ),
+                    ]),
+                ], className="card col-12 col-md-6 border-0 bg-transparent", style={'padding':'.3rem', 'border-radius': '0px',  'backgroundColor': '#F4F6F6', }
+            ),
+            ]),
+        ], className="card col-8 bg-transparent", style={'textColor':'white'}),
         
+    ]),
+   
+    dbc.Row([
+        dbc.Col([ 
+            ], className="card col-4 border-0 bg-transparent"),
+        dbc.Col([
+            dbc.Row([
+                dbc.Col([            
+                    html.Div([
+        
+                    ]),
+                    ], className="card col-12 col-md-6 border-0 bg-transparent", style={'padding':'.3rem', 'border-radius': '0px',  'backgroundColor': '#F4F6F6', }
+                ),
+                
+                dbc.Col([
+                    html.Div([
+                        dbc.Button(id='submit-button',
+                            n_clicks=0,
+                            children='Actualizar',
+                            color = 'dark',    
+                            className="mb-4 mt-2"),
+                    ], style={"width": "120%", 'marginLeft':'1.5rem', 'marginRight':'1.5rem'}
+                    ), 
     
+                ], className="card col-12  col-md-6 border-0 bg-transparent", style={'padding':'.3rem', 'border-radius': '0px', 'textAlign':'left', 'backgroundColor': 'black', }
+            ),
+            ]),
+            
+                
+        ], className="card col-8 m-auto bg-transparent", style={'border-radius':'3px'}),
+        
+    ], className="eight colums bg-transparent"),
+
+], className="eight columns", style={'backgroundColor': '#F4F6F6'})
+
+
+####################      sidebar left: control bar
+sidebar_right = html.Div([
+
+        # Filtros
         dbc.Row([
             html.Div([
-            
-                dbc.Button(id='submit-button',
-                    n_clicks=0,
-                    children='Actualizar',
-                    color = 'dark',    
-                    className="mb-5 mt-5"),
-            ], style={"width": "80%", "color":"grey", "align":"center", 'marginLeft':'1.5rem', 'marginRight':'1.5rem'}
-            ),
-            
-        ]),
+                    dmc.RadioGroup(
+                        [dmc.Radio(k, value=k) for k in list_layers],
+                        id="radiogroup-simple",
+                        orientation="vertical",
+                        value="Centros de acopio",
+                        label="Select la capa que desee visualizar",
+                        size="sm",
+                        mt=10,
+                    ),
+                    dmc.Text(id="radio-output"),
+                ])
+
+        ], className="mt-2", style={'marginBottom':'4rem'}),
+        
+        # tablero resumen
+        dbc.Row([
+        #primero
+            dbc.Col([
+                dbc.Row([
+                    dbc.Col([
+                        html.Img(id='image', src='../assets/centrosAcopio.png', width="65", height="65"),
+                    ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
+                    dbc.Col([
+                        dbc.Row([html.Center(html.Div([
+                        "1,332",
+                        ], id='resumen-centros_acopio', style={'marginTop':'0em',"textAling":"center", "color":"red", 'font-size': '32px'}),
+                        )]),
+                        dbc.Row([html.Div([
+                            dmc.Text("Centros Acopio", color='grey', weight=500, align='center', style={"fontSize": 12}),
+                            ]),
+                        ]),
+                    ], className="card col-9 border-0 bg-transparent"), 
+                ]),
+                    
+                ],className="card col-12 col-md-6", style={'padding':'.3rem', 'border-radius': '5px', 'backgroundColor': '#F4F6F6', }),
+            # segundo
+            dbc.Col([
+                dbc.Row([
+                    dbc.Col([
+                        html.Img(id='image', src='../assets/poblacionBeneficiaria.png', width="65", height="65"),
+                    ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
+                    dbc.Col([
+                        dbc.Row([html.Center(html.Div([
+                        "1,332",
+                        ], id='resumen-poblacion_beneficiaria', style={'marginTop':'0em',"textAling":"center", "color":"blue", 'font-size': '32px'}),
+                        )]),
+                        dbc.Row([html.Div([
+                            dmc.Text("Pob. Beneficiaria", color='grey', weight=500, align='center', style={"fontSize": 12}),
+                            ]),
+                        ]),
+                    ], className="card col-9 border-0 bg-transparent"), 
+                ]),
+                    
+                ],className="card col-12 col-md-6", style={'padding':'.3rem', 'border-radius': '5px', 'backgroundColor': '#F4F6F6', }),
+
+        ], style={'marginTop':'4rem'}), 
+
+        dbc.Row([
+        #primero
+            dbc.Col([
+                dbc.Row([
+                    dbc.Col([
+                        html.Img(id='image', src='../assets/dollar.svg', width="65", height="65"),
+                    ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
+                    dbc.Col([
+                        dbc.Row([html.Center(html.Div([
+                        "1,332",
+                        ], id='resumen-monto_apoyos', style={'marginTop':'0em',"textAling":"center", "color":"green", 'font-size': '32px'}),
+                        )]),
+                        dbc.Row([html.Div([
+                            dmc.Text("Monto Apoyos", color='grey', weight=500, align='center', style={"fontSize": 12}),
+                            ]),
+                        ]),
+                    ], className="card col-9 border-0 bg-transparent"), 
+                ]),
+                    
+                ],className="card col-12 col-md-6", style={'padding':'.3rem', 'border-radius': '5px', 'backgroundColor': '#F4F6F6', }),
+            # segundo
+            dbc.Col([
+                dbc.Row([
+                    dbc.Col([
+                        html.Img(id='image', src='../assets/porcentaje.png', width="65", height="65"),
+                    ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
+                    dbc.Col([
+                        dbc.Row([html.Center(html.Div([
+                        "51%",
+                        ], id='resumen-porcentaje_faltante', style={'marginTop':'0em',"textAling":"center", "color":"grey", 'font-size': '32px'}),
+                        )]),
+                        dbc.Row([html.Div([
+                            dmc.Text("Datos faltantes (%)", color='gray', weight=500, align='center', style={"fontSize": 12}),
+                            ]),
+                        ]),
+                    ], className="card col-9 border-0 bg-transparent"), 
+                ]),
+                    
+                ],className="card col-12 col-md-6", style={'padding':'.3rem','border-radius': '5px', 'backgroundColor': '#F4F6F6', }),
+
+        ], style={'marginTop':'1rem', 'marginBottom':'2rem'}),
+
         
         
-        ], className='col-10 col-md-12', style={'backgroundColor': '#EAEDED', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'marginLeft': '2rem', 'marginBottom': '2rem', 'marginRight':'1rem', 'marginTop': '0rem'}
+        ], style={'marginLeft':'2rem', 'marginRight':'2rem', 'marginTop':'2rem'}
     )
 
 #######################    content - mapa
 content1 = html.Div([
         dbc.Row([
             dbc.Col([
-                    
                     html.Div([
                         dbc.Tabs([
                                 dbc.Tab(label="Mapa", tab_id="tab-1", label_style={"color": "#00AEF9"}),
@@ -243,66 +400,22 @@ content1 = html.Div([
                         html.Div(id="content-mapa"),
                      ], style={"width": "100%"}
                     ),   # style={'height':'100vh'}               
-                ], className="card col-12", style={'height':'84vh', 'padding':'.3rem', 'marginTop':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', } # white
-                ), 
-            
+            ], className="card col-12 col-md-8", style={'padding':'.3rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
+            ), 
+            dbc.Col([
+                sidebar_right
+                
+            ], className="card col-12 col-md-4", style={'padding':'.3rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '0px', 'backgroundColor': 'white', }
+            )
         ]),
+        # Barra de control
         
-        
-    ], className="seven columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '1rem','marginRight': '2rem','marginTop': '0rem'}
-
+    
+    ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem', 'marginRight': '2rem','marginTop': '0rem'}
     )
 # backgroundColor': '#F4F6F6'
 #######################    content2 - gráficos
 content2 = html.Div([
-
-        dbc.Row([
-            dbc.Col([
-                html.Div([
-                    html.H6('Estado', style={'color':'#2C3E50', 'marginLeft':'1.5rem', 'marginRight':'1.5rem', 'marginTop':'1rem'})
-                    ],
-                    style={'marginBottom':'0.2rem'},
-                ),
-                html.Div([
-
-                    dmc.MultiSelect(
-                        id='estados', 
-                        data=list_states,
-                        value= ["Aguascalientes"],
-                        clearable=True,
-                        #style={"width": 600}  
-                    ),       
-
-                ]),
-    
-                
-                ], className="card col-12 col-md-6", style={'padding':'.3rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
-            ),
-            
-            dbc.Col([
-                html.Div([
-                    html.H6('Municipio', style={'color':'#2C3E50', 'marginLeft':'1.5rem', 'marginRight':'1.5rem', 'marginTop':'1rem'})
-                    ],
-                    style={'marginBottom':'0.2rem'},
-                ),
-                html.Div([
-
-                    dmc.MultiSelect(
-                        id='municipios', 
-                        data=list_states,
-                        value= ["Aguascalientes"],
-                        clearable=True,
-                        #style={"width": 600}  
-                    ),       
-
-                ]),
-    
-                
-                ], className="card col-12 col-md-6", style={'padding':'.3rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
-            ),
-        
-        
-        ]),
         dbc.Row([
             
             dbc.Col([
@@ -347,7 +460,7 @@ content2 = html.Div([
     )
 
 
-#######################    content2 - gráficos
+#######################    content2 - gráficos principales
 content3 = html.Div([
         dbc.Row([
             dbc.Col([
@@ -366,27 +479,7 @@ content3 = html.Div([
                     ),                  
                 ], className="card col-12", style={'padding':'.3rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
                 ), 
-            
-            #dbc.Col([
-            #        html.Div([
-            #            dbc.Tabs([
-            #                    dbc.Tab(label="Gráfico 4", tab_id="tab-r3c2-1", label_style={"color": "#00AEF9"}),
-            #                    
-            #                    dbc.Tab(label="Tabla 4", tab_id="tab-r3c2-2",  label_style={"color": "#00AEF9"}),
-            #                ],
-            #                id="tabs-r3c2",
-            #                active_tab="tab-r3c2-1",
-            #            ),
-            #            html.Div(id="content-r3c2"),
-            #         ], style={"width": "100%"}
-            #        ),                 
-            #    ], className="card col-12 col-md-6 ", style={'padding':'.3rem', 'marginTop':'0rem', 'marginLeft':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
-            #    ), 
-            
-            
         ]),
-         
-        
     ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem','marginRight': '2rem','marginTop': '0rem'}
 
     )
@@ -395,22 +488,42 @@ content3 = html.Div([
 # original 'backgroundColor': '#f2f2f2'
 ########################### layout  SEGALMEX
 layout = dbc.Container([
-         
-   
-            
+
+ 
+        html.Div([
+            html.Br(),
+            html.Br(),
+            dbc.Row([
+            dbc.Col(html.Img(src="assets/segalmex3.jpg", height="60px"), style = {'textAlign':'center', 'marginRight':'10px'} ),
+            ],
+            className="g-0 m-0, p-0",
+        ),
+        
+        dbc.Row([
+            dbc.Col(html.H1("SEGALMEX"),  className="ml-5",  style = {'textAlign':'center', 'color':'black'} ),
+            ],
+            className="g-0 m-0 p-0",
+        ),
+        html.Br(),
+        ], style={'backgroundColor':'#E5E8E8', 'm':'0px', 'padding':'0px'}),    
+        
+        # horizontal line
+        html.Hr(),
+        
         dbc.Row([
             dbc.Col([
-                html.Br()
-            ]),
-        ]),    
-            
-        dbc.Row([
-            dbc.Col(html.Img(src="assets/segalmex3.jpg", height="60px"), style = {'textAlign':'right', 'marginRight':'10px'} ),
-            dbc.Col(html.H1("SEGALMEX"),  className="ml-5",  style = {'textAlign':'left', 'color':'blue'} ),
-            ],
-            align="center",
-            className="g-0 m-0",
-        ),
+                dbc.Button(
+                    "Resumen Ejecutivo",
+                    #href= "/Proyecto.pdf",
+                    download="Proyecto.pdf",
+                    external_link=False,
+                    color="dark",
+                    id="btn",
+                ),   
+                dcc.Download(id="download"),
+                
+            ],  style = {'textAlign':'right', 'color':'black', 'marginRight':'3rem'}),
+        ], className="g-0 m-0"),
         
         dbc.Row([
             dbc.Col([
@@ -419,12 +532,36 @@ layout = dbc.Container([
             ]),
         ]), 
         
+        #dbc.Row([
+        #    dbc.Col(sidebar_header, className="col-12 mb-4"),
+        #    ]),
+        #html.Div([
+            dbc.Row([
+                dbc.Col(main_filters, 
+                        className="col-8 mb-4")
+            ]),
+        #], style={'backgroundColor':'#E5E8E8', 'm':'0px', 'padding':'0px'}),
+        
+        # accordeon
+        html.Div([
+            dbc.Row([
+                dbc.Col([
+                    html.Div([
+                            dmc.Accordion(id="accordion-uno"),
+                            dmc.Text(id="accordion-text-uno", mt=10),
+                    ]),
+                ]),
+            ], className="col-8", style={'marginTop':'2rem','marginBottom':'2rem','marginLeft':'1rem', 'marginRight':'1rem'}),
+        
+        ], className="eight columns", style={'backgroundColor':'#F4F6F6', 'm':'0px', 'padding':'0px'}),
+            
+        
         
         dbc.Row([html.H5(' ')]),
         # first row: filtros y mapa
         dbc.Row([
-                dbc.Col(sidebar_1eft, className="col-12 col-md-3"),
-                dbc.Col(content1, className="col-12 col-md-9", style={'backgroundColor': '#F4F6F6', 'margin': '0rem'}),
+                dbc.Col(content1, className="col-12 col-md-12", style={'backgroundColor': '#F4F6F6'}),
+                #dbc.Col(sidebar_right, className="col-12 col-md-4"),
                 #dbc.Col(sidebar_vol_right, width=3, className='bg-light')
                 ]
         ),
@@ -447,12 +584,71 @@ layout = dbc.Container([
             ]),
         ]),       
         
-    ], style={'backgroundColor': '#F4F6F6', 'margin': '0rem'},
+    ], style={'backgroundColor': '#F4F6F6', 'marginTop': '0rem', 'padding':'0rem'},
     fluid=True
     )
 
-
+#########################################################################################
 ############################            Call backs         ##############################
+#########################################################################################
+
+######    Resumen cards
+# cuenta centros de acopio
+@app.callback(
+        Output('resumen-centros_acopio', 'children'),
+        Input('submit-button', 'n_clicks'),
+        State('producto', 'value'),
+        State('anio', 'value')
+    )
+def resumen_centros_acopio(clicks, sel_producto, sel_anio):
+    
+    data = df_centros
+    # Sin dato nombre de dato faltante
+    cuenta_registros = len(data['NUM'])
+
+    return cuenta_registros
+# cuenta población beneficiaria
+@app.callback(
+        Output('resumen-poblacion_beneficiaria', 'children'),
+        Input('submit-button', 'n_clicks'),
+        State('producto', 'value'),
+        State('anio', 'value')
+    )
+def resumen_pablacion_beneficiaria(clicks, sel_producto, sel_anio):
+    
+    data = df_benef[df_benef['Anio'] == int(sel_anio)]
+    data = data[data['Producto'] == sel_producto]
+    
+    # Sin dato nombre de dato faltante
+    cuenta_registros = len(data['NOM_LOC'])
+
+    return "{:,}".format(cuenta_registros)
+    
+# Monto apoyos
+@app.callback(
+        Output('resumen-monto_apoyos', 'children'),
+        Input('submit-button', 'n_clicks'),
+        State('producto', 'value'),
+        State('anio', 'value')
+    )
+def resumen_monto_apoyos(clicks, sel_producto, sel_anio):
+    
+    data = df_benef[df_benef['Anio'] == int(sel_anio)]
+    data = data[data['Producto'] == sel_producto]
+    
+    # Sin dato nombre de dato faltante
+    monto_apoyos = data['MONTO_APOYO_TOTAL'].sum()
+    # millify(monto_apoyos, precision=2)
+    return millify(monto_apoyos, precision=2)
+
+# Descarga de resumen ejecutivo  
+#@app.callback(
+#    Output("download", "data"), 
+#    Input("btn", "n_clicks"))
+#def func(n_clicks):
+#    return dcc.send_file("C:/Users/jcmartinez/Desktop/Dashboard3/Proyecto.pdf")
+    
+
 # tabs - mapa
 # grafica mapa
 tab1_mapa_content = html.Div([
@@ -477,70 +673,58 @@ def switch_tab(at):
 @app.callback(
         Output('mapa', 'figure'),
         Input('submit-button', 'n_clicks'),
-        State('t_productor', 'value'),
-        State('grado_marginacion', 'value'),
+        #Input('t_productor', 'value'),
+        #Input('grado_marginacion', 'value'),
         State('producto', 'value'),
         State('anio', 'value')
     )
-def actualizar_mapa(clicks, tproductor_sel, gmarginacion_sel, producto_sel, anio_sel):
+def actualizar_mapa(clicks, producto_sel, anio_sel):
     
     
-    if tproductor_sel is None:
-        raise PreventUpdate
+    #if tproductor_sel is None:
+    #    raise PreventUpdate
     
     if producto_sel is None:
         raise PreventUpdate
     
-    if gmarginacion_sel is None:
-        raise PreventUpdate
+    #if gmarginacion_sel is None:
+    #    raise PreventUpdate
     
     # Para selecciones múltiples: si es valor único creamos la lista, si no es valor único es una lista
-    if isinstance(tproductor_sel, str):
-        tprod = [tproductor_sel]
-    else:
-        tprod = tproductor_sel
+    #if isinstance(tproductor_sel, str):
+    #    tprod = [tproductor_sel]
+    #else:
+    #    tprod = tproductor_sel
             
     # selección múltiple grado de marginación
-    if isinstance(gmarginacion_sel, str):
-        gmarg = [gmarginacion_sel]
-    else:
-        gmarg = gmarginacion_sel
+    #if isinstance(gmarginacion_sel, str):
+    #    gmarg = [gmarginacion_sel]
+    #else:
+    #    gmarg = gmarginacion_sel
         
     # filtros
     base = df_benef.copy()
     #base = base.dropna()
     benef_filter = base[base['Producto'] == producto_sel]
     benef_filter = benef_filter[benef_filter['Anio'] == int(anio_sel)]
-    benef_filter = benef_filter[benef_filter['GM_2020'].isin(gmarg)]
-    benef_filter = benef_filter[benef_filter['Tamanio_productor'].isin(tprod)]
+    #benef_filter = benef_filter[benef_filter['GM_2020'].isin(gmarg)]
+    #benef_filter = benef_filter[benef_filter['Tamanio_productor'].isin(tprod)]
     max_benef = benef_filter['MONTO_APOYO_TOTAL'].max()    
         
     est_color = df_prod_est[df_prod_est['Anio']==int(anio_sel)]
     est_color = est_color [est_color['Producto']==producto_sel]
     
-    
-    max_vol_prods =  {'Arroz': 50000000, 
-                                     'Frijol':100000000, 
-                                     'Leche':600000000, 
-                                     'Maíz':4700000000000, 
-                                     'Trigo':1200000000000}
-    
-    max_vol_prod = max_vol_prods[producto_sel]
-    
     #if isinstance(ticker_sel, str):
     #    stks = [ticker_sel]
     #else:
     #    stks = ticker_sel
-        
     # MAPA
     fig = go.Figure()
-
     # Traza areas de producción
     fig.add_trace(go.Choroplethmapbox(name='Mexico', geojson=mx_est_geo, ids=est_color['Entidad'], z=est_color['Volumenproduccion'],
                                         locations=est_color['Entidad'], featureidkey='properties.name', colorscale='greens',
                                         zmin=0, zmax=max_benef, 
                                         marker=dict(line=dict(color='black'), opacity=0.6)))
-
     # Traza de centros de acopio
     fig.add_trace(go.Scattermapbox(
             lat=df_centros['LAT_DECIMAL'],
@@ -552,8 +736,6 @@ def actualizar_mapa(clicks, tproductor_sel, gmarginacion_sel, producto_sel, anio
             ),
             text=df_centros['NOM_MUN'],
         ))
-        
-            
     # Traza de beneficiarios 
     fig.add_trace(go.Scattermapbox(
             lat=benef_filter['LAT_DECIMAL'],
@@ -565,7 +747,6 @@ def actualizar_mapa(clicks, tproductor_sel, gmarginacion_sel, producto_sel, anio
             ),
             text=benef_filter['MONTO_APOYO_TOTAL'],
         ))
-
     # Áreas de densidad (heatmap)
     fig.add_trace(go.Densitymapbox(
             lat=benef_filter['LAT_DECIMAL'], 
@@ -632,8 +813,7 @@ def switch_tab(at):
     )
 
 def actualizar_plot_r2c1(estado_sel, anio_sel):
-    
-    
+    #
     if isinstance(estado_sel, str):
         state_sel = [estado_sel]
     else:
@@ -707,8 +887,7 @@ def actualizar_plot_r2c1(estado_sel, anio_sel):
     )
 
 def actualizar_tabla_r2c1(estado_sel, anio_sel):
-    
-    
+        
     if isinstance(estado_sel, str):
         state_sel = [estado_sel]
     else:
@@ -729,8 +908,6 @@ def actualizar_tabla_r2c1(estado_sel, anio_sel):
     # agrupamiento
     base_filt = base_filt[['Producto', 'MONTO_APOYO_TOTAL']].groupby(['Producto'])['MONTO_APOYO_TOTAL'].sum().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
    
-
-    
     table = dt.DataTable(
         columns=[
             {"name": "Entidad", "id": "entidad" },
@@ -1022,3 +1199,68 @@ def actualizar_plot_r3c2(clicks, producto_sel, anio_sel):
     fig.update_xaxes(tickangle=80)
 
     return fig
+
+
+# acordion - uno
+characters_list = [
+    {
+        "id": "bender",
+        "image": "/assets/chart-histogram.png",
+        "label": "Punto número uno",
+        "description": "Fascinated with cooking, though has no sense of taste",
+        "content": "Bender Bending Rodríguez, (born September 4, 2996), designated Bending Unit 22, and commonly "
+        "known as Bender, is a bending unit created by a division of MomCorp in Tijuana, Mexico, "
+        "and his serial number is 2716057. His mugshot id number is 01473. He is Fry's best friend.",
+    },
+    {
+        "id": "carol",
+        "image": "/assets/chart-line-up.png",
+        "label": "Punto número dos",
+        "description": "One of the richest people on Earth",
+        "content": "Carol Miller (born January 30, 2880), better known as Mom, is the evil chief executive officer "
+        "and shareholder of 99.7% of Momcorp, one of the largest industrial conglomerates in the universe "
+        "and the source of most of Earth's robots. She is also one of the main antagonists of the Futurama "
+        "series.",
+    },
+    
+]
+
+def create_accordion_label(label, image, description):
+    return dmc.AccordionControl(
+        dmc.Group(
+            [
+                dmc.Avatar(src=image, radius="xl", size="lg"),
+                html.Div([
+                        dmc.Text(label),
+                        dmc.Text(description, size="sm", weight=400, color="dimmed"),
+                    ]),
+            ]
+        )
+    )
+
+
+def create_accordion_content(content):
+    return dmc.AccordionPanel(dmc.Text(content, size="sm"))
+
+
+@app.callback(
+    Output("accordion-text-uno", "children"), 
+    Input("accordion-uno", "value"))
+def show_state(value):
+    result = dmc.Accordion(
+    chevronPosition="right",
+    variant="contained",
+    children=[
+        dmc.AccordionItem(
+            [
+                create_accordion_label(
+                    character["label"], character["image"], character["description"]
+                ),
+                create_accordion_content(character["content"]),
+            ],
+            value=character["id"],
+        )
+        for character in characters_list
+    ],
+    )
+    return result

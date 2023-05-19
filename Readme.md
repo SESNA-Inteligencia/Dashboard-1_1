@@ -121,6 +121,13 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     conda config --set channel_priority strict
     conda install zstandard
     pip install dash-mantine-components==0.12.1
+
+    conda install -c conda-forge dash-iconify
+    pip install dash-iconify
+    conda install -c conda-forge millify
+    pip install dash-millify
+    conda install -c conda-forge dash-extensions
+    
   
 
 

@@ -4,9 +4,9 @@ body {
   margin: 0;
   padding: 0;
 }
-
+/*background-color:#154360;*/
 segalmex .body{
-  background-color:#154360;
+  background-color:'black';
   margin: 0;
   padding: 0;
 
@@ -17,3 +17,9 @@ style_cell = {
   'font_size': '26px',
   'text_align': 'center'
 },
+
+
+
+segalmex .div-main-filters{
+ border: 2px solid #F4F6F6;
+}

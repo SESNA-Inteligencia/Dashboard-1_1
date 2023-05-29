@@ -52,9 +52,47 @@ root = "C:/Users/jcmartinez/Desktop/Dashboard3"
 estados_json = open(root + '/datasets/estadosMexico.json')
 mx_est_geo = json.load(estados_json)
 
+# diccionario nombre columnas {base: new}
+names = {
+    'B_ANIO': 'Anio',
+    'B_PRODUCTO': 'Producto2',
+    'B_CVE_ENT': 'CVE_ENT',
+    'B_NOM_ENT': 'NOM_ENT',
+    'B_CVE_MUN': 'CVE_MUN',
+    'B_NOM_MUN': 'NOM_MUN',
+    'B_CVE_LOC': 'CVE_LOC',
+    'B_NOM_LOC': 'NOM_LOC',
+    'B_TAMPROD': 'TAMPROD',
+    'C_IML': 'IML',
+    'C_GML': 'GML',
+    'B_MONTO DE APOYO TOTAL $': 'MONTO_APOYO_TOTAL',
+    'C_Produccion': 'Volumenproduccion',
+    'C_LAT_DECIMAL': 'LAT_DECIMAL',
+    'C_LON_DECIMAL': 'LON_DECIMAL'
+}
 
 # base beneficiarios
-df_benef = pd.read_excel(root + '/datasets/base_beneficiarios_dashboard_v5.xlsx')
+products = {
+    'ARROZ':'Arroz',
+    'FRIJOL':'Frijol',
+    'MAIZ':'Maíz',
+    'LECHE':'Leche',
+    'TRIGO':'Trigo'
+}
+
+#base = pd.read_excel(root + '/datasets/base_beneficiarios_dashboard_v5.xlsx')
+df_2019 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2019.xlsx', sheet_name='Data')
+df_2020 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2020.xlsx', sheet_name='Data')
+df_2021 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2021.xlsx', sheet_name='Data')
+
+# read datasets
+df = pd.concat([df_2019, df_2020, df_2021], axis=0).reset_index()
+usecols = [*names.keys()]
+base = df[usecols].copy()
+base.columns = [*names.values()]
+# change 
+base['Producto'] = base['Producto2'].map(products)
+
 # base centros de acopio
 df_centros = pd.read_excel(root + '/datasets/base_centros_inegi.xlsx')
 df_centros = df_centros
@@ -69,7 +107,7 @@ list_year = ['2019', '2020', '2021']
 list_products = ['Arroz', 'Frijol', 'Leche', 'Maíz', 'Trigo']
 list_grado_marginacion = ['Muy bajo', 'Bajo', 'Medio', 'Alto', 'Muy alto']
 list_tamano_productor = ['Pequeño', 'Mediano', 'Grande']
-list_states = df_benef['NOM_ENT'].unique()
+list_states = base['NOM_ENT'].unique()
 list_layers = ['Centros de acopio','Nivel de marginación', 'Tamaño del productor']
 
 
@@ -460,7 +498,7 @@ content2 = html.Div([
     )
 
 
-#######################    content2 - gráficos principales
+#######################    content3 - gráficos principales
 content3 = html.Div([
         dbc.Row([
             dbc.Col([
@@ -484,6 +522,29 @@ content3 = html.Div([
 
     )
 
+#######################    content4 - gráficos principales
+content4 = html.Div([
+        dbc.Row([
+            dbc.Col([
+                    
+                    html.Div([
+                        dbc.Tabs([
+                                dbc.Tab(label="Gráfico 3", tab_id="tab-r3c1-1", label_style={"color": "#00AEF9"}),
+                                
+                                dbc.Tab(label="Tabla 3", tab_id="tab-r3c1-2",  label_style={"color": "#00AEF9"}),
+                            ],
+                            id="tabs-r3c1",
+                            active_tab="tab-r3c1-1",
+                        ),
+                        html.Div(id="content-r3c1"),
+                     ], style={"width": "100%"}
+                    ),                  
+                ], className="card col-12", style={'padding':'.3rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
+                ), 
+        ]),
+    ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem','marginRight': '2rem','marginTop': '0rem'}
+
+    )
 
 # original 'backgroundColor': '#f2f2f2'
 ########################### layout  SEGALMEX
@@ -555,8 +616,6 @@ layout = dbc.Container([
         
         ], className="eight columns", style={'backgroundColor':'#F4F6F6', 'm':'0px', 'padding':'0px'}),
             
-        
-        
         dbc.Row([html.H5(' ')]),
         # first row: filtros y mapa
         dbc.Row([
@@ -565,15 +624,41 @@ layout = dbc.Container([
                 #dbc.Col(sidebar_vol_right, width=3, className='bg-light')
                 ]
         ),
+        
+        # accordeon
+        html.Div([
+            dbc.Row([
+                dbc.Col([
+                    html.Div([
+                            dmc.Accordion(id="accordion-dos"),
+                            dmc.Text(id="accordion-text-dos", mt=10),
+                    ]),
+                ]),
+            ], className="col-8", style={'marginTop':'2rem','marginBottom':'1rem','marginLeft':'1rem', 'marginRight':'1rem'}),
+        
+        ], className="eight columns", style={'backgroundColor':'#F4F6F6', 'm':'0px', 'padding':'0px'}),
         # second row: graficos
         dbc.Row([
-                dbc.Col(content2, className="col-12 col-md-12", style={'backgroundColor': '#F4F6F6', 'marginTop': '1rem'}),
+                dbc.Col(content3, className="col-12 col-md-12", style={'backgroundColor': '#F4F6F6', 'marginTop': '1rem'}),
                 #dbc.Col(sidebar_vol_right, width=3, className='bg-light')
                 ]
         ),
+        # accordeon
+        html.Div([
+            dbc.Row([
+                dbc.Col([
+                    html.Div([
+                            dmc.Accordion(id="accordion-tres"),
+                            dmc.Text(id="accordion-text-tres", mt=10),
+                    ]),
+                ]),
+            ], className="col-8", style={'marginTop':'2rem','marginBottom':'1rem','marginLeft':'1rem', 'marginRight':'1rem'}),
+        
+        ], className="eight columns", style={'backgroundColor':'#F4F6F6', 'm':'0px', 'padding':'0px'}),
+    
         # third row: graficos
         dbc.Row([
-                dbc.Col(content3, className="col-12 col-md-12", style={'backgroundColor': '#F4F6F6', 'marginTop': '1rem'}),
+                dbc.Col(content2, className="col-12 col-md-12", style={'backgroundColor': '#F4F6F6', 'marginTop': '1rem'}),
                 #dbc.Col(sidebar_vol_right, width=3, className='bg-light')
         ], className='mb-0'),  
         
@@ -592,7 +677,10 @@ layout = dbc.Container([
 ############################            Call backs         ##############################
 #########################################################################################
 
-######    Resumen cards
+
+#-------------------------------------------------------------------------------
+#                              Resumen cards
+#-------------------------------------------------------------------------------
 # cuenta centros de acopio
 @app.callback(
         Output('resumen-centros_acopio', 'children'),
@@ -616,7 +704,7 @@ def resumen_centros_acopio(clicks, sel_producto, sel_anio):
     )
 def resumen_pablacion_beneficiaria(clicks, sel_producto, sel_anio):
     
-    data = df_benef[df_benef['Anio'] == int(sel_anio)]
+    data = base[base['Anio'] == int(sel_anio)]
     data = data[data['Producto'] == sel_producto]
     
     # Sin dato nombre de dato faltante
@@ -633,7 +721,7 @@ def resumen_pablacion_beneficiaria(clicks, sel_producto, sel_anio):
     )
 def resumen_monto_apoyos(clicks, sel_producto, sel_anio):
     
-    data = df_benef[df_benef['Anio'] == int(sel_anio)]
+    data = base[base['Anio'] == int(sel_anio)]
     data = data[data['Producto'] == sel_producto]
     
     # Sin dato nombre de dato faltante
@@ -648,8 +736,9 @@ def resumen_monto_apoyos(clicks, sel_producto, sel_anio):
 #def func(n_clicks):
 #    return dcc.send_file("C:/Users/jcmartinez/Desktop/Dashboard3/Proyecto.pdf")
     
-
-# tabs - mapa
+##########################################################################################
+# SECCIÓN I :  mapa
+##########################################################################################
 # grafica mapa
 tab1_mapa_content = html.Div([
         #dcc.Graph(id="mapa", mathjax=True)
@@ -703,7 +792,7 @@ def actualizar_mapa(clicks, producto_sel, anio_sel):
     #    gmarg = gmarginacion_sel
         
     # filtros
-    base = df_benef.copy()
+    #base = base.copy()
     #base = base.dropna()
     benef_filter = base[base['Producto'] == producto_sel]
     benef_filter = benef_filter[benef_filter['Anio'] == int(anio_sel)]
@@ -711,8 +800,8 @@ def actualizar_mapa(clicks, producto_sel, anio_sel):
     #benef_filter = benef_filter[benef_filter['Tamanio_productor'].isin(tprod)]
     max_benef = benef_filter['MONTO_APOYO_TOTAL'].max()    
         
-    est_color = df_prod_est[df_prod_est['Anio']==int(anio_sel)]
-    est_color = est_color [est_color['Producto']==producto_sel]
+    #est_color = df_prod_est[df_prod_est['Anio']==int(anio_sel)]
+    #est_color = est_color [est_color['Producto']==producto_sel]
     
     #if isinstance(ticker_sel, str):
     #    stks = [ticker_sel]
@@ -721,8 +810,8 @@ def actualizar_mapa(clicks, producto_sel, anio_sel):
     # MAPA
     fig = go.Figure()
     # Traza areas de producción
-    fig.add_trace(go.Choroplethmapbox(name='Mexico', geojson=mx_est_geo, ids=est_color['Entidad'], z=est_color['Volumenproduccion'],
-                                        locations=est_color['Entidad'], featureidkey='properties.name', colorscale='greens',
+    fig.add_trace(go.Choroplethmapbox(name='Mexico', geojson=mx_est_geo, ids=benef_filter['NOM_ENT'], z=benef_filter['Volumenproduccion'],
+                                        locations=benef_filter['NOM_ENT'], featureidkey='properties.name', colorscale='greens',
                                         zmin=0, zmax=max_benef, 
                                         marker=dict(line=dict(color='black'), opacity=0.6)))
     # Traza de centros de acopio
@@ -785,17 +874,19 @@ def actualizar_tabla_mapa(clicks, producto_sel, anio_sel):
     
     return 
 
+############################################################################################
+# SECTION II : 
+############################################################################################
 
-###############        tabs - grafico r2
+# Tabs actualization
 tab1_r2c1_content = html.Div([             
-    dcc.Graph(id="plot-r2c1")
+    dcc.Graph(id="plot1-r2c1")
 ])
 
 tab2_r2c1_content = html.Div([
-    html.Div(id="tabla-r2c1")
+    dcc.Graph(id="plot2-r2c1")
     #dcc.Graph(id="tabla-r2c1")
 ])
-
 @app.callback(Output("content-r2c1", "children"), [Input("tabs-r2c1", "active_tab")])
 def switch_tab(at):
     if at == "tab-r2c1-1":
@@ -804,146 +895,165 @@ def switch_tab(at):
         return tab2_r2c1_content
     return html.P("This shouldn't ever be displayed...")
 
-# actializa gráfico r2-c1 
+#----------------------------------------------------------------------------------
+#                     Actializa Tab 1: row2 - col1
+#----------------------------------------------------------------------------------
 @app.callback(
-        Output('plot-r2c1', 'figure'),
-        #Input('submit-button', 'n_clicks'),
-        Input('estados', 'value'),
+        Output('plot1-r2c1', 'figure'),
+        Input('submit-button', 'n_clicks'),
+        #Input('estados', 'value'),
         Input('anio', 'value')
     )
 
-def actualizar_plot_r2c1(estado_sel, anio_sel):
+def actualizar_plot1_r2c1(clicks, anio_sel):
     #
-    if isinstance(estado_sel, str):
-        state_sel = [estado_sel]
-    else:
-        state_sel = estado_sel
-     
     colors = {'Arroz': 'orange', 
           'Maíz': 'yellow',
           'Frijol': 'brown',
           'Leche': 'blue',
           'Trigo': 'green'}   
     
-    # Map 
-    base = df_benef.copy()
-     # filtro de estado
-    base_filt = base[base['NOM_ENT'].isin(state_sel)]
-    # filtro de año
-    base_filt = base_filt[base_filt['Anio']==int(anio_sel)]
-    # agrupamiento
-    base_filt = base_filt[['Producto', 'MONTO_APOYO_TOTAL']].groupby(['Producto'])['MONTO_APOYO_TOTAL'].sum().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
-   
-   
-    productos = base_filt['Producto'].unique()
-    
+    # 
+    base2 = base[base['Anio'] == int(anio_sel)]
+    #base = dist_plot[dist_plot['PRODUCTO2']== producto]
+
+    base2 = base2.groupby(['Producto'])['MONTO_APOYO_TOTAL'].sum().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
+    #milli = [millify(element, precision=2) for element in base['MONTO_APOYO_TOTAL']]
+    #print(milli)
+
     fig = go.Figure()
+    productos = base2['Producto'].unique()
     # all traces
     for producto in productos:
-        base_prod = base_filt[base_filt['Producto']==producto]
+        base_prod = base2[base2['Producto']==producto]
         fig.add_trace(go.Bar(
-                x=base_prod['Producto'].to_list(),
-                y=base_prod['MONTO_APOYO_TOTAL'].to_list(),
-                #mode='markers',
-                name= producto))
+                    x=base_prod['Producto'].to_list(),
+                    y=base_prod['MONTO_APOYO_TOTAL'].to_list(),
+                    text=millify(base_prod['MONTO_APOYO_TOTAL'],2),
+                    name=producto,
+                    width=0.98,
+                    ))
+    
+    fig.update_layout(
+            showlegend=True,
+            autosize=False,
+            #width=900,
+            height=350,
+            margin=dict(
+                l=0,
+                r=0,
+                b=0,
+                t=0,
+                pad=0),
+                plot_bgcolor='rgba(0, 0, 0, 0)',
+                paper_bgcolor= "White",
+                )
 
     fig.update_layout(
-        showlegend=False,
-        autosize=False,
-        #width=900,
-        height=400,
-        margin=dict(
-            l=0,
-            r=0,
-            b=0,
-            t=0,
-            pad=0),
-            plot_bgcolor='rgba(0, 0, 0, 0)',
-            paper_bgcolor= "White",
-            )
+            title="",
+            xaxis_title="",
+            yaxis_title="Monto apoyo otorgado",
+            legend_title="Producto:",
+            font=dict(
+                #family="Courier New, monospace",
+                size=12,
+                color="Black"
+                ))
+
+    fig.update_xaxes(tickangle=0)
+
+    
+    return fig
+
+#----------------------------------------------------------------------------------------
+#                        Actualización Tab 2 : row2 - col1
+#--------------------------------------------------------------------------------------- 
+@app.callback(
+        Output('plot2-r2c1', 'figure'),
+        Input('submit-button', 'n_clicks'),
+        #Input('estados', 'value'),
+        Input('anio', 'value')
+    )
+
+def actualizar_plot2_r2c1(clicks, anio_sel):
+        
+  
+    colors = {'Arroz': 'orange', 
+          'Maíz': 'yellow',
+          'Frijol': 'brown',
+          'Leche': 'blue',
+          'Trigo': 'green'}   
+    
+    productos = base['Producto'].unique()
+    anios = base['Anio'].unique()
+    base2 = base.groupby(['Producto','Anio'])['MONTO_APOYO_TOTAL'].sum().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
+    #milli = [millify(element, precision=2) for element in base['MONTO_APOYO_TOTAL']]
+    #print(milli)
+
+    fig = go.Figure()
+    for producto in productos:
+    #for anio in anios:
+        base_i = base2[base2['Producto'] == producto].sort_values('Anio', ascending=True)
+        milli = [millify(ele, precision=2) for ele in base_i['MONTO_APOYO_TOTAL']]
+    #  base_i = base_i[base_i['ANIO'] == anio]
+        # all traces
+        #print(base_i['MONTO_APOYO_TOTAL'])
+        fig.add_trace(go.Scatter(
+                x= base_i['Anio'].astype('str'),
+                y= base_i['MONTO_APOYO_TOTAL'].to_list(),
+                text= milli,
+                mode="lines+markers+text",
+                name= producto,
+                textposition="top right"
+                ))
+
+    fig.update_layout(legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1,
+            xanchor="right",
+            x=1
+        ))
 
     fig.update_layout(
-        title="",
-        xaxis_title="Producto",
-        yaxis_title="Monto Apoyo",
-        legend_title="",
-        font=dict(
-            #   family="Courier New, monospace",
-            size=13,
-            color="Black"
-            ))
+                showlegend=True,
+                autosize=False,
+                #width=900,
+                height=350,
+                margin=dict(
+                    l=0,
+                    r=0,
+                    b=0,
+                    t=0,
+                    pad=0),
+                    plot_bgcolor='rgba(0, 0, 0, 0)',
+                    paper_bgcolor= "White",
+                    )
+
+    fig.update_layout(
+                title="",
+                xaxis_title="",
+                yaxis_title="Monto Apoyo Otorgado ($)",
+                legend_title="",
+                font=dict(
+                    #family="Courier New, monospace",
+                    size=12,
+                    color="Black"
+                    ))
 
     fig.update_xaxes(tickangle=0)
     
-    fig.update_layout(barmode='stack')
+    
     return fig
 
-# actializa tabla r2-c1 
-@app.callback(
-        Output('tabla-r2c1', 'children'),
-        #Input('submit-button', 'n_clicks'),
-        Input('estados', 'value'),
-        Input('anio', 'value')
-    )
-
-def actualizar_tabla_r2c1(estado_sel, anio_sel):
-        
-    if isinstance(estado_sel, str):
-        state_sel = [estado_sel]
-    else:
-        state_sel = estado_sel
-     
-    colors = {'Arroz': 'orange', 
-          'Maíz': 'yellow',
-          'Frijol': 'brown',
-          'Leche': 'blue',
-          'Trigo': 'green'}   
-    
-    # Map 
-    base = df_benef.copy()
-     # filtro de estado
-    base_filt = base[base['NOM_ENT'].isin(state_sel)]
-    # filtro de año
-    base_filt = base_filt[base_filt['Anio']==int(anio_sel)]
-    # agrupamiento
-    base_filt = base_filt[['Producto', 'MONTO_APOYO_TOTAL']].groupby(['Producto'])['MONTO_APOYO_TOTAL'].sum().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
-   
-    table = dt.DataTable(
-        columns=[
-            {"name": "Entidad", "id": "entidad" },
-            {"name": "Arroz", "id": "arroz", "deletable": [False, True], "renamable": True, "hideable": "last"},
-            {"name": "Frijol", "id": "frijol", "deletable": [False, True], "renamable": True, "hideable": "last"},
-            {"name": "Leche", "id": "leche", "deletable": [False, True], "renamable": True, "hideable": "last"},
-            {"name": "Maíz", "id": "maiz", "deletable": [False, True], "renamable": True, "hideable": "last"},
-            {"name": "Trigo", "id": "trigo", "deletable": [False, True], "renamable": True, "hideable": "last"},
-        ],
-        data=[
-            {
-                "entidad": i,
-                "arroz": i * 10,
-                "frijol": i * 100,
-                "leche": i * -1,
-                "maiz": i * -10,
-                "trigo": i * -100,
-            }
-            for i in range(100)
-        ],
-        export_format='csv', # | 'xlsx'
-        export_headers='display',
-        #merge_duplicate_headers=True
-        page_size=10,
-    )
-    return table
-
-
-###   Gráfico row2 - col2
+#   Actualización row2 - col2
 tab1_r2c2_content = html.Div([
         #dcc.Graph(id="mapa", mathjax=True)
-        dcc.Graph(id="plot-r2c2")
+        dcc.Graph(id="plot1-r2c2")
     ]),
 
 tab2_r2c2_content = html.Div([
-    dt.DataTable(id="tabla-r2c2")
+    dt.DataTable(id="plot2-r2c2")
 ])
 
 #  Actualiza tabs - mapa
@@ -955,24 +1065,19 @@ def switch_tab(at):
         return tab2_r2c2_content
     return html.P("This shouldn't ever be displayed...")
 
-
+#--------------------------------------------------------------------------------------
+#  Actualización Tab 1 : row2-col2
+#--------------------------------------------------------------------------------------
 @app.callback(
-        Output('plot-r2c2', 'figure'),
-        #Input('submit-button', 'n_clicks'),
-        Input('estados', 'value'),
+        Output('plot1-r2c2', 'figure'),
+        Input('submit-button', 'n_clicks'),
         #Input('municipios', 'value'),
         Input('anio', 'value')
     )
 
-def actualizar_plot_r2c2(estado_sel, anio_sel):
+def actualizar_plot_r2c2(clicks, anio_sel):
     
-    
-    if isinstance(estado_sel, str):
-        state_sel = [estado_sel]
-    else:
-        state_sel = estado_sel
-    
-    
+
     colors = {'Arroz': 'orange', 
           'Maíz': 'yellow',
           'Frijol': 'brown',
@@ -980,74 +1085,169 @@ def actualizar_plot_r2c2(estado_sel, anio_sel):
           'Trigo': 'green'}
     # Total de productos
     
-    # filtro de año
-    base_filt = df_benef[df_benef['Anio'] == int(anio_sel)]
-    
-    base_filt = base_filt[base_filt['NOM_ENT'].isin(state_sel)]
-    
-    productos = base_filt['Producto'].unique()
-    
-    
-    fig = go.Figure()
-  
-    # all traces
-    for producto in productos:
-        base_prod = base_filt[base_filt['Producto']==producto]
-        fig.add_trace(go.Scatter(
-                x=base_prod['IMN_2020'].to_list(),
-                y=base_prod['MONTO_APOYO_TOTAL'].to_list(),
-                mode='markers',
-                name= producto,
-                marker=dict(size=8,
-                        color=colors[producto])))
-    
-    fig.update_layout(
-            showlegend=True,
-            autosize=False,
-            #width=900,
-            height=400,
-            margin=dict(
-                l=0,
-                r=0,
-                b=0,
-                t=0,
-                pad=0),
-                #plot_bgcolor='rgba(0, 0, 0, 0)',
-                #paper_bgcolor= "White",
-                )
+    productos = base['Producto'].unique()
+    anios = base['Anio'].unique()
+    base2 = base.groupby(['Producto','Anio'])['MONTO_APOYO_TOTAL'].sum().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
+    #milli = [millify(element, precision=2) for element in base['MONTO_APOYO_TOTAL']]
+    #print(milli)
 
-    fig.update_layout(
-            title="",
-            xaxis_title="Grado de Marginación",
-            yaxis_title="Monto Apoyo",
-            legend_title="Producto:",
-            font=dict(
-                #family="Courier New, monospace",
-                size=13,
-                color="Black"
+    fig = go.Figure()
+    for producto in productos:
+    #for anio in anios:
+        base_i = base2[base2['Producto'] == producto].sort_values('Anio', ascending=True)
+        milli = [millify(ele, precision=2) for ele in base_i['MONTO_APOYO_TOTAL']]
+    #  base_i = base_i[base_i['ANIO'] == anio]
+        # all traces
+        #print(base_i['MONTO_APOYO_TOTAL'])
+        fig.add_trace(go.Scatter(
+                x= base_i['Anio'].astype('str'),
+                y= base_i['MONTO_APOYO_TOTAL'].to_list(),
+                text= milli,
+                mode="lines+markers+text",
+                name= producto,
+                textposition="top right"
                 ))
 
     fig.update_layout(legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1,
-        xanchor="right",
-        x=1
-    ))
+            orientation="v",
+            yanchor="bottom",
+            y=1,
+            xanchor="right",
+            x=1
+        ))
 
-    fig.update_xaxes(tickangle=80)
+    fig.update_layout(
+                showlegend=True,
+                autosize=False,
+                #width=900,
+                height=350,
+                margin=dict(
+                    l=0,
+                    r=0,
+                    b=0,
+                    t=0,
+                    pad=0),
+                    plot_bgcolor='rgba(0, 0, 0, 0)',
+                    paper_bgcolor= "White",
+                    )
 
+    fig.update_layout(
+                title="",
+                xaxis_title="",
+                yaxis_title="Monto Apoyo Otorgado ($)",
+                legend_title="",
+                font=dict(
+                    #family="Courier New, monospace",
+                    size=12,
+                    color="Black"
+                    ))
+
+    fig.update_xaxes(tickangle=0)
+    
+    
+    return fig
+
+#--------------------------------------------------------------------------------------
+#  Actualización Tab 1 : row2-col2
+#--------------------------------------------------------------------------------------
+@app.callback(
+        Output('plot2-r2c2', 'figure'),
+        Input('submit-button', 'n_clicks'),
+        #Input('municipios', 'value'),
+        #Input('anio', 'value')
+    )
+
+def actualizar_plot2_r2c2(clicks):
+    
+    colors = {'Arroz': 'orange', 
+          'Maíz': 'yellow',
+          'Frijol': 'brown',
+          'Leche': 'blue',
+          'Trigo': 'green'}
+    # Total de productos
+    base2 = base.copy()
+    labels = base2['Anio'].unique()
+    widths = np.array([33.3,33.3,33.3])
+
+    # diccionario con key: producto y value=monto por año
+    data = {product:np.round(np.divide([base2[(base2['Producto'] == product) & (base2['Anio'] == anio)]['MONTO_APOYO_TOTAL'].sum() for anio in np.sort(base2['Anio'].unique())],[base2[base2['Anio'] == anio]['MONTO_APOYO_TOTAL'].sum() for anio in np.sort(base2['Anio'].unique())]),4)*100 for product in base2['Producto'].unique()}
+    data_monto = {product:[base2[(base2['Producto'] == product) & (base2['Anio'] == anio)]['MONTO_APOYO_TOTAL'].sum() for anio in np.sort(base2['Anio'].unique())] for product in base2['Producto'].unique()}
+
+    fig = go.Figure()
+    for key in data:
+    #if key == product:
+        fig.add_trace(go.Bar(
+            name=key,
+            y=data[key],
+            x=np.cumsum(widths)-widths,
+            width=widths,
+            offset=0,
+            opacity=0.8,
+            customdata= [millify(element,2) for element in data_monto[key]],
+            texttemplate=" %{y}% <br> %{customdata}",
+            textposition="inside",
+            textangle=0,
+            textfont_color="white",
+            hovertemplate="<br>".join([
+                "Porcentaje: %{y}%",
+                "Monto: %{customdata}",
+            ])
+        ))
+ 
+    fig.update_xaxes(
+        tickvals=np.cumsum(widths)-widths/2,
+        ticktext= ["%s<br>" % l for l in labels]
+    )
+
+    fig.update_layout(legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1,
+            xanchor="right",
+            x=1
+        ))
+    fig.update_layout(
+                showlegend=True,
+                autosize=False,
+                width=700,
+                height=400,
+                margin=dict(
+                    l=0,
+                    r=0,
+                    b=0,
+                    t=0,
+                    pad=0),
+                    #plot_bgcolor='rgba(0, 0, 0, 0)',
+                    #paper_bgcolor= "White",
+    )
+
+    fig.update_xaxes(range=[0,100])
+    fig.update_yaxes(range=[0,100], visible=False)
+    #ig.update.layout(xaxis_visible=False, yaxis_visible=False, xaxis2_visible=False, yaxis2_visible=False)
+    fig.update_layout(
+        title_text="",
+        barmode="stack",
+        uniformtext=dict(mode="hide", minsize=10),
+    )
+
+
+    fig.show(config={"displayModeBar": False})
+    
     return fig
 
 
-###############       tabs - grafico r3
+
+
+#########################################################################################
+# SECTION II - grafico r2 :  
+##########################################################################################
 tab1_r3c1_content = html.Div([
         #dcc.Graph(id="mapa", mathjax=True)
-        dcc.Graph(id="plot-r3c1")
+        dcc.Graph(id="plot1-r3c1")
     ]),
 
 tab2_r3c1_content = html.Div([
-    dt.DataTable(id="tabla-r3c1")
+     dcc.Graph(id="plot2-r3c1")
 ])
 
 @app.callback(Output("content-r3c1", "children"), [Input("tabs-r3c1", "active_tab")])
@@ -1059,18 +1259,20 @@ def switch_tab(at):
     return html.P("This shouldn't ever be displayed...")
 
 
+#--------------------------------------------------------------------------------------
+#  Actualización Tab 1 : row3-col1  --> Grafico monto y producto vs estado
+#--------------------------------------------------------------------------------------
 @app.callback(
-        Output('plot-r3c1', 'figure'),
-        #Input('submit-button', 'n_clicks'),
+        Output('plot1-r3c1', 'figure'),
+        Input('submit-button', 'n_clicks'),
         #Input('producto', 'value'),
         Input('anio', 'value')
     )
 
-def actualizar_plot_r3c1(anio_sel):
+def actualizar_plot1_r3c1(clicks, anio_sel):
     
-   
     # filtro de año
-    base = df_benef.copy()
+    #base = base.copy()
     base_filt = base[base['Anio'] == int(anio_sel)]
     
     # Map 
@@ -1126,105 +1328,78 @@ def actualizar_plot_r3c1(anio_sel):
     return fig
 
 
-
-###   Actualiza grafico row4 - col2
-tab1_r3c2_content = html.Div([
-        #dcc.Graph(id="mapa", mathjax=True)
-        dcc.Graph(id="plot-r3c2")
-    ]),
-
-tab2_r3c2_content = html.Div([
-    dcc.Graph(id="tabla-r3c2")
-])
-
-
-@app.callback(Output("content-r3c2", "children"), [Input("tabs-r3c2", "active_tab")])
-def switch_tab(at):
-    if at == "tab-r3c2-1":
-        return tab1_r3c2_content
-    elif at == "tab-r3c2-2":
-        return tab2_r3c2_content
-    return html.P("This shouldn't ever be displayed...")
-
+#--------------------------------------------------------------------------------------
+#  Actualización Tab 1 : row3-col1 Grafico qqplot
+#--------------------------------------------------------------------------------------
 
 @app.callback(
-        Output('plot-r3c2', 'figure'),
+        Output('plot2-r3c1', 'figure'),
         Input('submit-button', 'n_clicks'),
-        State('producto', 'value'),
-        State('anio', 'value')
+        Input('producto', 'value'),
+        Input('anio', 'value')
     )
 
-def actualizar_plot_r3c2(clicks, producto_sel, anio_sel):
+def actualizar_plot2_r3c1(clicks, producto_sel, anio_sel):
     
-    # Map 
-    df_benef_state = df_benef[['NOM_ENT', 'MONTO_APOYO_TOTAL']].groupby('NOM_ENT').sum().sort_values('MONTO_APOYO_TOTAL', ascending=False)
-    df_benef_state_mean = df_benef_state.mean()[:10]
+    dist_plot = base[base['Anio'] == int(anio_sel)]
+    dist_plot = dist_plot[dist_plot['Producto']== producto_sel]
+
+    idx = dist_plot.groupby(['NOM_ENT'])['MONTO_APOYO_TOTAL'].mean().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
+    #dist_plot = dist_plot.iloc[idx]
+    monto_promedio = dist_plot['MONTO_APOYO_TOTAL'].mean()
+
+    estados = idx['NOM_ENT'].unique()
+    colores = [f'rgba({26+i*3},{45+i*5},{96+i*8},0.8)' for i in range(len(estados))]
     
     fig = go.Figure()
-    # 
-    fig.add_trace(go.Bar(
-        x=df_benef_state.index.to_list(),
-        y=df_benef_state['MONTO_APOYO_TOTAL'].to_list()))
+    for estado, cls in zip(estados, colores):
+        serie = dist_plot[dist_plot['NOM_ENT'] == estado]
+        #print(serie)
+        fig.add_trace(
+                    go.Box(
+                        y=serie['MONTO_APOYO_TOTAL'], 
+                        orientation='v',
+                        name=estado,
+                        #boxpoints='all',
+                        #jitter=0.5,
+                        whiskerwidth=0.1,
+                        marker_color=cls,
+                        fillcolor=cls,
+                        marker=dict(
+                            size=0.1,
+                            #color='rgb(0, 0, 0)'
+                        )
+                        ))
+    fig.add_hline(y=monto_promedio, line_width=0.3, line_dash="dash", line_color="blue", opacity=0.2)
+    #Overlay both histograms
+    fig.update_layout(barmode='overlay')
+    # Reduce opacity to see both histograms
+    fig.update_traces(opacity=1)
+    fig.update_layout(paper_bgcolor='white',
+                        plot_bgcolor='white',)
+        
 
-    fig.add_hline(y=df_benef_state_mean['MONTO_APOYO_TOTAL'], line_dash="dot", row=3, col="all",
-                annotation_text="Promedio", 
-                annotation_position="bottom right")
-    
+    fig.update_layout(showlegend=False)
+        
     fig.update_layout(
-        showlegend=False,
-        autosize=False,
-        #width=900,
-        height=400,
-        margin=dict(
-            l=0,
-            r=0,
-            b=0,
-            t=0,
-            pad=0),
-            plot_bgcolor='rgba(0, 0, 0, 0)',
-            paper_bgcolor= "White",
+            autosize=False,
+            #width=1020,
+            height=350,
+            margin=dict(
+                l=0,
+                r=0,
+                b=0,
+                t=0,
+                pad=0),
+            #paper_bgcolor="Lightblue",
             )
-
-    fig.update_layout(
-        title="Monto Apoyo Total",
-        xaxis_title="Monto Apoyo Total",
-        yaxis_title="Monto Apoyo Total",
-        legend_title="",
-        font=dict(
-            #   family="Courier New, monospace",
-            size=8,
-            color="RebeccaPurple"
-            ))
-
-    fig.update_xaxes(tickangle=80)
 
     return fig
 
-
-# acordion - uno
-characters_list = [
-    {
-        "id": "bender",
-        "image": "/assets/chart-histogram.png",
-        "label": "Punto número uno",
-        "description": "Fascinated with cooking, though has no sense of taste",
-        "content": "Bender Bending Rodríguez, (born September 4, 2996), designated Bending Unit 22, and commonly "
-        "known as Bender, is a bending unit created by a division of MomCorp in Tijuana, Mexico, "
-        "and his serial number is 2716057. His mugshot id number is 01473. He is Fry's best friend.",
-    },
-    {
-        "id": "carol",
-        "image": "/assets/chart-line-up.png",
-        "label": "Punto número dos",
-        "description": "One of the richest people on Earth",
-        "content": "Carol Miller (born January 30, 2880), better known as Mom, is the evil chief executive officer "
-        "and shareholder of 99.7% of Momcorp, one of the largest industrial conglomerates in the universe "
-        "and the source of most of Earth's robots. She is also one of the main antagonists of the Futurama "
-        "series.",
-    },
-    
-]
-
+###########################################################################################
+#                                   SECTION III
+###########################################################################################
+# funcion para accordion label
 def create_accordion_label(label, image, description):
     return dmc.AccordionControl(
         dmc.Group(
@@ -1237,16 +1412,106 @@ def create_accordion_label(label, image, description):
             ]
         )
     )
-
-
+# funcion para accordion content
 def create_accordion_content(content):
     return dmc.AccordionPanel(dmc.Text(content, size="sm"))
 
-
+# acordeon uno callbacks
 @app.callback(
     Output("accordion-text-uno", "children"), 
     Input("accordion-uno", "value"))
 def show_state(value):
+    # text
+    characters_list = [
+        {
+            "id": "bender",
+            "image": "/assets/chart-histogram.png",
+            "label": "Punto número uno",
+            "description": "Descripción punto uno",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
+        {
+            "id": "carol",
+            "image": "/assets/chart-line-up.png",
+            "label": "Punto número dos",
+            "description": "Descripción punto dos",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
+        
+    ]
+    # resultado
+    result = dmc.Accordion(
+    chevronPosition="right",
+    variant="contained",
+    children=[
+        dmc.AccordionItem(
+            [
+                create_accordion_label(
+                    character["label"], character["image"], character["description"]
+                ),
+                create_accordion_content(character["content"]),
+            ],
+            value=character["id"],
+        )
+        for character in characters_list
+    ],
+    )
+    return result
+
+
+# acordeon dos callbacks
+@app.callback(
+    Output("accordion-text-dos", "children"), 
+    Input("accordion-dos", "value"))
+def show_state(value):
+    # text
+    characters_list = [
+        {
+            "id": "bender",
+            "image": "/assets/chart-histogram.png",
+            "label": "Punto número uno",
+            "description": "Descripción punto uno",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
+        
+        
+    ]
+    # resultado
+    result = dmc.Accordion(
+    chevronPosition="right",
+    variant="contained",
+    children=[
+        dmc.AccordionItem(
+            [
+                create_accordion_label(
+                    character["label"], character["image"], character["description"]
+                ),
+                create_accordion_content(character["content"]),
+            ],
+            value=character["id"],
+        )
+        for character in characters_list
+    ],
+    )
+    return result
+
+# acordeon tres callbacks
+@app.callback(
+    Output("accordion-text-tres", "children"), 
+    Input("accordion-tres", "value"))
+def show_state(value):
+    # text
+    characters_list = [
+        {
+            "id": "carol",
+            "image": "/assets/chart-line-up.png",
+            "label": "Punto número dos",
+            "description": "Descripción punto dos",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        },
+        
+    ]
+    # resultado
     result = dmc.Accordion(
     chevronPosition="right",
     variant="contained",

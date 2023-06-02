@@ -63,8 +63,8 @@ names = {
     'B_CVE_LOC': 'CVE_LOC',
     'B_NOM_LOC': 'NOM_LOC',
     'B_TAMPROD': 'TAMPROD',
-    'C_IML': 'IML',
-    'C_GML': 'GML',
+    'C_IMM': 'IML',
+    'C_GMM': 'GML',
     'B_MONTO DE APOYO TOTAL $': 'MONTO_APOYO_TOTAL',
     'C_Produccion': 'Volumenproduccion',
     'C_LAT_DECIMAL': 'LAT_DECIMAL',
@@ -235,7 +235,6 @@ sidebar_header = html.Div([
 
 # Filtros proncipales
 main_filters = html.Div([
-
     dbc.Row([
         dbc.Col([            
             ], className="card col-4 border-0 bg-transparent"),
@@ -312,9 +311,8 @@ main_filters = html.Div([
 ], className="eight columns", style={'backgroundColor': '#F4F6F6'})
 
 
-####################      sidebar left: control bar
+####################      sidebar left: Barra de control
 sidebar_right = html.Div([
-
         # Filtros
         dbc.Row([
             html.Div([
@@ -417,12 +415,10 @@ sidebar_right = html.Div([
 
         ], style={'marginTop':'1rem', 'marginBottom':'2rem'}),
 
-        
-        
         ], style={'marginLeft':'2rem', 'marginRight':'2rem', 'marginTop':'2rem'}
     )
 
-#######################    content - mapa
+#######################    content - Mapa interactivo 
 content1 = html.Div([
         dbc.Row([
             dbc.Col([
@@ -447,8 +443,6 @@ content1 = html.Div([
             )
         ]),
         # Barra de control
-        
-    
     ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem', 'marginRight': '2rem','marginTop': '0rem'}
     )
 # backgroundColor': '#F4F6F6'
@@ -488,10 +482,7 @@ content2 = html.Div([
                     ),                  
                 ], className="card col-12 col-md-6", style={'padding':'.3rem', 'marginTop':'0rem', 'marginLeft':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
                 ), 
-            
-            
         ]),
-         
         
     ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem','marginRight': '2rem','marginTop': '0rem'}
 
@@ -550,7 +541,6 @@ content4 = html.Div([
 ########################### layout  SEGALMEX
 layout = dbc.Container([
 
- 
         html.Div([
             html.Br(),
             html.Br(),
@@ -1231,7 +1221,7 @@ def actualizar_plot2_r2c2(clicks):
     )
 
 
-    fig.show(config={"displayModeBar": False})
+    #fig.show(config={"displayModeBar": False})
     
     return fig
 

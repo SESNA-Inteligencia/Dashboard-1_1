@@ -1219,8 +1219,6 @@ def actualizar_plot2_r2c2(clicks):
         barmode="stack",
         uniformtext=dict(mode="hide", minsize=10),
     )
-
-
     #fig.show(config={"displayModeBar": False})
     
     return fig

@@ -18,6 +18,7 @@ from dash.exceptions import PreventUpdate
 #from dash_extensions import Download
 #from dash_extensions.snippets import send_file
 from dash_iconify import DashIconify
+from dash_extensions.enrich import Dash
 import dash_leaflet as dl
 from sqlalchemy import create_engine
 from app import app
@@ -30,8 +31,8 @@ from folium.plugins import MarkerCluster
 from costumFunctions import make_dataframe_state_mun
 import sys
 import pymysql
-import plotly.io as pio
-pio.renderers.default = 'firefox'
+#import plotly.io as pio
+#pio.renderers.default = 'firefox'
 
 
 # CONFIG BASE DATOS (No activo)

@@ -107,7 +107,7 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     conda install -c conda-forge dash-table 
     conda install -c conda-forge plotly
     conda install -c conda-forge folium
-    conda install -c conda-forge dash-mantine-components
+    conda install -c conda-forge dash-mantine-components-0.11.1
     conda install -c conda-forge matplotlib
     conda install -c conda-forge seaborn
     conda install -c conda-forge dash-bootstrap-components
@@ -120,13 +120,13 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     conda config --add channels conda-forge
     conda config --set channel_priority strict
     conda install zstandard
-    pip install dash-mantine-components==0.12.1
+    pip install dash-mantine-components==0.11.1
 
-    conda install -c conda-forge dash-iconify
-    pip install dash-iconify
-    conda install -c conda-forge millify
-    pip install dash-millify
-    conda install -c conda-forge dash-extensions
+    conda install -c conda-forge dash-iconify==0.1.2
+    pip install dash-iconify==0.1.2
+    conda install -c conda-forge millify==0.1.1
+    pip install dash-millify==0.1.1
+    conda install -c conda-forge dash-extensions==0.1.8
     
   
 

@@ -20,6 +20,8 @@ from dash.exceptions import PreventUpdate
 from dash_iconify import DashIconify
 from dash_extensions.enrich import Dash
 import dash_leaflet as dl
+import dash_leaflet.express as dlx
+from dash_extensions.javascript import arrow_function, assign
 from sqlalchemy import create_engine
 from app import app
 import requests
@@ -31,6 +33,10 @@ from folium.plugins import MarkerCluster
 from costumFunctions import make_dataframe_state_mun
 import sys
 import pymysql
+
+
+
+
 #import plotly.io as pio
 #pio.renderers.default = 'firefox'
 
@@ -86,6 +92,9 @@ df_2019 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2019.xlsx', sheet_
 df_2020 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2020.xlsx', sheet_name='Data')
 df_2021 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2021.xlsx', sheet_name='Data')
 
+base1 = pd.read_excel(root + '/datasets/base1.xlsx')
+centros = pd.read_excel(root + '/datasets/centros.xlsx')
+
 # read datasets
 df = pd.concat([df_2019, df_2020, df_2021], axis=0).reset_index()
 usecols = [*names.keys()]
@@ -110,9 +119,6 @@ list_grado_marginacion = ['Muy bajo', 'Bajo', 'Medio', 'Alto', 'Muy alto']
 list_tamano_productor = ['Pequeño', 'Mediano', 'Grande']
 list_states = base['NOM_ENT'].unique()
 list_layers = ['Centros de acopio','Nivel de marginación', 'Tamaño del productor']
-
-
-
 
 
 
@@ -731,13 +737,57 @@ def resumen_monto_apoyos(clicks, sel_producto, sel_anio):
 # SECCIÓN I :  mapa
 ##########################################################################################
 # grafica mapa
+
+
 tab1_mapa_content = html.Div([
         #dcc.Graph(id="mapa", mathjax=True)
         dcc.Graph(id="mapa")
-    ]),
+    ], style={'height': '120px'}),
+
+classes = [0, 10, 20, 50, 100, 200, 500, 1000]
+chroma = "https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js"  # js lib used for colors
+colorscale = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026', '#800026']
+style = dict(weight=1, opacity=0.1, color='#ECF0F1', dashArray='4', fillOpacity=0.9)
+# Create colorbar.
+ctg = ["{}+".format(cls, classes[i + 1]) for i, cls in enumerate(classes[:-1])] + ["{}+".format(classes[-1])]
+colorbar = dlx.categorical_colorbar(categories=ctg, colorscale=colorscale, width=300, height=30, position="bottomleft")
+# Geojson rendering logic, must be JavaScript as it is executed in clientside.
+style_handle = assign("""function(feature, context){
+    const {classes, colorscale, style, colorProp} = context.props.hideout;  // get props from hideout
+    const value = feature.properties[colorProp];  // get value the determines the color
+    for (let i = 0; i < classes.length; ++i) {
+        if (value > classes[i]) {
+            style.fillColor = colorscale[i]; 
+            style.color = 'black'; // set the fill color according to the class
+        }
+    }
+    return style;
+}""")
+# Information
+info = html.Div(id="info",
+                style={"position": "absolute", "top": "10px", "right": "10px", "z-index": "1000"})
 
 tab2_mapa_content = html.Div([
-    dt.DataTable(id="tabla-mapa")
+    dl.Map(center=[22.76, -102.58], zoom=20, children=[
+        dl.TileLayer(),
+        info, 
+        dl.GeoJSON(url="https://raw.githubusercontent.com/SESNA-Inteligencia/Dashboard-1_1/master/datasets/estadosMexico.json",  # url to geojson file
+                     options=dict(style=style_handle),  # how to style each polygon
+                     zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
+                     zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
+                     hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='7')),  # style applied on hover
+                     hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp="#154360"),
+                     id="states")] +   
+        [dl.Circle(center=[lat, lon], radius=radio, color=color, children=[
+                          dl.Popup("Latitud: {} - \n Longitud {}".format(lat, lon))
+                          ]) for lat, lon, radio, color in zip(base1['LAT_DECIMAL'],base1['LON_DECIMAL'], base1['radio'], base1['color'])] +
+        [dl.Circle(center=[lat, lon], radius=3, color='red',
+                            ) for lat, lon in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'])],               
+        #dl.GeoJSON(url="https://gist.githubusercontent.com/mcwhittemore/1f81416ff74dd64decc6/raw/f34bddb3bf276a32b073ba79d0dd625a5735eedc/usa-state-capitals.geojson", id="capitals"),  # geojson resource (faster than in-memory)
+        #dl.GeoJSON(url="https://raw.githubusercontent.com/SESNA-Inteligencia/Dashboard-1_1/master/datasets/estadosMexico.json", id="states",
+        #           hoverStyle=arrow_function(dict(weight=5, color='#5D6D7E', dashArray=''))),  # geobuf resource (fastest option)
+    style={'width': '100%', 'height': '50vh', 'margin': "auto", "display": "block"}, id="map"),
+    html.Div(id="state"), html.Div(id="info")
 ])
 
 #  Actualiza tabs - mapa
@@ -758,6 +808,7 @@ def switch_tab(at):
         State('producto', 'value'),
         State('anio', 'value')
     )
+
 def actualizar_mapa(clicks, producto_sel, anio_sel):
     
     
@@ -836,8 +887,9 @@ def actualizar_mapa(clicks, producto_sel, anio_sel):
             colorscale='YlOrRd',
             opacity=0.8,
             radius=12))
-        
-    #fig.update_layout(mapbox_style="dark", mapbox_accesstoken='some_token')
+    
+  
+    #
     fig.update_layout(mapbox_style="open-street-map", #mapbox_style= "open-street-map", #'open-street-map',
                     mapbox_zoom=4, 
                     mapbox_center = {'lat': 25, 'lon': -99},
@@ -853,17 +905,51 @@ def actualizar_mapa(clicks, producto_sel, anio_sel):
     return fig
 
 ####   actualiza tabla-Mapa
-@app.callback(
-        Output('tabla-mapa', 'figure'),
-        Input('submit-button', 'n_clicks'),
-        State('producto', 'value'),
-        State('anio', 'value')
-    )
+#@app.callback(
+#        Output('mapa2', 'figure'),
+#        Input('submit-button', 'n_clicks'),
+#        State('producto', 'value'),
+#        State('anio', 'value')
+#    )
 
-def actualizar_tabla_mapa(clicks, producto_sel, anio_sel):
-    
-    
-    return 
+@app.callback(Output("info", "children"), [Input("states", "hideout")])
+def info_hover(feature):
+    return [html.H4("Beneficiarios SEGALMEX"),
+            html.Br(),
+            html.B("Estado"), ": ",
+            html.H4("{}".format(feature["properties"]["name"]), href='https://es.wikipedia.org/wiki/Durango', target="_blank"),
+            html.Br(),
+            html.B("Monto Apoyo"), ": {} \n".format(np.round(np.sum(base1[base1['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTAL']),2)),
+            html.Br(),
+            html.B("Monto Promedio Apoyo"), ": {} \n".format(np.round(np.mean(base1[base1['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTAL']),2)),
+            html.Br(),
+            html.B("Total Beneficiarios"), ": {} \n".format(1278),
+            html.Br(),
+            html.B("Total Centros Acopio"), ": {} \n".format(1278),
+            html.Br()]
+
+#@app.callback(Output("states", "children"), [Input("states", "click_feature")])
+#def capital_click(feature):
+#    if feature is not None:
+#        return f"You clicked {feature['properties']['name']}"
+
+@app.callback(Output("state", "children"), [Input("states", "click_feature")])
+def state_hover(feature):
+    if feature is not None:
+        return [html.Center(html.H4("Beneficiarios SEGALMEX")),
+            html.Br(),
+            html.B("Estado"), ": ",
+            html.A("{}".format(feature["properties"]["name"]), href='https://es.wikipedia.org/wiki/Durango', target="_blank"),
+            html.Br(),
+            html.B("Monto Apoyo"), ": {} \n".format(np.round(np.sum(base1[base1['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTAL']),2)),
+            html.Br(),
+            html.B("Monto Promedio Apoyo"), ": {} \n".format(np.round(np.mean(base1[base1['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTAL']),2)),
+            html.Br(),
+            html.B("Total Beneficiarios"), ": {} \n".format(1278),
+            html.Br(),
+            html.B("Total Centros Acopio"), ": {} \n".format(1278),
+            html.Br()]
+
 
 ############################################################################################
 # SECTION II : 

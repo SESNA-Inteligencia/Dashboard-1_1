@@ -1,0 +1,25 @@
+pandas 
+numpy 
+dash 
+dash-table 
+plotly
+folium
+dash-mantine-components-0.11.1
+matplotlib
+seaborn
+dash-bootstrap-components
+dash-leaflet
+sqlalchemy 
+datetime 
+pymysql
+requests
+openpyxl
+conda-forge
+conda config --set channel_priority strict
+conda install zstandard
+dash-mantine-components==0.11.1
+
+dash-iconify==0.1.2
+dash-iconify==0.1.2
+dash-millify==0.1.1
+dash-extensions==0.1.8

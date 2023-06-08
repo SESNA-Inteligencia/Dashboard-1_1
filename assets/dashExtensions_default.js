@@ -10,8 +10,7 @@ window.dashExtensions = Object.assign({}, window.dashExtensions, {
             const value = feature.properties[colorProp]; // get value the determines the color
             for (let i = 0; i < classes.length; ++i) {
                 if (value > classes[i]) {
-                    style.fillColor = colorscale[i];
-                    style.color = 'black'; // set the fill color according to the class
+                    style.fillColor = colorscale[i]; // set the fill color according to the class
                 }
             }
             return style;

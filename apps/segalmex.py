@@ -100,6 +100,8 @@ df = pd.concat([df_2019, df_2020, df_2021], axis=0).reset_index()
 usecols = [*names.keys()]
 base = df[usecols].copy()
 base.columns = [*names.values()]
+# base2
+data2 = json.load(open(root +'/datasets/sample.json'))
 # change 
 base['Producto'] = base['Producto2'].map(products)
 
@@ -738,16 +740,47 @@ def resumen_monto_apoyos(clicks, sel_producto, sel_anio):
 ##########################################################################################
 # grafica mapa
 
-
 tab1_mapa_content = html.Div([
         #dcc.Graph(id="mapa", mathjax=True)
         dcc.Graph(id="mapa")
     ], style={'height': '120px'}),
 
-classes = [0, 10, 20, 50, 100, 200, 500, 1000]
-chroma = "https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js"  # js lib used for colors
-colorscale = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026', '#800026']
-style = dict(weight=1, opacity=0.1, color='#ECF0F1', dashArray='4', fillOpacity=0.9)
+# Función para encabezados
+def get_info(feature=None):
+    # Valores por defecto a nivel nacional 
+    #header = [html.H4("Beneficiarios")]
+    if not feature:
+        return [
+            html.H4("{}".format("Nacional")),
+            html.Br(),
+            html.B("Monto Apoyo"), ": {} \n".format(100),
+            html.Br(),
+            html.B("Monto Promedio Apoyo"), ": {} \n".format(100),
+            html.Br(),
+            html.B("Total Beneficiarios"), ": {} \n".format(1278),
+            html.Br(),
+            html.B("Total Centros Acopio"), ": {} \n".format(1278),
+            html.Br()]
+        # valores a nivel estatal
+    return [
+            html.H4("{}".format(feature["properties"]["name"])),
+            #html.Br(),
+            #html.B("Estado"), ": ",
+            #html.A("{}".format(feature["properties"]["name"])),
+            html.Br(),
+            html.B("Monto Apoyo"), ": {} \n".format(np.round(np.sum(base1[base1['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTAL']),2)),
+            html.Br(),
+            html.B("Monto Promedio Apoyo"), ": {} \n".format(np.round(np.mean(base1[base1['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTAL']),2)),
+            html.Br(),
+            html.B("Total Beneficiarios"), ": {} \n".format(1278),
+            html.Br(),
+            html.B("Total Centros Acopio"), ": {} \n".format(1278),
+            html.Br()]
+
+# declaración de parámetros para color y leyendas        
+classes = [0, 5, 10, 20, 40, 60, 80, 100]
+colorscale = ['#D5F5E3', '#ABEBC6', '#82E0AA', '#58D68D', '#2ECC71', '#28B463', '#239B56', '#1D8348']
+style = dict(weight=2, opacity=1, color='#ECF0F1', dashArray='3', fillOpacity=0.7)
 # Create colorbar.
 ctg = ["{}+".format(cls, classes[i + 1]) for i, cls in enumerate(classes[:-1])] + ["{}+".format(classes[-1])]
 colorbar = dlx.categorical_colorbar(categories=ctg, colorscale=colorscale, width=300, height=30, position="bottomleft")
@@ -757,27 +790,29 @@ style_handle = assign("""function(feature, context){
     const value = feature.properties[colorProp];  // get value the determines the color
     for (let i = 0; i < classes.length; ++i) {
         if (value > classes[i]) {
-            style.fillColor = colorscale[i]; 
-            style.color = 'black'; // set the fill color according to the class
+            style.fillColor = colorscale[i];  // set the fill color according to the class
         }
     }
     return style;
 }""")
+
 # Information
-info = html.Div(id="info",
+info = html.Div(children=get_info(), id="info", className="info",
                 style={"position": "absolute", "top": "10px", "right": "10px", "z-index": "1000"})
 
+
 tab2_mapa_content = html.Div([
-    dl.Map(center=[22.76, -102.58], zoom=20, children=[
+    dl.Map(center=[22.76, -102.58], zoom=5, children=[
         dl.TileLayer(),
+        colorbar,
         info, 
-        dl.GeoJSON(url="https://raw.githubusercontent.com/SESNA-Inteligencia/Dashboard-1_1/master/datasets/estadosMexico.json",  # url to geojson file
+        dl.GeoJSON(data=data2,  # url to geojson file
                      options=dict(style=style_handle),  # how to style each polygon
                      zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
                      zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
-                     hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='7')),  # style applied on hover
-                     hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp="#154360"),
-                     id="states")] +   
+                     hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='4')),  # style applied on hover
+                     hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp="density"),
+                     id="states")]+  
         [dl.Circle(center=[lat, lon], radius=radio, color=color, children=[
                           dl.Popup("Latitud: {} - \n Longitud {}".format(lat, lon))
                           ]) for lat, lon, radio, color in zip(base1['LAT_DECIMAL'],base1['LON_DECIMAL'], base1['radio'], base1['color'])] +
@@ -786,8 +821,8 @@ tab2_mapa_content = html.Div([
         #dl.GeoJSON(url="https://gist.githubusercontent.com/mcwhittemore/1f81416ff74dd64decc6/raw/f34bddb3bf276a32b073ba79d0dd625a5735eedc/usa-state-capitals.geojson", id="capitals"),  # geojson resource (faster than in-memory)
         #dl.GeoJSON(url="https://raw.githubusercontent.com/SESNA-Inteligencia/Dashboard-1_1/master/datasets/estadosMexico.json", id="states",
         #           hoverStyle=arrow_function(dict(weight=5, color='#5D6D7E', dashArray=''))),  # geobuf resource (fastest option)
-    style={'width': '100%', 'height': '50vh', 'margin': "auto", "display": "block"}, id="map"),
-    html.Div(id="state"), html.Div(id="info")
+    style={'width': '100%', 'height': '80vh', 'margin': "auto", "display": "block"}, id="map"),
+    html.Div(id="state"), html.Div(id="info2")
 ])
 
 #  Actualiza tabs - mapa
@@ -888,7 +923,6 @@ def actualizar_mapa(clicks, producto_sel, anio_sel):
             opacity=0.8,
             radius=12))
     
-  
     #
     fig.update_layout(mapbox_style="open-street-map", #mapbox_style= "open-street-map", #'open-street-map',
                     mapbox_zoom=4, 
@@ -912,43 +946,9 @@ def actualizar_mapa(clicks, producto_sel, anio_sel):
 #        State('anio', 'value')
 #    )
 
-@app.callback(Output("info", "children"), [Input("states", "hideout")])
+@app.callback(Output("info", "children"), [Input("states", "hover_feature")])
 def info_hover(feature):
-    return [html.H4("Beneficiarios SEGALMEX"),
-            html.Br(),
-            html.B("Estado"), ": ",
-            html.H4("{}".format(feature["properties"]["name"]), href='https://es.wikipedia.org/wiki/Durango', target="_blank"),
-            html.Br(),
-            html.B("Monto Apoyo"), ": {} \n".format(np.round(np.sum(base1[base1['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTAL']),2)),
-            html.Br(),
-            html.B("Monto Promedio Apoyo"), ": {} \n".format(np.round(np.mean(base1[base1['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTAL']),2)),
-            html.Br(),
-            html.B("Total Beneficiarios"), ": {} \n".format(1278),
-            html.Br(),
-            html.B("Total Centros Acopio"), ": {} \n".format(1278),
-            html.Br()]
-
-#@app.callback(Output("states", "children"), [Input("states", "click_feature")])
-#def capital_click(feature):
-#    if feature is not None:
-#        return f"You clicked {feature['properties']['name']}"
-
-@app.callback(Output("state", "children"), [Input("states", "click_feature")])
-def state_hover(feature):
-    if feature is not None:
-        return [html.Center(html.H4("Beneficiarios SEGALMEX")),
-            html.Br(),
-            html.B("Estado"), ": ",
-            html.A("{}".format(feature["properties"]["name"]), href='https://es.wikipedia.org/wiki/Durango', target="_blank"),
-            html.Br(),
-            html.B("Monto Apoyo"), ": {} \n".format(np.round(np.sum(base1[base1['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTAL']),2)),
-            html.Br(),
-            html.B("Monto Promedio Apoyo"), ": {} \n".format(np.round(np.mean(base1[base1['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTAL']),2)),
-            html.Br(),
-            html.B("Total Beneficiarios"), ": {} \n".format(1278),
-            html.Br(),
-            html.B("Total Centros Acopio"), ": {} \n".format(1278),
-            html.Br()]
+    return get_info(feature)
 
 
 ############################################################################################

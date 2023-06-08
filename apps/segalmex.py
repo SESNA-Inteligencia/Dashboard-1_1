@@ -810,18 +810,18 @@ tab2_mapa_content = html.Div([
                      options=dict(style=style_handle),  # how to style each polygon
                      zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
                      zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
-                     hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='4')),  # style applied on hover
+                     hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='7')),  # style applied on hover
                      hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp="density"),
-                     id="states")]+  
-        [dl.Circle(center=[lat, lon], radius=radio, color=color, children=[
+                     id="states"),  
+        dl.Pane([dl.Circle(center=[lat, lon], radius=radio, color=color, children=[
                           dl.Popup("Latitud: {} - \n Longitud {}".format(lat, lon))
-                          ]) for lat, lon, radio, color in zip(base1['LAT_DECIMAL'],base1['LON_DECIMAL'], base1['radio'], base1['color'])] +
-        [dl.Circle(center=[lat, lon], radius=3, color='red',
-                            ) for lat, lon in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'])],               
+                          ]) for lat, lon, radio, color in zip(base1['LAT_DECIMAL'],base1['LON_DECIMAL'], base1['radio'], base1['color'])]),
+        dl.Pane([dl.Circle(center=[lat, lon], radius=3, color='red',
+                            ) for lat, lon in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'])]),               
         #dl.GeoJSON(url="https://gist.githubusercontent.com/mcwhittemore/1f81416ff74dd64decc6/raw/f34bddb3bf276a32b073ba79d0dd625a5735eedc/usa-state-capitals.geojson", id="capitals"),  # geojson resource (faster than in-memory)
         #dl.GeoJSON(url="https://raw.githubusercontent.com/SESNA-Inteligencia/Dashboard-1_1/master/datasets/estadosMexico.json", id="states",
         #           hoverStyle=arrow_function(dict(weight=5, color='#5D6D7E', dashArray=''))),  # geobuf resource (fastest option)
-    style={'width': '100%', 'height': '80vh', 'margin': "auto", "display": "block"}, id="map"),
+],style={'width': '100%', 'height': '80vh', 'margin': "auto", "display": "block"}, id="map"),
     html.Div(id="state"), html.Div(id="info2")
 ])
 

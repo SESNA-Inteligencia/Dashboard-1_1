@@ -93,6 +93,8 @@ df_2020 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2020.xlsx', sheet_
 df_2021 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2021.xlsx', sheet_name='Data')
 
 base1 = pd.read_excel(root + '/datasets/base1.xlsx')
+base_entidad = pd.read_excel(root + '/datasets/base_entidad.xlsx')
+
 centros = pd.read_excel(root + '/datasets/centros.xlsx')
 
 # read datasets
@@ -120,8 +122,8 @@ list_products = ['Arroz', 'Frijol', 'Leche', 'Maíz', 'Trigo']
 list_grado_marginacion = ['Muy bajo', 'Bajo', 'Medio', 'Alto', 'Muy alto']
 list_tamano_productor = ['Pequeño', 'Mediano', 'Grande']
 list_states = base['NOM_ENT'].unique()
-list_layers = ['Centros de acopio','Nivel de marginación', 'Tamaño del productor']
-
+list_layers = ['Centros de acopio','Volumen Produccion']
+list_bneficiarios_opciones = ['Monto del Apoyo', 'Número de Beneficiarios']
 
 
 #------------------------------------------------------------------------------
@@ -325,20 +327,53 @@ sidebar_right = html.Div([
         # Filtros
         dbc.Row([
             html.Div([
+                dmc.Text("Beneficiarios"),
+                dmc.Text("Seleccione la característica que desee visualizar", size="sm", color="gray"),
+                dmc.ChipGroup(
+                    [dmc.Chip(k, value=k) for k in list_bneficiarios_opciones],
+                    id='beneficiarios-opciones',
+                    value='Número de Beneficiarios'
+                ),
+                ], className='mb-4 mt-2'),
+            html.Hr(),
+            html.Div([
+                    dmc.Text("Seleccione la capa que desee visualizar"),
                     dmc.RadioGroup(
                         [dmc.Radio(k, value=k) for k in list_layers],
                         id="radiogroup-simple",
                         orientation="vertical",
                         value="Centros de acopio",
-                        label="Select la capa que desee visualizar",
+                        #label="",
                         size="sm",
-                        mt=10,
+                        mt=5,
                     ),
-                    dmc.Text(id="radio-output"),
-                ])
+                    dmc.Text(id="radio-centros"),
+                ], className='mb-4'),
+     
+            html.Div([
+                dmc.Text("Nivel de Marginación"),
+                dmc.MultiSelect(
+                    id='grado_marginacion', 
+                    value= ['Muy bajo'],
+                    data=list_grado_marginacion,
+                    clearable=True,
+                    style={"width": 350}  
+                ),       
+                
+                ], className='mb-2'),
+            html.Div([
+                dmc.Text("Tamaño del Productor"),
+                dmc.MultiSelect(
+                    id='tamanio_productor', 
+                    value= ['Pequeño'],
+                    data=list_tamano_productor,
+                    clearable=True,
+                    style={"width": 350}  
+                ),       
+                ]),
 
-        ], className="mt-2", style={'marginBottom':'4rem'}),
-        
+        ], className="mt-2", style={'marginBottom':'1rem'}),
+    
         # tablero resumen
         dbc.Row([
         #primero
@@ -743,12 +778,20 @@ def resumen_monto_apoyos(clicks, sel_producto, sel_anio):
 tab1_mapa_content = html.Div([
         #dcc.Graph(id="mapa", mathjax=True)
         dcc.Graph(id="mapa")
-    ], style={'height': '120px'}),
+    ], style={'height': '100vh'})
+
+tab2_mapa_content = html.Div([
+        #dcc.Graph(id="mapa", mathjax=True)
+        dl.Map(id="mapa2")
+    ], style={'height': '100vh'})
+
 
 # Función para encabezados
 def get_info(feature=None):
     # Valores por defecto a nivel nacional 
     #header = [html.H4("Beneficiarios")]
+    #monto_apoyo_ent = base_entidad[base_entidad['NOM_ENT']==feature["properties"]["name"]]['MONTO_APOYO_TOTALsum'].sum()
+    
     if not feature:
         return [
             html.H4("{}".format("Nacional")),
@@ -800,30 +843,6 @@ style_handle = assign("""function(feature, context){
 info = html.Div(children=get_info(), id="info", className="info",
                 style={"position": "absolute", "top": "10px", "right": "10px", "z-index": "1000"})
 
-
-tab2_mapa_content = html.Div([
-    dl.Map(center=[22.76, -102.58], zoom=5, children=[
-        dl.TileLayer(),
-        colorbar,
-        info, 
-        dl.GeoJSON(data=data2,  # url to geojson file
-                     options=dict(style=style_handle),  # how to style each polygon
-                     zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
-                     zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
-                     hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='7')),  # style applied on hover
-                     hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp="density"),
-                     id="states"),  
-        dl.Pane([dl.Circle(center=[lat, lon], radius=radio, color=color, children=[
-                          dl.Popup("Latitud: {} - \n Longitud {}".format(lat, lon))
-                          ]) for lat, lon, radio, color in zip(base1['LAT_DECIMAL'],base1['LON_DECIMAL'], base1['radio'], base1['color'])]),
-        dl.Pane([dl.Circle(center=[lat, lon], radius=3, color='red',
-                            ) for lat, lon in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'])]),               
-        #dl.GeoJSON(url="https://gist.githubusercontent.com/mcwhittemore/1f81416ff74dd64decc6/raw/f34bddb3bf276a32b073ba79d0dd625a5735eedc/usa-state-capitals.geojson", id="capitals"),  # geojson resource (faster than in-memory)
-        #dl.GeoJSON(url="https://raw.githubusercontent.com/SESNA-Inteligencia/Dashboard-1_1/master/datasets/estadosMexico.json", id="states",
-        #           hoverStyle=arrow_function(dict(weight=5, color='#5D6D7E', dashArray=''))),  # geobuf resource (fastest option)
-],style={'width': '100%', 'height': '80vh', 'margin': "auto", "display": "block"}, id="map"),
-    html.Div(id="state"), html.Div(id="info2")
-])
 
 #  Actualiza tabs - mapa
 @app.callback(Output("content-mapa", "children"), [Input("tabs-mapa", "active_tab")])
@@ -945,12 +964,50 @@ def actualizar_mapa(clicks, producto_sel, anio_sel):
 #        State('producto', 'value'),
 #        State('anio', 'value')
 #    )
-
+# actualiza infor en mapa
 @app.callback(Output("info", "children"), [Input("states", "hover_feature")])
 def info_hover(feature):
     return get_info(feature)
 
+@app.callback(
+        Output('mapa2', 'children'),
+        Input('submit-button', 'n_clicks'),
+        #Input('t_productor', 'value'),
+        #Input('grado_marginacion', 'value'),
+        State('producto', 'value'),
+        State('anio', 'value')
+    )
 
+def actualizar_mapa2(clicks, producto_sel, anio_sel):
+    
+    benef_filter = base1[base1['Producto'] == producto_sel]
+    benef_filter = benef_filter[benef_filter['Anio'] == int(anio_sel)]
+    
+    
+    tab2_mapa_content = html.Div([
+            dl.Map(center=[22.76, -102.58], zoom=5, children=[
+                dl.TileLayer(),
+                colorbar,
+                info, 
+                dl.GeoJSON(data=data2,  # url to geojson file
+                            options=dict(style=style_handle),  # how to style each polygon
+                            zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
+                            zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
+                            hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='7')),  # style applied on hover
+                            hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp="density"),
+                            id="states"),  
+                dl.Pane([dl.CircleMarker(center=[lat, lon], radius=radio, color='blue', children=[
+                                dl.Popup("Municipio {}".format(mun))
+                                ]) for mun, lat, lon, radio, color in zip(base1['NOM_MUN'], base1['LAT_DECIMAL'], base1['LON_DECIMAL'], base1['radio'], base1['color'])]),
+                dl.Pane([dl.Circle(center=[lat, lon], radius=6, color='red',
+                                    ) for lat, lon in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'])]),               
+                #dl.GeoJSON(url="https://gist.githubusercontent.com/mcwhittemore/1f81416ff74dd64decc6/raw/f34bddb3bf276a32b073ba79d0dd625a5735eedc/usa-state-capitals.geojson", id="capitals"),  # geojson resource (faster than in-memory)
+                #dl.GeoJSON(url="https://raw.githubusercontent.com/SESNA-Inteligencia/Dashboard-1_1/master/datasets/estadosMexico.json", id="states",
+                #           hoverStyle=arrow_function(dict(weight=5, color='#5D6D7E', dashArray=''))),  # geobuf resource (fastest option)
+        ],style={'width': '100%', 'height': '100vh', 'margin': "auto", "display": "block"}, id="map"),
+            #html.Div(id="state"), html.Div(id="info2")
+        ])
+    return tab2_mapa_content
 ############################################################################################
 # SECTION II : 
 ############################################################################################

@@ -997,10 +997,11 @@ def actualizar_mapa2(clicks, producto_sel, anio_sel):
                             hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp="density"),
                             id="states"),  
                 dl.Pane([dl.CircleMarker(center=[lat, lon], radius=radio, color='blue', children=[
-                                dl.Popup("Municipio {}".format(mun))
+                                dl.Popup("Municipio: {}".format(mun))
                                 ]) for mun, lat, lon, radio, color in zip(base1['NOM_MUN'], base1['LAT_DECIMAL'], base1['LON_DECIMAL'], base1['radio'], base1['color'])]),
-                dl.Pane([dl.Circle(center=[lat, lon], radius=6, color='red',
-                                    ) for lat, lon in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'])]),               
+                dl.Pane([dl.Circle(center=[lat, lon], radius=6, color='red', children=[
+                                dl.Popup("Municipio: {}".format(mun))
+                                ]) for lat, lon, mun in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'], centros['NOM_MUN'])]),               
                 #dl.GeoJSON(url="https://gist.githubusercontent.com/mcwhittemore/1f81416ff74dd64decc6/raw/f34bddb3bf276a32b073ba79d0dd625a5735eedc/usa-state-capitals.geojson", id="capitals"),  # geojson resource (faster than in-memory)
                 #dl.GeoJSON(url="https://raw.githubusercontent.com/SESNA-Inteligencia/Dashboard-1_1/master/datasets/estadosMexico.json", id="states",
                 #           hoverStyle=arrow_function(dict(weight=5, color='#5D6D7E', dashArray=''))),  # geobuf resource (fastest option)

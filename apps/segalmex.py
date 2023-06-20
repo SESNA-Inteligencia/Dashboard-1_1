@@ -98,7 +98,8 @@ base = df[usecols].copy()
 base.columns = [*names.values()]
 base['Producto'] = base['Producto2'].map(products)
 # base2 : georeferencia (contornos) a nivel estatal
-data2 = json.load(open(root +'/datasets/sample.json'))
+#data2 = json.load(open(root +'/datasets/sample.json'))
+data2 = json.load(open(root +'/datasets/sample3.json'))
 
 # bases OK
 base1 = pd.read_excel(root + '/datasets/base1.xlsx')
@@ -992,11 +993,11 @@ def get_info(feature=None):
           ]
 
 # declaración de parámetros para color y leyendas        
-classes = [0, 5, 10, 20, 40, 60, 80, 100]
-colorscale = ['#D5F5E3', '#ABEBC6', '#82E0AA', '#58D68D', '#2ECC71', '#28B463', '#239B56', '#1D8348']
+classes = [0, 1000,3000,5000,10000, 100000, 1000000, 8000000]
+colorscale = ['#D5F5E3', '#ABEBC6', '#82E0AA', '#58D68D', '#2ECC71', '#239B56', '#1D8348', '#0B5345']
 style = dict(weight=2, opacity=1, color='#ECF0F1', dashArray='3', fillOpacity=0.7)
 # Create colorbar.
-ctg = ["{}+".format(cls, classes[i + 1]) for i, cls in enumerate(classes[:-1])] + ["{}+".format(classes[-1])]
+ctg = ["{}+".format(millify(cls), classes[i + 1]) for i, cls in enumerate(classes[:-1])] + ["{}+".format(classes[-1])]
 colorbar = dlx.categorical_colorbar(categories=ctg, colorscale=colorscale, width=300, height=30, position="bottomleft")
 # Geojson rendering logic, must be JavaScript as it is executed in clientside
 style_handle = assign("""function(feature, context){
@@ -1132,7 +1133,8 @@ def actualizar_mapa(clicks, producto_sel, anio_sel):
 #        State('anio', 'value')
 #    )
 # actualiza infor en mapa
-@app.callback(Output("info", "children"), [Input("states", "hover_feature")])
+@app.callback(Output("info", "children"), 
+              Input("states", "hover_feature"))
 def info_hover(feature):
     return get_info(feature)
 
@@ -1149,7 +1151,6 @@ def info_hover(feature):
 
 def actualizar_mapa2(clicks, margin_sel, benef_sel,capas_sel, producto_sel, anio_sel):
     
-
     if isinstance(capas_sel, str):
         capas = [capas_sel]
     else:
@@ -1209,7 +1210,7 @@ def actualizar_mapa2(clicks, margin_sel, benef_sel,capas_sel, producto_sel, anio
                             zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
                             zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
                             hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='7')),  # style applied on hover
-                            hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp="density"),
+                            hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp=f'{anio_sel}-{producto_sel}'),
                             id="states"),  
                 benef_option,           #dl.GeoJSON(url="https://gist.githubusercontent.com/mcwhittemore/1f81416ff74dd64decc6/raw/f34bddb3bf276a32b073ba79d0dd625a5735eedc/usa-state-capitals.geojson", id="capitals"),  # geojson resource (faster than in-memory)
                 #dl.GeoJSON(url="https://raw.githubusercontent.com/SESNA-Inteligencia/Dashboard-1_1/master/datasets/estadosMexico.json", id="states",
@@ -1228,7 +1229,7 @@ def actualizar_mapa2(clicks, margin_sel, benef_sel,capas_sel, producto_sel, anio
                             zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
                             zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
                             hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='7')),  # style applied on hover
-                            hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp="density"),
+                            hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp=f'{anio_sel}-{producto_sel}'),
                             id="states"),  
                 benef_option,
                 dl.Pane([dl.Circle(center=[lat, lon], radius=6, color='red', children=[

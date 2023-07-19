@@ -34,9 +34,43 @@ from costumFunctions import make_dataframe_state_mun
 import sys
 import pymysql
 
+def get_info(feature=None):
+    # Valores por defecto a nivel nacional 
+    #header = [html.H4("Beneficiarios")]
+    #monto_apoyo_ent = base_entidad[base_entidad['NOM_ENT']==feature["properties"]["name"]]['MONTO_APOYO_TOTALsum'].sum()
+    
+    if not feature:
+        return [
+            html.H4("{}".format("Nacional")),
+            dmc.Center(html.Img(id='image', src='../assets/Nacional.png', width="65", height="65"))]
+        # valores a nivel estatal
+    return [
+            html.H4("{}".format(feature["properties"]["name"])),
+            #html.Br(),
+            #html.B("Estado"), ": ",
+            #html.A("{}".format(feature["properties"]["name"])),
+            dmc.Center(html.Img(id='image', src='../assets/'+ str(feature["properties"]["name"]) +'.png', width="65", height="65")),
+          ]
 
-
-
+def get_info2(feature=None):
+    # Valores por defecto a nivel nacional 
+    #header = [html.H4("Beneficiarios")]
+    #monto_apoyo_ent = base_entidad[base_entidad['NOM_ENT']==feature["properties"]["name"]]['MONTO_APOYO_TOTALsum'].sum()
+    
+    if not feature:
+        return [
+            dbc.Col(html.Img(src='../assets/Nacional.png', height="80px")),
+            dbc.Col(dbc.NavbarBrand("Nacional", class_name="ms-1")),
+        ]
+    #[
+    #        dmc.Center(html.H4("{}".format("Nacional"))),
+    #        dmc.Center(html.Img(id='image', src='../assets/Nacional.png', width="65", height="65"))]
+    # valores a nivel estatal
+    return [
+            dbc.Col(html.Img(id='image', src='../assets/'+ str(feature["properties"]["name"]) +'.png', width="65", height="65")),
+            dbc.Col(html.H4("{}".format(feature["properties"]["name"]))),
+        ]
+    
 #import plotly.io as pio
 #pio.renderers.default = 'firefox'
 
@@ -58,6 +92,8 @@ root = "C:/Users/jcmartinez/Desktop/Dashboard3"
 #repo_est_url = ""
 estados_json = open(root + '/datasets/estadosMexico.json')
 mx_est_geo = json.load(estados_json)
+
+
 
 # diccionario nombre columnas {base: new}
 names = {
@@ -112,6 +148,13 @@ base_municipios_tprod = pd.read_excel(root + '/datasets/base_municipio_tprod.xls
 centros_entidad = pd.read_excel(root + '/datasets/centros_entidad.xlsx')
 centros_municipio = pd.read_excel(root + '/datasets/centros_municipio.xlsx')
 
+# sample maps 
+# blue style
+style1 = "https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
+# grey style
+style2 = 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png'
+# black style
+style3 = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
 # base centros de acopio
 #df_centros = pd.read_excel(root + '/datasets/base_centros_inegi.xlsx')
 #df_centros = df_centros
@@ -125,12 +168,16 @@ centros_municipio = pd.read_excel(root + '/datasets/centros_municipio.xlsx')
 # opciones 
 list_year = ['2019', '2020', '2021']
 list_products = ['Arroz', 'Frijol', 'Leche', 'Maíz', 'Trigo']
-list_grado_marginacion = ['Muy bajo', 'Bajo', 'Medio', 'Alto', 'Muy alto']
+list_grado_marginacion = [['Muy bajo', 'blue'], 
+                          ['Bajo','indigo'], 
+                          ['Medio', 'green'], 
+                          ['Alto', 'red'], 
+                          ['Muy alto', 'orange']]
+
 list_tamano_productor = ['Pequeño', 'Mediano', 'Grande']
 list_states = base['NOM_ENT'].unique()
 list_layers = ['Centros de Acopio','Volumen Producción', 'All']
 list_beneficiarios_opciones = ['Monto del Apoyo', 'Número de Beneficiarios']
-
 
 #------------------------------------------------------------------------------
 #                        layout
@@ -235,15 +282,14 @@ sidebar_header = html.Div([
     ], style={'marginTop':'4rem'}), 
 ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem','marginRight': '2rem','marginTop': '0rem', 'marginBottom':'2rem'})
 
-# Filtros proncipales
+# Filtros principales
 main_filters = html.Div([
     dbc.Row([
         dbc.Col([            
             ], className="card col-4 border-0 bg-transparent"),
         dbc.Col([ 
             dbc.Row([
-                dbc.Col([
-                    
+                dbc.Col([ 
                     html.Div([
                         dmc.Select(
                             icon=DashIconify(icon="material-symbols:filter-list-rounded"),
@@ -339,10 +385,15 @@ sidebar_right = html.Div([
             html.Hr(),
             html.Div([
                     dmc.Text("Seleccione la capa que desee visualizar"),
-                    dmc.ChipGroup(
-                        [dmc.Chip(k, value=k, variant='outline') for k in list_layers],
+                    dmc.SegmentedControl(
+                    #dmc.ChipGroup(
+                    #    [dmc.Chip(k, value=k, variant='outline') for k in list_layers],
+                        orientation="horizontal",
+                        fullWidth=True,
                         id='radio-centros',
-                        multiple=False,
+                        data=list_layers,
+                        color='#4E203A',
+                        #multiple=False,
                         value='Volumen Producción',
                     ),
                     #dmc.RadioGroup(
@@ -360,28 +411,34 @@ sidebar_right = html.Div([
      
             html.Div([
                 dmc.Text("Nivel de Marginación"),
-                dmc.MultiSelect(
-                    id='grado_marginacion', 
-                    value= ['Muy bajo'],
-                    data=list_grado_marginacion,
-                    clearable=True,
-                    style={"width": 350}  
-                ),       
-                
+                #dmc.MultiSelect(
+                #    id='grado_marginacion', 
+                #    value= ['Muy bajo'],
+                #    data=list_grado_marginacion,
+                    #color = '#4E203A',
+                #    clearable=True,
+                #    style={"width": 350}  
+                #),  
+                dmc.CheckboxGroup(
+                    id="grado_marginacion",
+                    label="Grado de marginación",
+                    description="",
+                    orientation="horizontal",
+                    withAsterisk=True,
+                    offset="md",
+                    mb=12,
+                    children=[
+                        dmc.Checkbox(label="Muy bajo", value="Muy bajo", color="indigo"),
+                        dmc.Checkbox(label="Bajo", value="Bajo", color="blue"),
+                        dmc.Checkbox(label="Medio", value="Medio", color="green"),
+                        dmc.Checkbox(label="Alto", value="Alto", color="orange"),
+                        dmc.Checkbox(label="Muy alto", value="Muy alto", color="pink"),
+                    ],
+                    value=["Muy bajo", "Bajo","Medio","Alto","Muy alto"],
+                ),      
                 ], className='mb-2'),
-            html.Div([
-                dmc.Text("Tamaño del Productor"),
-                dmc.MultiSelect(
-                    id='tamanio_productor', 
-                    value= ['Pequeño'],
-                    data=list_tamano_productor,
-                    clearable=True,
-                    style={"width": 350}  
-                ),       
-                ]),
 
         ], className="mt-2", style={'marginBottom':'1rem'}),
-    
         # tablero resumen
         dbc.Row([
         #primero
@@ -421,52 +478,11 @@ sidebar_right = html.Div([
                     ], className="card col-9 border-0 bg-transparent"), 
                 ]),
                     
-                ],className="card col-12 col-md-6", style={'padding':'.3rem', 'border-radius': '5px', 'backgroundColor': '#F4F6F6', }),
+                ],className="card col-12 col-md-6", style={'padding':'.3rem', 'border-radius': '5px', 'backgroundColor': '#7C90AB', }),  #'#F4F6F6'
 
-        ], style={'marginTop':'4rem'}), 
+        ], style={'marginTop':'1rem'}), 
 
-        dbc.Row([
-        #primero
-            dbc.Col([
-                dbc.Row([
-                    dbc.Col([
-                        html.Img(id='image', src='../assets/dollar.svg', width="65", height="65"),
-                    ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
-                    dbc.Col([
-                        dbc.Row([html.Center(html.Div([
-                        "1,332",
-                        ], id='resumen-monto_apoyos_total', style={'marginTop':'0em',"textAling":"center", "color":"green", 'font-size': '32px'}),
-                        )]),
-                        dbc.Row([html.Div([
-                            dmc.Text("Monto Apoyos (Total)", color='grey', weight=500, align='center', style={"fontSize": 11}),
-                            ]),
-                        ]),
-                    ], className="card col-9 border-0 bg-transparent"), 
-                ]),
-                    
-                ],className="card col-12 col-md-6", style={'padding':'.3rem', 'border-radius': '5px', 'backgroundColor': '#F4F6F6', }),
-            # segundo
-            dbc.Col([
-                dbc.Row([
-                    dbc.Col([
-                        html.Img(id='image', src='../assets/porcentaje.png', width="65", height="65"),
-                    ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
-                    dbc.Col([
-                        dbc.Row([html.Center(html.Div([
-                        "51%",
-                        ], id='resumen_monto_apoyos_prom', style={'marginTop':'0em',"textAling":"center", "color":"grey", 'font-size': '32px'}),
-                        )]),
-                        dbc.Row([html.Div([
-                            dmc.Text("Monto Apoyos (Prom)", color='gray', weight=500, align='center', style={"fontSize": 11}),
-                            ]),
-                        ]),
-                    ], className="card col-9 border-0 bg-transparent"), 
-                ]),
-                    
-                ],className="card col-12 col-md-6", style={'padding':'.3rem','border-radius': '5px', 'backgroundColor': '#F4F6F6', }),
-
-        ], style={'marginTop':'1rem', 'marginBottom':'0rem'}),
-        
+  
         # Row three
         dbc.Row([
         #primero
@@ -513,23 +529,24 @@ sidebar_right = html.Div([
         ], style={'marginLeft':'2rem', 'marginRight':'2rem', 'marginTop':'1rem'}
     )
 
-#######################    content - Mapa interactivo 
+#######################    content - Mapa interactivo ##############
 content1 = html.Div([
         dbc.Row([
             dbc.Col([
                     html.Div([
-                        dbc.Tabs([
-                                dbc.Tab(label="Mapa", tab_id="tab-1", label_style={"color": "#00AEF9"}),
-                                
-                                dbc.Tab(label="Tabla", tab_id="tab-2",  label_style={"color": "#00AEF9"}),
-                            ],
-                            id="tabs-mapa",
-                            active_tab="tab-1",
-                        ),
-                        html.Div(id="content-mapa"),
+                        #dbc.Tabs([
+                        #        dbc.Tab(label="Mapa", tab_id="tab-1", label_style={"backgroundColor":"#2a3240","color": "white"}),
+                        #        
+                        #        #dbc.Tab(label="Tabla", tab_id="tab-2",  label_style={"color": "#00AEF9"}),
+                        #    ],
+                        #    id="tabs-mapa",
+                        #    active_tab="tab-1",
+                        #    style={'backgroundColor':'#BFC9CA', 'padding':'.0rem'},
+                        #),
+                        dl.Map(id="mapa2"),
                      ], style={"width": "100%"}
                     ),   # style={'height':'100vh'}               
-            ], className="card col-12 col-md-8", style={'padding':'.3rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
+            ], className="card col-12 col-md-8", style={'padding':'.0rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': '#BFC9CA', }
             ), 
             dbc.Col([
                 sidebar_right
@@ -541,96 +558,102 @@ content1 = html.Div([
     ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem', 'marginRight': '2rem','marginTop': '0rem'}
     )
 # backgroundColor': '#F4F6F6'
-#######################    content2 - gráficos
+#############################################################
+###            content2 - graficos barras
+###    - Gráfico1 : Tamaño productor por estado
+###    - Gráfico2 : Nivel de marginación por estado
+############################################################# 
 content2 = html.Div([
         dbc.Row([
-            
             dbc.Col([
-                    
-                    html.Div([
+                    #html.Div([
                         dbc.Tabs([
-                                dbc.Tab(label="Gráfico 1", tab_id="tab-r2c1-1", label_style={"color": "#00AEF9"}),
-                                
-                                dbc.Tab(label="Tabla 1", tab_id="tab-r2c1-2",  label_style={"color": "#00AEF9"}),
+                                dbc.Tab(label="Gráfico 1", tab_id="tab-r2c1-1", label_style={"color": "white", 'backgroundColor': '#2a3240'}),
+                                #dbc.Tab(label="Tabla 1", tab_id="tab-r2c1-2",  label_style={"color": "#00AEF9"}),
                             ],
                             id="tabs-r2c1",
                             active_tab="tab-r2c1-1",
+                            style={'backgroundColor': '#F2F4F4'}
                         ),
                         html.Div(id="content-r2c1"),
-                     ], style={"width": "100%"}
-                    ),                  
-                ], className="card col-12 col-md-6", style={'padding':'.3rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
+                    # ], style={'backgroundColor': '#F2F4F4',"width": "100%"}
+                    #),                  
+                ], className="card col-4 col-md-4", style={'backgroundColor': '#F2F4F4','padding':'.0rem', 'marginTop':'0rem', 'marginRight':'1rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', }
                 ), 
-            
+            dbc.Col([], className="card col-3", style={'backgroundColor': '#F2F4F4'}),
             dbc.Col([
-                    html.Div([
+                    #html.Div([
                         dbc.Tabs([
-                                dbc.Tab(label="Gráfico 2", tab_id="tab-r2c2-1", label_style={"color": "#00AEF9"}),
+                                dbc.Tab(label="Gráfico 2", tab_id="tab-r2c2-1", label_style={"color": "#F2F4F4", 'backgroundColor': '#2a3240'}),
                                 
-                                dbc.Tab(label="Tabla 2", tab_id="tab-r2c2-2",  label_style={"color": "#00AEF9"}),
+                                #dbc.Tab(label="Tabla 2", tab_id="tab-r2c2-2",  label_style={"color": "#00AEF9"}),
                             ],
                             id="tabs-r2c2",
                             active_tab="tab-r2c2-1",
+                            style={'backgroundColor': '#F2F4F4'}
                         ),
                         html.Div(id="content-r2c2"),
-                     ], style={"width": "100%"}
-                    ),                  
-                ], className="card col-12 col-md-6", style={'padding':'.3rem', 'marginTop':'0rem', 'marginLeft':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
+                     #], style={'backgroundColor': '#F2F4F4', "width": "100%"}
+                    #),                  
+                ], className="card col-4 col-md-4", style={'padding':'.0rem', 'marginTop':'0rem', 'marginLeft':'1rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': '#F2F4F4', }
                 ), 
         ]),
         
-    ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem','marginRight': '2rem','marginTop': '0rem'}
+    ], className="twelve columns", style={'backgroundColor': '#F2F4F4', 'marginLeft': '0rem','marginRight': '0rem','marginTop': '0rem'}
 
     )
 
-
-#######################    content3 - gráficos principales
+#######################    content3 - gráficos por municipios
 content3 = html.Div([
         dbc.Row([
             dbc.Col([
                     
                     html.Div([
                         dbc.Tabs([
-                                dbc.Tab(label="Gráfico 3", tab_id="tab-r3c1-1", label_style={"color": "#00AEF9"}),
+                                #dbc.Tab(label="Gráfico 3", tab_id="tab-r3c1-1", label_style={"color": "#00AEF9"}),
                                 
-                                dbc.Tab(label="Tabla 3", tab_id="tab-r3c1-2",  label_style={"color": "#00AEF9"}),
+                                dbc.Tab(label="Municipios", tab_id="tab-r3c1-2",  label_style={"color": "#4e203a", 'backgroundColor': '#F2F4F4'}),
                             ],
                             id="tabs-r3c1",
-                            active_tab="tab-r3c1-1",
+                            active_tab="tab-r3c1-2",
+                            style={"backgroundColor":'#F2F4F4'}
                         ),
                         html.Div(id="content-r3c1"),
-                     ], style={"width": "100%"}
+                     ], style={"backgroundColor":'#F2F4F4',"width": "100%"}
                     ),                  
-                ], className="card col-12", style={'padding':'.3rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
+                ], className="col-12", style={'padding':'.0rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
                 ), 
         ]),
-    ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem','marginRight': '2rem','marginTop': '0rem'}
+    ], className="ten columns", style={'backgroundColor': '#F2F4F4', 'marginLeft': '4rem','marginRight': '4rem','marginTop': '0rem'}
 
     )
 
-#######################    content4 - gráficos principales
+# Content 4
 content4 = html.Div([
         dbc.Row([
             dbc.Col([
-                    
-                    html.Div([
-                        dbc.Tabs([
-                                dbc.Tab(label="Gráfico 3", tab_id="tab-r3c1-1", label_style={"color": "#00AEF9"}),
-                                
-                                dbc.Tab(label="Tabla 3", tab_id="tab-r3c1-2",  label_style={"color": "#00AEF9"}),
-                            ],
-                            id="tabs-r3c1",
-                            active_tab="tab-r3c1-1",
-                        ),
-                        html.Div(id="content-r3c1"),
-                     ], style={"width": "100%"}
-                    ),                  
-                ], className="card col-12", style={'padding':'.3rem', 'marginTop':'0rem', 'marginRight':'0rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': 'white', }
+                    #html.Div([
+                        
+                        html.Div(id="content-r4_1"),
+                    # ], style={'backgroundColor': '#F2F4F4',"width": "100%"}
+                    #),                  
+                ], className="card col-4 col-md-4", style={'backgroundColor': '#F2F4F4','padding':'.0rem', 'marginTop':'0rem', 'marginRight':'1rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', }
+                ), 
+            dbc.Col([], className="card col-3", style={'backgroundColor': '#F2F4F4'}),
+            dbc.Col([
+                    #html.Div([
+                        html.Div(id="content-r4_2"),
+                     #], style={'backgroundColor': '#F2F4F4', "width": "100%"}
+                    #),                  
+                ], className="card col-4 col-md-4", style={'padding':'.0rem', 'marginTop':'0rem', 'marginLeft':'1rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'border-radius': '10px', 'backgroundColor': '#F2F4F4', }
                 ), 
         ]),
-    ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem','marginRight': '2rem','marginTop': '0rem'}
+        
+    ], className="twelve columns", style={'backgroundColor': '#F2F4F4', 'marginLeft': '0rem','marginRight': '0rem','marginTop': '0rem'}
 
     )
+
+
 
 # original 'backgroundColor': '#f2f2f2'
 ########################### layout  SEGALMEX
@@ -640,18 +663,18 @@ layout = dbc.Container([
             html.Br(),
             html.Br(),
             dbc.Row([
-            dbc.Col(html.Img(src="assets/segalmex3.jpg", height="60px"), style = {'textAlign':'center', 'marginRight':'10px'} ),
+            dbc.Col(html.Img(src="assets/segalmex3.jpg", height="80px"), style = {'textAlign':'center', 'marginRight':'10px'} ),
             ],
             className="g-0 m-0, p-0",
         ),
         
         dbc.Row([
-            dbc.Col(html.H1("SEGALMEX"),  className="ml-5",  style = {'textAlign':'center', 'color':'black'} ),
+            dbc.Col(html.H1("SEGALMEX"),  className="ml-5",  style = {'textAlign':'center', 'color':'white'} ),
             ],
             className="g-0 m-0 p-0",
         ),
         html.Br(),
-        ], style={'backgroundColor':'#E5E8E8', 'm':'0px', 'padding':'0px'}),    
+        ], style={'background-image': 'url(/assets/maiz_image.jpg)','background-size': '150px 150px','backgroundColor':'#E5E8E8', 'm':'0px', 'padding':'0px'}),    
         
         # horizontal line
         html.Hr(),
@@ -690,12 +713,33 @@ layout = dbc.Container([
             dbc.Row([
                 dbc.Col([
                     html.Div([
-                            dmc.Accordion(id="accordion-uno"),
-                            dmc.Text(id="accordion-text-uno", mt=10),
+                            #dmc.Accordion(id="accordion-uno"),
+                            #dmc.Text(id="accordion-text-uno", mt=10),
+                            dmc.Spoiler(
+                                showLabel="Show more",
+                                hideLabel="Hide",
+                                maxHeight=50,
+                                children=[
+                                    dmc.Text(
+                                        """We Butter the Bread with Butter was founded in 2007 by Marcel Neumann, who was originally guitarist 
+                                        for Martin Kesici's band, and Tobias Schultka. The band was originally meant as a joke, but progressed 
+                                        into being a more serious musical duo. The name for the band has no particular meaning, although its 
+                                        origins were suggested from when the two original members were driving in a car operated by Marcel 
+                                        Neumann and an accident almost occurred. Neumann found Schultka "so funny that he briefly lost control of 
+                                        the vehicle." Many of their songs from this point were covers of German folk tales and nursery rhymes. """
+                                    )
+                                ],
+                            )
                     ]),
                 ]),
             ], className="col-8", style={'marginTop':'2rem','marginBottom':'2rem','marginLeft':'1rem', 'marginRight':'1rem'}),
-        
+            
+            # pie plot for products
+            dbc.Row([
+                html.Br(),
+                html.Iframe(id='plot2-r3c1', srcDoc=open(root + "/graficos/piePlot.html", 'r', encoding = 'utf-8').read(), style={"height": "350px", "width": "1300px"})
+            ], className="col-10", style={'backgroundColor':'#F2F3F4','marginTop':'4rem', 'marginBottom':'2rem', 'marginLeft':'6rem', 'marginRight':'4rem'}),
+            
         ], className="eight columns", style={'backgroundColor':'#F4F6F6', 'm':'0px', 'padding':'0px'}),
             
         dbc.Row([html.H5(' ')]),
@@ -709,6 +753,22 @@ layout = dbc.Container([
                 #dbc.Col(sidebar_vol_right, width=3, className='bg-light')
                 ]
         ),
+        # Indicador de estado
+        dbc.Row(
+            get_info2()
+            , 
+            id="info2" ,                    
+            align="center",
+            className="g-0"),
+
+        dbc.Row([html.Div([html.Div(get_info())], 
+                     id="info")], align="center", style={'marginTop':'4px','marginBottom':'4px'}),
+    
+        # third row: graficos
+        dbc.Row([
+                dbc.Col(content2, className="col-12 col-md-12", style={'backgroundColor': '#F4F6F6', 'marginTop': '1rem', 'marginLeft':'2rem', 'marginRight':'2rem'}),
+                #dbc.Col(sidebar_vol_right, width=3, className='bg-light')
+        ], className='mb-0', style={'marginLeft':'2rem', 'marginRight':'2rem'}),  
         
         # accordeon
         html.Div([
@@ -728,6 +788,12 @@ layout = dbc.Container([
                 #dbc.Col(sidebar_vol_right, width=3, className='bg-light')
                 ]
         ),
+        
+        dbc.Row([
+                dbc.Col(content4, className="col-12 col-md-12", style={'backgroundColor': '#F4F6F6', 'marginTop': '1rem'}),
+                #dbc.Col(sidebar_vol_right, width=3, className='bg-light')
+                ]
+        ),
         # accordeon
         html.Div([
             dbc.Row([
@@ -742,10 +808,10 @@ layout = dbc.Container([
         ], className="eight columns", style={'backgroundColor':'#F4F6F6', 'm':'0px', 'padding':'0px'}),
     
         # third row: graficos
-        dbc.Row([
-                dbc.Col(content2, className="col-12 col-md-12", style={'backgroundColor': '#F4F6F6', 'marginTop': '1rem'}),
-                #dbc.Col(sidebar_vol_right, width=3, className='bg-light')
-        ], className='mb-0'),  
+        #dbc.Row([
+        #        dbc.Col(content2, className="col-12 col-md-12", style={'backgroundColor': '#F4F6F6', 'marginTop': '1rem', 'marginLeft':'2rem', 'marginRight':'2rem'}),
+        #        #dbc.Col(sidebar_vol_right, width=3, className='bg-light')
+        #], className='mb-0', style={'marginLeft':'2rem', 'marginRight':'2rem'}),  
         
         dbc.Row([
             dbc.Col([
@@ -757,7 +823,8 @@ layout = dbc.Container([
     ], style={'backgroundColor': '#F4F6F6', 'marginTop': '0rem', 'padding':'0rem'},
     fluid=True
     )
-
+    # #EBF5FB
+    # #F4F6F6
 #########################################################################################
 ############################            Call backs         ##############################
 #########################################################################################
@@ -765,11 +832,51 @@ layout = dbc.Container([
 #-------------------------------------------------------------------------------
 #                              Resumen cards
 #-------------------------------------------------------------------------------
+#                      CARD 1 : Regresa estado
+@app.callback(# 'click_feature
+        Output('state01', 'children'),
+        Input("states", "click_feature")
+    )
+def get_state(clicks, feature):
+    
+    # condición
+    if not feature:
+        state = 'Nacional'
+    else: 
+        # filtro de estado
+        state = feature["properties"]["name"]
+
+    return state
+
+#           CARD 2 : Indicador de estado
+
+@app.callback(# 'click_feature
+        Output('state_label', 'children'),
+        Input("states", "click_feature")
+    )
+def get_state(clicks, feature):
+    
+    # condición
+    if not feature:
+        return [
+            html.H4("{}".format(feature["properties"]["name"])),
+            dmc.Center(html.Img(id='image', src='../assets/'+ str("Nacional") +'.png', width="65", height="65")),
+          ]    
+    else: 
+        # filtro de estado
+        state = feature["properties"]["name"]
+        return [
+            html.H4("{}".format(feature["properties"]["name"])),
+            dmc.Center(html.Img(id='image', src='../assets/'+ str(feature["properties"]["name"]) +'.png', width="65", height="65")),
+          ]
+
+
+
 #                      CARD 1 : Cuenta centros de acopio
-@app.callback(
+@app.callback(# 'click_feature
         Output('resumen-centros_acopio', 'children'),
         Input('submit-button', 'n_clicks'),
-        Input("states", "hover_feature"),
+        Input("states", "click_feature"),
         State('producto', 'value'),
         State('anio', 'value')
     )
@@ -792,7 +899,7 @@ def resumen_centros_acopio(clicks, feature, sel_producto, sel_anio):
 @app.callback(
         Output('resumen-poblacion_beneficiaria', 'children'),
         Input('submit-button', 'n_clicks'),
-        Input("states", "hover_feature"),
+        Input("states", "click_feature"),
         State('producto', 'value'),
         State('anio', 'value')
     )
@@ -819,7 +926,7 @@ def resumen_pablacion_beneficiaria(clicks, feature, sel_producto, sel_anio):
 @app.callback(
         Output('resumen-monto_apoyos_total', 'children'),
         Input('submit-button', 'n_clicks'),
-        Input("states", "hover_feature"),
+        Input("states", "click_feature"),
         State('producto', 'value'),
         State('anio', 'value')
     )
@@ -845,7 +952,7 @@ def resumen_monto_apoyos_total(clicks, feature, sel_producto, sel_anio):
 @app.callback(
         Output('resumen_monto_apoyos_prom', 'children'),
         Input('submit-button', 'n_clicks'),
-        Input("states", "hover_feature"),
+        Input("states", "click_feature"),
         State('producto', 'value'),
         State('anio', 'value')
     )
@@ -872,7 +979,7 @@ def resumen_monto_apoyos_promedio(clicks, feature, sel_producto, sel_anio):
 @app.callback(
         Output('resumen-volumen_incentivado_total', 'children'),
         Input('submit-button', 'n_clicks'),
-        Input("states", "hover_feature"),
+        Input("states", "click_feature"),
         State('producto', 'value'),
         State('anio', 'value')
     )
@@ -898,7 +1005,7 @@ def resumen_volumen_incentivado_total(clicks, feature, sel_producto, sel_anio):
 @app.callback(
         Output('resumen-volumen_incentivado_promedio', 'children'),
         Input('submit-button', 'n_clicks'),
-        Input("states", "hover_feature"),
+        Input("states", "click_feature"),
         State('producto', 'value'),
         State('anio', 'value')
     )
@@ -919,9 +1026,6 @@ def resumen_volumen_incentivado_promedio(clicks, feature, sel_producto, sel_anio
     # millify(monto_apoyos, precision=2)
     return millify(result, precision=1)
 
-
-
-
 # Descarga de resumen ejecutivo  
 #@app.callback(
 #    Output("download", "data"), 
@@ -932,17 +1036,16 @@ def resumen_volumen_incentivado_promedio(clicks, feature, sel_producto, sel_anio
 ##########################################################################################
 # SECCIÓN I :  mapa
 ##########################################################################################
-# grafica mapa
+# gráfica mapa
 tab1_mapa_content = html.Div([
         #dcc.Graph(id="mapa", mathjax=True)
         dl.Map(id="mapa2")
     ], style={'height': '100vh'})
 
-tab2_mapa_content = html.Div([
+tab2_mapa_content = html.Div([  
         #dcc.Graph(id="mapa", mathjax=True)
-        dl.Map(id="mapa2")
-    ], style={'height': '90vh'})
-
+        html.Iframe(id='map', srcDoc=open('PieMap.html', 'r').read(), style={"height": "1200px", "width": "900px"})
+    ], style={'height': '100vh', 'width': '100vh'})
 
 # Función para encabezados
 def get_info(feature=None):
@@ -952,44 +1055,21 @@ def get_info(feature=None):
     
     if not feature:
         return [
-            html.H4("{}".format("Nacional")),
-            html.Br(),
-            html.B("Monto Apoyo"), ": {} \n".format(100),
-            html.Br(),
-            html.B("Monto Promedio Apoyo"), ": {} \n".format(100),
-            html.Br(),
-            html.B("Total Beneficiarios"), ": {} \n".format(1278),
-            html.Br(),
-            html.B("Total Centros Acopio"), ": {} \n".format(1278),
-            html.Br()]
+            dmc.Center(html.H4("{}".format("Nacional"))),
+            dmc.Center(html.Img(id='image', src='../assets/Nacional.png', width="65", height="65"))]
         # valores a nivel estatal
     return [
-            html.H4("{}".format(feature["properties"]["name"])),
+            dmc.Center(html.H4("{}".format(feature["properties"]["name"]))),
             #html.Br(),
             #html.B("Estado"), ": ",
             #html.A("{}".format(feature["properties"]["name"])),
-            html.Br(),
-            #dmc.Text("Monto Apoyo Total : {} \n".format(np.round(np.sum(base_entidad[base_entidad['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTALsum']),2), size="xs", color="gray")),
-            
-            #dmc.Text("Monto Apoyo Promedio : {} \n".format(np.round(np.mean(base_entidad[base_entidad['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTALmean']),2), size="xs", color="gray")),
-            
-            #dmc.Text("Número de Beneficiarios : {} \n".format(np.round(np.mean(base_entidad[base_entidad['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTALmean']),2), size="xs", color="gray")),
-                      
-            #dmc.Text("Número Centros Acopio : {} \n".format(np.round(np.mean(base_entidad[base_entidad['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTALmean']),2), size="xs", color="gray")),
-
-            #dmc.Text("Volumen Incentivado Total : {} \n".format(np.round(np.mean(base_entidad[base_entidad['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTALmean']),2), size="xs", color="gray")),
-        
-            #dmc.Text("Volumen Incentivado Promedio : {} \n".format(np.round(np.mean(base_entidad[base_entidad['NOM_ENT'] == feature["properties"]["name"]]['MONTO_APOYO_TOTALmean']),2), size="xs", color="gray")),
-
-            dmc.Text("Tamaño del Productor :", size="xs", color="gray"),
-
-            dmc.Text(" - Pequeño: {} \n".format(np.round(np.sum(base_entidad_tprod[(base_entidad_tprod['NOM_ENT'] == feature["properties"]["name"]) & (base_entidad_tprod['TAMPROD']=='Pequeño')]['NUM_BENEFsize']),2), size="xs", color="gray")),
-
-            dmc.Text(" - Mediano: {} \n".format(np.round(np.sum(base_entidad_tprod[(base_entidad_tprod['NOM_ENT'] == feature["properties"]["name"]) & (base_entidad_tprod['TAMPROD']=='Mediano')]['NUM_BENEFsize']),2), size="xs", color="gray")),
-
-            dmc.Text(" - Grande: {} \n".format(np.round(np.sum(base_entidad_tprod[(base_entidad_tprod['NOM_ENT'] == feature["properties"]["name"]) & (base_entidad_tprod['TAMPROD']=='Grande')]['NUM_BENEFsize']),2), size="xs", color="gray")),
-
+            dmc.Center(html.Img(id='image', src='../assets/'+ str(feature["properties"]["name"]) +'.png', width="65", height="65")),
           ]
+    
+    
+
+
+
 
 # declaración de parámetros para color y leyendas        
 classes = [0, 1000,3000,5000,10000, 100000, 1000000, 3000000]
@@ -1015,7 +1095,8 @@ info = html.Div(children=get_info(), id="info", className="info",
                 style={"position": "absolute", "top": "10px", "right": "10px", "z-index": "1000"})
 
 #  Actualiza tabs - mapa
-@app.callback(Output("content-mapa", "children"), [Input("tabs-mapa", "active_tab")])
+@app.callback(Output("content-mapa", "children"), 
+              [Input("tabs-mapa", "active_tab")])
 def switch_tab(at):
     if at == "tab-1":
         return tab1_mapa_content
@@ -1023,120 +1104,22 @@ def switch_tab(at):
         return tab2_mapa_content
     return html.P("This shouldn't ever be displayed...")
 
-# actualiza MAPA
-@app.callback(
-        Output('mapa', 'figure'),
-        Input('submit-button', 'n_clicks'),
-        #Input('t_productor', 'value'),
-        #Input('grado_marginacion', 'value'),
-        State('producto', 'value'),
-        State('anio', 'value')
-    )
-
-def actualizar_mapa(clicks, producto_sel, anio_sel):    
-    #if tproductor_sel is None:
-    #    raise PreventUpdate
-    if producto_sel is None:
-        raise PreventUpdate
-    
-    #if gmarginacion_sel is None:
-    #    raise PreventUpdate
-    
-    # Para selecciones múltiples: si es valor único creamos la lista, si no es valor único es una lista
-    #if isinstance(tproductor_sel, str):
-    #    tprod = [tproductor_sel]
-    #else:
-    #    tprod = tproductor_sel
-            
-    # selección múltiple grado de marginación
-    #if isinstance(gmarginacion_sel, str):
-    #    gmarg = [gmarginacion_sel]
-    #else:
-    #    gmarg = gmarginacion_sel
-        
-    # filtros
-    #base = base.copy()
-    #base = base.dropna()
-    benef_filter = base[base['Producto'] == producto_sel]
-    benef_filter = benef_filter[benef_filter['Anio'] == int(anio_sel)]
-    #benef_filter = benef_filter[benef_filter['GM_2020'].isin(gmarg)]
-    #benef_filter = benef_filter[benef_filter['Tamanio_productor'].isin(tprod)]
-    max_benef = benef_filter['MONTO_APOYO_TOTAL'].max()    
-    #est_color = df_prod_est[df_prod_est['Anio']==int(anio_sel)]
-    #est_color = est_color [est_color['Producto']==producto_sel]
-    
-    #if isinstance(ticker_sel, str):
-    #    stks = [ticker_sel]
-    #else:
-    #    stks = ticker_sel
-    # MAPA
-    fig = go.Figure()
-    # Traza areas de producción
-    fig.add_trace(go.Choroplethmapbox(name='Mexico', geojson=mx_est_geo, ids=benef_filter['NOM_ENT'], z=benef_filter['Volumenproduccion'],
-                                        locations=benef_filter['NOM_ENT'], featureidkey='properties.name', colorscale='greens',
-                                        zmin=0, zmax=max_benef, 
-                                        marker=dict(line=dict(color='black'), opacity=0.6)))
-    # Traza de centros de acopio
-    fig.add_trace(go.Scattermapbox(
-            lat=centros_municipio['LAT_DECIMAL'],
-            lon=centros_municipio['LON_DECIMAL'],
-            mode='markers',
-            marker=go.scattermapbox.Marker(
-                size=5,
-                color='red'
-            ),
-            text=centros_municipio['NOM_MUN'],
-        ))
-    # Traza de beneficiarios 
-    fig.add_trace(go.Scattermapbox(
-            lat=benef_filter['LAT_DECIMAL'],
-            lon=benef_filter['LON_DECIMAL'],
-            mode='markers',
-            marker=go.scattermapbox.Marker(
-                size=5,
-                color='blue'
-            ),
-            text=benef_filter['MONTO_APOYO_TOTAL'],
-        ))
-    # Áreas de densidad (heatmap)
-    fig.add_trace(go.Densitymapbox(
-            lat=benef_filter['LAT_DECIMAL'], 
-            lon=benef_filter['LON_DECIMAL'], 
-            z=benef_filter['MONTO_APOYO_TOTAL'], 
-            zmin=0, zmax=max_benef,
-            colorscale='YlOrRd',
-            opacity=0.8,
-            radius=12))
-    
-    #
-    fig.update_layout(mapbox_style="open-street-map", #mapbox_style= "open-street-map", #'open-street-map',
-                    mapbox_zoom=4, 
-                    mapbox_center = {'lat': 25, 'lon': -99},
-                    paper_bgcolor='white',
-                    plot_bgcolor='white')
-
-    fig.update_layout(legend_title_text='', margin={"r":0,"t":0,"l":0,"b":0})
-
-    fig.update_traces(colorbar_orientation='v',
-                    colorbar_x=-0.1,
-                    selector=dict(type='densitymapbox'))
-        
-    return fig
-
 ####   actualiza tabla-Mapa
-#@app.callback(
-#        Output('mapa2', 'figure'),
-#        Input('submit-button', 'n_clicks'),
-#        State('producto', 'value'),
-#        State('anio', 'value')
-#    )
 # actualiza infor en mapa
 @app.callback(Output("info", "children"), 
-              Input("states", "hover_feature"))
+              Input("states", "click_feature"))
               #State('producto', 'value'),
               #State('anio', 'value'))
 def info_hover(feature):
     return get_info(feature)
+
+@app.callback(Output("info2", "children"), 
+              Input("states", "click_feature"))
+              #State('producto', 'value'),
+              #State('anio', 'value'))
+def info_hover(feature):
+    return get_info(feature)
+
 
 @app.callback(
         Output('mapa2', 'children'),
@@ -1170,19 +1153,19 @@ def actualizar_mapa2(clicks, margin_sel, benef_sel,capas_sel, producto_sel, anio
     
     # opción de beneficiarios
     if benef_sel=='Número de Beneficiarios':
-        benef_option = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=radio,fillOpacity=1,fillColor='blue', color='blue', children=[
+        benef_option = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=radio,fillOpacity=1,fillColor=color, color=color, children=[
             dl.Popup("Municipio: {}".format(mun))
-            ]) for mun, lat, lon, radio, color in zip(benef_filter['NOM_MUN'], benef_filter['LAT_DECIMALmean'], benef_filter['LON_DECIMALmean'], benef_filter['NUM_BENEFradio'], benef_filter['MONTO_APOYO_TOTALcolor'])])
+            ]) for mun, lat, lon, radio, color in zip(benef_filter['NOM_MUN'], benef_filter['LAT_DECIMALmean'], benef_filter['LON_DECIMALmean'], benef_filter['NUM_BENEFradio'], benef_filter['GMMcolor'])])
     else:
-        benef_option = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=radio, color='blue', children=[
+        benef_option = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=radio, color=color, children=[
             dl.Popup("Municipio: {}".format(mun))
-            ]) for mun, lat, lon, radio, color in zip(benef_filter['NOM_MUN'], benef_filter['LAT_DECIMALmean'], benef_filter['LON_DECIMALmean'], benef_filter['MONTO_APOYO_TOTALradio'], benef_filter['MONTO_APOYO_TOTALcolor'])])
+            ]) for mun, lat, lon, radio, color in zip(benef_filter['NOM_MUN'], benef_filter['LAT_DECIMALmean'], benef_filter['LON_DECIMALmean'], benef_filter['MONTO_APOYO_TOTALradio'], benef_filter['GMMcolor'])])
  
     # opción centros de acopio y de producción
     if capas_sel == 'Centros de Acopio':
         tab2_mapa_content = html.Div([
             dl.Map(center=[22.76, -102.58], zoom=5, children=[
-                dl.TileLayer(),
+                dl.TileLayer(url=style1),
                 info,  
                  dl.GeoJSON(data=data2,  # url to geojson file
                             options=dict(style=style_handle),  # how to style each polygon
@@ -1204,7 +1187,7 @@ def actualizar_mapa2(clicks, margin_sel, benef_sel,capas_sel, producto_sel, anio
     elif capas_sel == 'Volumen Producción':
         tab2_mapa_content = html.Div([
             dl.Map(center=[22.76, -102.58], zoom=5, children=[
-                dl.TileLayer(),
+                dl.TileLayer(url=style1),
                 colorbar,
                 info, 
                 dl.GeoJSON(data=data2,  # url to geojson file
@@ -1223,7 +1206,7 @@ def actualizar_mapa2(clicks, margin_sel, benef_sel,capas_sel, producto_sel, anio
     else:
         tab2_mapa_content = html.Div([
             dl.Map(center=[22.76, -102.58], zoom=5, children=[
-                dl.TileLayer(),
+                dl.TileLayer(url=style1),
                 colorbar,
                 info, 
                 dl.GeoJSON(data=data2,  # url to geojson file
@@ -1251,14 +1234,15 @@ def actualizar_mapa2(clicks, margin_sel, benef_sel,capas_sel, producto_sel, anio
 
 # Tabs actualization
 tab1_r2c1_content = html.Div([             
-    dcc.Graph(id="plot1-r2c1")
+    html.Iframe(srcDoc=open(root + "/graficos/sunburstPlot.html", 'r', encoding = 'utf-8').read(), style={"height": "350px", "width": "800px"})
 ])
 
 tab2_r2c1_content = html.Div([
     dcc.Graph(id="plot2-r2c1")
     #dcc.Graph(id="tabla-r2c1")
 ])
-@app.callback(Output("content-r2c1", "children"), [Input("tabs-r2c1", "active_tab")])
+@app.callback(Output("content-r2c1", "children"), 
+              [Input("tabs-r2c1", "active_tab")])
 def switch_tab(at):
     if at == "tab-r2c1-1":
         return tab1_r2c1_content
@@ -1267,7 +1251,7 @@ def switch_tab(at):
     return html.P("This shouldn't ever be displayed...")
 
 #----------------------------------------------------------------------------------
-#                     Actializa Tab 1: row2 - col1
+#                     Actializa Gráfico 1:
 #----------------------------------------------------------------------------------
 @app.callback(
         Output('plot1-r2c1', 'figure'),
@@ -1277,150 +1261,17 @@ def switch_tab(at):
     )
 
 def actualizar_plot1_r2c1(clicks, anio_sel):
-    #
-    colors = {'Arroz': 'orange', 
-          'Maíz': 'yellow',
-          'Frijol': 'brown',
-          'Leche': 'blue',
-          'Trigo': 'green'}   
-    
-    # 
-    base2 = base[base['Anio'] == int(anio_sel)]
-    #base = dist_plot[dist_plot['PRODUCTO2']== producto]
-
-    base2 = base2.groupby(['Producto'])['MONTO_APOYO_TOTAL'].sum().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
-    #milli = [millify(element, precision=2) for element in base['MONTO_APOYO_TOTAL']]
-    #print(milli)
-
-    fig = go.Figure()
-    productos = base2['Producto'].unique()
-    # all traces
-    for producto in productos:
-        base_prod = base2[base2['Producto']==producto]
-        fig.add_trace(go.Bar(
-                    x=base_prod['Producto'].to_list(),
-                    y=base_prod['MONTO_APOYO_TOTAL'].to_list(),
-                    text=millify(base_prod['MONTO_APOYO_TOTAL'],2),
-                    name=producto,
-                    width=0.98,
-                    ))
-    
-    fig.update_layout(
-            showlegend=True,
-            autosize=False,
-            #width=900,
-            height=350,
-            margin=dict(
-                l=0,
-                r=0,
-                b=0,
-                t=0,
-                pad=0),
-                plot_bgcolor='rgba(0, 0, 0, 0)',
-                paper_bgcolor= "White",
-                )
-
-    fig.update_layout(
-            title="",
-            xaxis_title="",
-            yaxis_title="Monto apoyo otorgado",
-            legend_title="Producto:",
-            font=dict(
-                #family="Courier New, monospace",
-                size=12,
-                color="Black"
-                ))
-
-    fig.update_xaxes(tickangle=0)
-
-    
-    return fig
-
-#----------------------------------------------------------------------------------------
-#                        Actualización Tab 2 : row2 - col1
-#--------------------------------------------------------------------------------------- 
-@app.callback(
-        Output('plot2-r2c1', 'figure'),
-        Input('submit-button', 'n_clicks'),
-        #Input('estados', 'value'),
-        Input('anio', 'value')
-    )
-
-def actualizar_plot2_r2c1(clicks, anio_sel):
-        
   
-    colors = {'Arroz': 'orange', 
-          'Maíz': 'yellow',
-          'Frijol': 'brown',
-          'Leche': 'blue',
-          'Trigo': 'green'}   
     
-    productos = base['Producto'].unique()
-    anios = base['Anio'].unique()
-    base2 = base.groupby(['Producto','Anio'])['MONTO_APOYO_TOTAL'].sum().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
-    #milli = [millify(element, precision=2) for element in base['MONTO_APOYO_TOTAL']]
-    #print(milli)
+    return 
 
-    fig = go.Figure()
-    for producto in productos:
-    #for anio in anios:
-        base_i = base2[base2['Producto'] == producto].sort_values('Anio', ascending=True)
-        milli = [millify(ele, precision=2) for ele in base_i['MONTO_APOYO_TOTAL']]
-    #  base_i = base_i[base_i['ANIO'] == anio]
-        # all traces
-        #print(base_i['MONTO_APOYO_TOTAL'])
-        fig.add_trace(go.Scatter(
-                x= base_i['Anio'].astype('str'),
-                y= base_i['MONTO_APOYO_TOTAL'].to_list(),
-                text= milli,
-                mode="lines+markers+text",
-                name= producto,
-                textposition="top right"
-                ))
+#----------------------------------------------------------------------------------
+#                     Actializa Gráfico 2:
+#----------------------------------------------------------------------------------
 
-    fig.update_layout(legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1,
-            xanchor="right",
-            x=1
-        ))
-
-    fig.update_layout(
-                showlegend=True,
-                autosize=False,
-                #width=900,
-                height=350,
-                margin=dict(
-                    l=0,
-                    r=0,
-                    b=0,
-                    t=0,
-                    pad=0),
-                    plot_bgcolor='rgba(0, 0, 0, 0)',
-                    paper_bgcolor= "White",
-                    )
-
-    fig.update_layout(
-                title="",
-                xaxis_title="",
-                yaxis_title="Monto Apoyo Otorgado ($)",
-                legend_title="",
-                font=dict(
-                    #family="Courier New, monospace",
-                    size=12,
-                    color="Black"
-                    ))
-
-    fig.update_xaxes(tickangle=0)
-    
-    
-    return fig
-
-#   Actualización row2 - col2
 tab1_r2c2_content = html.Div([
         #dcc.Graph(id="mapa", mathjax=True)
-        dcc.Graph(id="plot1-r2c2")
+        html.Iframe(id='plot1-r2c2', srcDoc=open(root + "/graficos/sunburstPlot.html", 'r', encoding = 'utf-8').read(), style={"height": "350px", "width": "800px"})
     ]),
 
 tab2_r2c2_content = html.Div([
@@ -1428,7 +1279,8 @@ tab2_r2c2_content = html.Div([
 ])
 
 #  Actualiza tabs - mapa
-@app.callback(Output("content-r2c2", "children"), [Input("tabs-r2c2", "active_tab")])
+@app.callback(Output("content-r2c2", "children"), 
+              [Input("tabs-r2c2", "active_tab")])
 def switch_tab(at):
     if at == "tab-r2c2-1":
         return tab1_r2c2_content
@@ -1436,9 +1288,7 @@ def switch_tab(at):
         return tab2_r2c2_content
     return html.P("This shouldn't ever be displayed...")
 
-#--------------------------------------------------------------------------------------
-#  Actualización Tab 1 : row2-col2
-#--------------------------------------------------------------------------------------
+# --------------------------------------------
 @app.callback(
         Output('plot1-r2c2', 'figure'),
         Input('submit-button', 'n_clicks'),
@@ -1446,168 +1296,12 @@ def switch_tab(at):
         Input('anio', 'value')
     )
 
-def actualizar_plot_r2c2(clicks, anio_sel):
-    
-    colors = {'Arroz': 'orange', 
-          'Maíz': 'yellow',
-          'Frijol': 'brown',
-          'Leche': 'blue',
-          'Trigo': 'green'}
-    # Total de productos
-    
-    productos = base['Producto'].unique()
-    anios = base['Anio'].unique()
-    base2 = base.groupby(['Producto','Anio'])['MONTO_APOYO_TOTAL'].sum().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
-    #milli = [millify(element, precision=2) for element in base['MONTO_APOYO_TOTAL']]
-    #print(milli)
-
-    fig = go.Figure()
-    for producto in productos:
-    #for anio in anios:
-        base_i = base2[base2['Producto'] == producto].sort_values('Anio', ascending=True)
-        milli = [millify(ele, precision=2) for ele in base_i['MONTO_APOYO_TOTAL']]
-    #  base_i = base_i[base_i['ANIO'] == anio]
-        # all traces
-        #print(base_i['MONTO_APOYO_TOTAL'])
-        fig.add_trace(go.Scatter(
-                x= base_i['Anio'].astype('str'),
-                y= base_i['MONTO_APOYO_TOTAL'].to_list(),
-                text= milli,
-                mode="lines+markers+text",
-                name= producto,
-                textposition="top right"
-                ))
-
-    fig.update_layout(legend=dict(
-            orientation="v",
-            yanchor="bottom",
-            y=1,
-            xanchor="right",
-            x=1
-        ))
-
-    fig.update_layout(
-                showlegend=True,
-                autosize=False,
-                #width=900,
-                height=350,
-                margin=dict(
-                    l=0,
-                    r=0,
-                    b=0,
-                    t=0,
-                    pad=0),
-                    plot_bgcolor='rgba(0, 0, 0, 0)',
-                    paper_bgcolor= "White",
-                    )
-
-    fig.update_layout(
-                title="",
-                xaxis_title="",
-                yaxis_title="Monto Apoyo Otorgado ($)",
-                legend_title="",
-                font=dict(
-                    #family="Courier New, monospace",
-                    size=12,
-                    color="Black"
-                    ))
-
-    fig.update_xaxes(tickangle=0)
-    
-    
-    return fig
-
-#--------------------------------------------------------------------------------------
-#  Actualización Tab 1 : row2-col2
-#--------------------------------------------------------------------------------------
-@app.callback(
-        Output('plot2-r2c2', 'figure'),
-        Input('submit-button', 'n_clicks'),
-        #Input('municipios', 'value'),
-        #Input('anio', 'value')
-    )
-
-def actualizar_plot2_r2c2(clicks):
-    
-    colors = {'Arroz': 'orange', 
-          'Maíz': 'yellow',
-          'Frijol': 'brown',
-          'Leche': 'blue',
-          'Trigo': 'green'}
-    # Total de productos
-    base2 = base.copy()
-    labels = base2['Anio'].unique()
-    widths = np.array([33.3,33.3,33.3])
-
-    # diccionario con key: producto y value=monto por año
-    data = {product:np.round(np.divide([base2[(base2['Producto'] == product) & (base2['Anio'] == anio)]['MONTO_APOYO_TOTAL'].sum() for anio in np.sort(base2['Anio'].unique())],[base2[base2['Anio'] == anio]['MONTO_APOYO_TOTAL'].sum() for anio in np.sort(base2['Anio'].unique())]),4)*100 for product in base2['Producto'].unique()}
-    data_monto = {product:[base2[(base2['Producto'] == product) & (base2['Anio'] == anio)]['MONTO_APOYO_TOTAL'].sum() for anio in np.sort(base2['Anio'].unique())] for product in base2['Producto'].unique()}
-
-    fig = go.Figure()
-    for key in data:
-    #if key == product:
-        fig.add_trace(go.Bar(
-            name=key,
-            y=data[key],
-            x=np.cumsum(widths)-widths,
-            width=widths,
-            offset=0,
-            opacity=0.8,
-            customdata= [millify(element,2) for element in data_monto[key]],
-            texttemplate=" %{y}% <br> %{customdata}",
-            textposition="inside",
-            textangle=0,
-            textfont_color="white",
-            hovertemplate="<br>".join([
-                "Porcentaje: %{y}%",
-                "Monto: %{customdata}",
-            ])
-        ))
- 
-    fig.update_xaxes(
-        tickvals=np.cumsum(widths)-widths/2,
-        ticktext= ["%s<br>" % l for l in labels]
-    )
-
-    fig.update_layout(legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1,
-            xanchor="right",
-            x=1
-        ))
-    fig.update_layout(
-                showlegend=True,
-                autosize=False,
-                width=700,
-                height=400,
-                margin=dict(
-                    l=0,
-                    r=0,
-                    b=0,
-                    t=0,
-                    pad=0),
-                    #plot_bgcolor='rgba(0, 0, 0, 0)',
-                    #paper_bgcolor= "White",
-    )
-
-    fig.update_xaxes(range=[0,100])
-    fig.update_yaxes(range=[0,100], visible=False)
-    #ig.update.layout(xaxis_visible=False, yaxis_visible=False, xaxis2_visible=False, yaxis2_visible=False)
-    fig.update_layout(
-        title_text="",
-        barmode="stack",
-        uniformtext=dict(mode="hide", minsize=10),
-    )
-    #fig.show(config={"displayModeBar": False})
-    
-    return fig
-
-
-
+def actualizar_plot1_r2c2(clicks, anio_sel):
+  
+    return
 
 #########################################################################################
-# SECTION II - grafico r2 :  
+#  SECTION III - grafico Barras por municipio  
 ##########################################################################################
 tab1_r3c1_content = html.Div([
         #dcc.Graph(id="mapa", mathjax=True)
@@ -1615,10 +1309,12 @@ tab1_r3c1_content = html.Div([
     ]),
 
 tab2_r3c1_content = html.Div([
-     dcc.Graph(id="plot2-r3c1")
-])
+     #dcc.Graph(id="plot2-r3c1")
+     html.Iframe(id='plot2-r3c1', srcDoc=open("2019-Maíz-Durango.html", 'r', encoding = 'utf-8').read(), style={"height": "350px", "width": "1300px"})
+], style={'height':'60vh'})
 
-@app.callback(Output("content-r3c1", "children"), [Input("tabs-r3c1", "active_tab")])
+@app.callback(Output("content-r3c1", "children"), 
+              [Input("tabs-r3c1", "active_tab")])
 def switch_tab(at):
     if at == "tab-r3c1-1":
         return tab1_r3c1_content
@@ -1628,144 +1324,34 @@ def switch_tab(at):
 
 
 #--------------------------------------------------------------------------------------
-#  Actualización Tab 1 : row3-col1  --> Grafico monto y producto vs estado
-#--------------------------------------------------------------------------------------
-@app.callback(
-        Output('plot1-r3c1', 'figure'),
-        Input('submit-button', 'n_clicks'),
-        #Input('producto', 'value'),
-        Input('anio', 'value')
-    )
-
-def actualizar_plot1_r3c1(clicks, anio_sel):
-    
-    # filtro de año
-    #base = base.copy()
-    base_filt = base[base['Anio'] == int(anio_sel)]
-    
-    # Map 
-    base_filt = base_filt[['NOM_ENT', 'Producto','MONTO_APOYO_TOTAL']].groupby(['NOM_ENT', 'Producto'])['MONTO_APOYO_TOTAL'].sum().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
-    base_filt_mean = base_filt['MONTO_APOYO_TOTAL'].mean()
-    # 
-    productos = base_filt['Producto'].unique()
-    
-    fig = go.Figure()
-    
-    for producto in productos:
-        fig.add_trace(
-                go.Bar(name= producto, 
-                x=base_filt[base_filt['Producto']==producto]['NOM_ENT'].to_list(),
-                y=base_filt[base_filt['Producto']==producto]['MONTO_APOYO_TOTAL'].to_list()
-                )
-        ),
-
-    fig.update_layout(barmode='stack')
-    
-    fig.add_hline(y=base_filt_mean, line_dash="dot", row=3, col="all",
-                annotation_text="Promedio", 
-                annotation_position="bottom right")
-    
-    fig.update_layout(
-        showlegend=False,
-        autosize=False,
-        #width=900,
-        height=400,
-        margin=dict(
-            l=0,
-            r=0,
-            b=0,
-            t=0,
-            pad=0),
-            plot_bgcolor='rgba(0, 0, 0, 0)',
-            paper_bgcolor= "White",
-            )
-
-    fig.update_layout(
-        title="",
-        xaxis_title="",
-        yaxis_title="Monto Apoyo",
-        legend_title="",
-        font=dict(
-            #   family="Courier New, monospace",
-            size=8,
-            color="Black"
-            ))
-
-    fig.update_xaxes(tickangle=80)
-
-    return fig
-
-
-#--------------------------------------------------------------------------------------
 #  Actualización Tab 1 : row3-col1 Grafico qqplot
 #--------------------------------------------------------------------------------------
-
 @app.callback(
-        Output('plot2-r3c1', 'figure'),
+        Output('plot2-r3c1', 'srcDoc'),
         Input('submit-button', 'n_clicks'),
-        Input('producto', 'value'),
-        Input('anio', 'value')
+        Input("states", "click_feature"),
+        State('producto', 'value'),
+        State('anio', 'value')
     )
 
-def actualizar_plot2_r3c1(clicks, producto_sel, anio_sel):
-    
+def actualizar_plot2_r3c1(clicks, feature, producto_sel, anio_sel):
+    # srcDoc=open("2019-Maíz-Durango.html", 'r', encoding = 'utf-8').read()
     dist_plot = base[base['Anio'] == int(anio_sel)]
     dist_plot = dist_plot[dist_plot['Producto']== producto_sel]
-
-    idx = dist_plot.groupby(['NOM_ENT'])['MONTO_APOYO_TOTAL'].mean().reset_index().sort_values('MONTO_APOYO_TOTAL', ascending=False)
-    #dist_plot = dist_plot.iloc[idx]
-    monto_promedio = dist_plot['MONTO_APOYO_TOTAL'].mean()
-
-    estados = idx['NOM_ENT'].unique()
-    colores = [f'rgba({26+i*3},{45+i*5},{96+i*8},0.8)' for i in range(len(estados))]
     
-    fig = go.Figure()
-    for estado, cls in zip(estados, colores):
-        serie = dist_plot[dist_plot['NOM_ENT'] == estado]
-        #print(serie)
-        fig.add_trace(
-                    go.Box(
-                        y=serie['MONTO_APOYO_TOTAL'], 
-                        orientation='v',
-                        name=estado,
-                        #boxpoints='all',
-                        #jitter=0.5,
-                        whiskerwidth=0.1,
-                        marker_color=cls,
-                        fillcolor=cls,
-                        marker=dict(
-                            size=0.1,
-                            #color='rgb(0, 0, 0)'
-                        )
-                        ))
-    fig.add_hline(y=monto_promedio, line_width=0.3, line_dash="dash", line_color="blue", opacity=0.2)
-    #Overlay both histograms
-    fig.update_layout(barmode='overlay')
-    # Reduce opacity to see both histograms
-    fig.update_traces(opacity=1)
-    fig.update_layout(paper_bgcolor='white',
-                        plot_bgcolor='white',)
-        
-
-    fig.update_layout(showlegend=False)
-        
-    fig.update_layout(
-            autosize=False,
-            #width=1020,
-            height=350,
-            margin=dict(
-                l=0,
-                r=0,
-                b=0,
-                t=0,
-                pad=0),
-            #paper_bgcolor="Lightblue",
-            )
-
-    return fig
+    
+    if feature == None:
+        return open(root + f"/graficos/g1_barras/2020-Maíz-Veracruz de Ignacio de la Llave.html", 'r', encoding = 'utf-8').read()
+        #html.Iframe(id='plot2-r3c1',src=file, style={"height": "350px", "width": "1300px"})
+    else:
+        entidad = feature["properties"]["name"]
+    
+        return open(root + f"/graficos/g1_barras/{str(anio_sel)}-{str(producto_sel)}-{entidad}.html", 'r', encoding = 'utf-8').read()
+        #html.Iframe(id='plot2-r3c1',src=file, style={"height": "350px", "width": "1300px"})
+  
 
 ###########################################################################################
-#                                S E C T I O N  III
+#                                S E C T I O N  IV
 ###########################################################################################
 # funcion para accordion label
 def create_accordion_label(label, image, description):
@@ -1798,13 +1384,7 @@ def show_state(value):
             "description": "Descripción punto uno",
             "content": html.Div([dmc.Text("Posibles beneficiarios:"),
                                  dmc.Text("todos los productores de maíz poseedores de una superficie de cultivo de hasta 5 (cinco) hectáreas de temporal.", color="black"),
-                                 dmc.Table(
-                                            striped=True,
-                                            highlightOnHover=True,
-                                            withBorder=True,
-                                            withColumnBorders=True,
-                                            children=[pd.DataFrame({'Precio de Garantía':[5610], 'Volumen máximo':[20]})]
-                                        )]),
+                                 ]),
         },
         {
             "id": "carol",

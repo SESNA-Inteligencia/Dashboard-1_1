@@ -1,0 +1,108 @@
+<!-- Styles -->
+<style>
+#chartdiv {
+  width: 50%;
+  height: 300px;
+}
+</style>
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/hierarchy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am5.ready(function() {
+
+// Create root element
+// https://www.amcharts.com/docs/v5/getting-started/#Root_element
+var root = am5.Root.new("chartdiv");
+
+
+// Set themes
+// https://www.amcharts.com/docs/v5/concepts/themes/
+root.setThemes([
+  am5themes_Animated.new(root)
+]);
+
+
+// Create wrapper container
+var container = root.container.children.push(am5.Container.new(root, {
+  width: am5.percent(100),
+  height: am5.percent(100),
+  layout: root.verticalLayout
+}));
+
+
+// Create series
+// https://www.amcharts.com/docs/v5/charts/hierarchy/#Adding
+var series = container.children.push(am5hierarchy.Sunburst.new(root, {
+  singleBranchOnly: true,
+  downDepth: 10,
+  initialDepth: 10,
+  valueField: "value",
+  categoryField: "name",
+  childDataField: "children"
+}));
+
+
+// Generate and set data
+// https://www.amcharts.com/docs/v5/charts/hierarchy/#Setting_data
+var maxLevels = 2;
+var maxNodes = 2;
+var maxValue = 100;
+
+var data = {
+  name: "Root",
+  children: [{
+    name: "A0",
+    collapsed: true,
+    children: [{
+      name: "A00",
+      value: 71
+    }, {
+      name: "A01",
+      value: 33
+    }, {
+      name: "A02",
+      value: 2
+    }]
+  }, {
+    name: "B0",
+    children: [{
+      name: "B10",
+      value: 78
+    }, {
+      name: "B11",
+      value: 36
+    }]
+  }, {
+    name: "C0",
+    collapsed: true,
+    children: [{
+      name: "C20",
+      value: 46
+    }, {
+      name: "C21",
+      value: 28
+    }, {
+      name: "C22",
+      value: 18
+    }]
+  }]
+}
+//generateLevel(data, "", 0);
+
+series.data.setAll([data]);
+series.set("selectedDataItem", series.dataItems[0]);
+
+
+// Make stuff animate on load
+series.appear(1000, 100);
+
+}); // end am5.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div>

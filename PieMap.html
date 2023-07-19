@@ -1,0 +1,459 @@
+<!-- Styles -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 600px;
+}
+
+</style>
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/maps.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/geodata/continentsLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create map instance
+var chart = am4core.create("chartdiv", am4maps.MapChart);
+
+// Set map definition
+chart.geodata = am4geodata_continentsLow;
+
+// Set projection
+chart.projection = new am4maps.projections.Miller();
+
+// Create map polygon series
+var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+polygonSeries.exclude = ["antarctica"];
+polygonSeries.useGeodata = true;
+
+// Create an image series that will hold pie charts
+var pieSeries = chart.series.push(new am4maps.MapImageSeries());
+var pieTemplate = pieSeries.mapImages.template;
+pieTemplate.propertyFields.latitude = "latitude";
+pieTemplate.propertyFields.longitude = "longitude";
+
+var pieChartTemplate = pieTemplate.createChild(am4charts.PieChart);
+pieChartTemplate.adapter.add("data", function(data, target) {
+  if (target.dataItem) {
+    return target.dataItem.dataContext.pieData;
+  }
+  else {
+    return [];
+  }
+});
+pieChartTemplate.propertyFields.width = "width";
+pieChartTemplate.propertyFields.height = "height";
+pieChartTemplate.horizontalCenter = "middle";
+pieChartTemplate.verticalCenter = "middle";
+
+var pieTitle = pieChartTemplate.titles.create();
+pieTitle.text = "{title}";
+
+var pieSeriesTemplate = pieChartTemplate.series.push(new am4charts.PieSeries);
+pieSeriesTemplate.dataFields.category = "category";
+pieSeriesTemplate.dataFields.value = "value";
+pieSeriesTemplate.labels.template.disabled = true;
+pieSeriesTemplate.ticks.template.disabled = true;pieSeries.data = [
+{
+ "title":"Senegal",
+"latitude":14.497401000000002,
+"longitude":-14.452361999999999,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":174
+ }, {
+ "category":"Recovered",
+"value":6044
+ }, {
+ "category":"Active",
+"value":2767
+ }] 
+ }, {
+ "title":"Paraguay",
+"latitude":-23.442503,
+"longitude":-58.44383199999999,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":35
+ }, {
+ "category":"Recovered",
+"value":2307
+ }, {
+ "category":"Active",
+"value":1475
+ }] 
+ }, {
+ "title":"Saint Kitts and Nevis",
+"latitude":17.357822,
+"longitude":-62.782998,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":0
+ }, {
+ "category":"Recovered",
+"value":15
+ }, {
+ "category":"Active",
+"value":2
+ }] 
+ }, {
+ "title":"Zambia",
+"latitude":-13.133897,
+"longitude":27.849332,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":128
+ }, {
+ "category":"Recovered",
+"value":1620
+ }, {
+ "category":"Active",
+"value":1638
+ }] 
+ }, {
+ "title":"Bahrain",
+"latitude":25.930414000000003,
+"longitude":50.637772,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":129
+ }, {
+ "category":"Recovered",
+"value":33455
+ }, {
+ "category":"Active",
+"value":3732
+ }] 
+ }, {
+ "title":"Kenya",
+"latitude":-0.023559,
+"longitude":37.906193,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":250
+ }, {
+ "category":"Recovered",
+"value":6258
+ }, {
+ "category":"Active",
+"value":7660
+ }] 
+ }, {
+ "title":"Botswana",
+"latitude":-22.328474,
+"longitude":24.684866,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":1
+ }, {
+ "category":"Recovered",
+"value":48
+ }, {
+ "category":"Active",
+"value":473
+ }] 
+ }, {
+ "title":"Mali",
+"latitude":17.570692,
+"longitude":-3.9961660000000006,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":122
+ }, {
+ "category":"Recovered",
+"value":1856
+ }, {
+ "category":"Active",
+"value":499
+ }] 
+ }, {
+ "title":"Austria",
+"latitude":47.516231,
+"longitude":14.550072,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":710
+ }, {
+ "category":"Recovered",
+"value":17716
+ }, {
+ "category":"Active",
+"value":1401
+ }] 
+ }, {
+ "title":"Montenegro",
+"latitude":42.708678000000006,
+"longitude":19.37439,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":35
+ }, {
+ "category":"Recovered",
+"value":426
+ }, {
+ "category":"Active",
+"value":1920
+ }] 
+ }]; 
+ }); // end am4core.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div><!-- Styles -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 600px;
+}
+
+</style>
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/maps.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/geodata/continentsLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create map instance
+var chart = am4core.create("chartdiv", am4maps.MapChart);
+
+// Set map definition
+chart.geodata = am4geodata_continentsLow;
+
+// Set projection
+chart.projection = new am4maps.projections.Miller();
+
+// Create map polygon series
+var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+polygonSeries.exclude = ["antarctica"];
+polygonSeries.useGeodata = true;
+
+// Create an image series that will hold pie charts
+var pieSeries = chart.series.push(new am4maps.MapImageSeries());
+var pieTemplate = pieSeries.mapImages.template;
+pieTemplate.propertyFields.latitude = "latitude";
+pieTemplate.propertyFields.longitude = "longitude";
+
+var pieChartTemplate = pieTemplate.createChild(am4charts.PieChart);
+pieChartTemplate.adapter.add("data", function(data, target) {
+  if (target.dataItem) {
+    return target.dataItem.dataContext.pieData;
+  }
+  else {
+    return [];
+  }
+});
+pieChartTemplate.propertyFields.width = "width";
+pieChartTemplate.propertyFields.height = "height";
+pieChartTemplate.horizontalCenter = "middle";
+pieChartTemplate.verticalCenter = "middle";
+
+var pieTitle = pieChartTemplate.titles.create();
+pieTitle.text = "{title}";
+
+var pieSeriesTemplate = pieChartTemplate.series.push(new am4charts.PieSeries);
+pieSeriesTemplate.dataFields.category = "category";
+pieSeriesTemplate.dataFields.value = "value";
+pieSeriesTemplate.labels.template.disabled = true;
+pieSeriesTemplate.ticks.template.disabled = true;pieSeries.data = [
+{
+ "title":"Burkina Faso",
+"latitude":12.238333,
+"longitude":-1.561593,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":53
+ }, {
+ "category":"Recovered",
+"value":901
+ }, {
+ "category":"Active",
+"value":111
+ }] 
+ }, {
+ "title":"Antigua and Barbuda",
+"latitude":17.060816,
+"longitude":-61.796428,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":3
+ }, {
+ "category":"Recovered",
+"value":57
+ }, {
+ "category":"Active",
+"value":16
+ }] 
+ }, {
+ "title":"Portugal",
+"latitude":39.399872,
+"longitude":-8.224454,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":1697
+ }, {
+ "category":"Recovered",
+"value":33769
+ }, {
+ "category":"Active",
+"value":13432
+ }] 
+ }, {
+ "title":"Chad",
+"latitude":15.454166,
+"longitude":18.732207,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":75
+ }, {
+ "category":"Recovered",
+"value":803
+ }, {
+ "category":"Active",
+"value":11
+ }] 
+ }, {
+ "title":"Ethiopia",
+"latitude":9.145,
+"longitude":40.489673,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":180
+ }, {
+ "category":"Recovered",
+"value":5448
+ }, {
+ "category":"Active",
+"value":5444
+ }] 
+ }, {
+ "title":"Comoros",
+"latitude":-11.875001,
+"longitude":43.872219,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":7
+ }, {
+ "category":"Recovered",
+"value":319
+ }, {
+ "category":"Active",
+"value":11
+ }] 
+ }, {
+ "title":"Brunei",
+"latitude":4.535277,
+"longitude":114.727669,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":3
+ }, {
+ "category":"Recovered",
+"value":138
+ }, {
+ "category":"Active",
+"value":0
+ }] 
+ }, {
+ "title":"Argentina",
+"latitude":-38.416097,
+"longitude":-63.616672,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":2490
+ }, {
+ "category":"Recovered",
+"value":58598
+ }, {
+ "category":"Active",
+"value":75030
+ }] 
+ }, {
+ "title":"Bhutan",
+"latitude":27.514162,
+"longitude":90.433601,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":0
+ }, {
+ "category":"Recovered",
+"value":83
+ }, {
+ "category":"Active",
+"value":9
+ }] 
+ }, {
+ "title":"Spain",
+"latitude":40.463667,
+"longitude":-3.74922,
+"width":50,
+"height":50,
+"pieData": [{
+ "category":"Deaths",
+"value":28424
+ }, {
+ "category":"Recovered",
+"value":150376
+ }, {
+ "category":"Active",
+"value":87394
+ }] 
+ }]; 
+ 

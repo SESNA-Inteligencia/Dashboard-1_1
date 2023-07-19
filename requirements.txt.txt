@@ -1,0 +1,25 @@
+conda-forge::pandas 
+conda-forge::numpy 
+conda-forge::dash 
+conda-forge::dash-table 
+conda-forge::plotly
+conda-forge::folium
+conda-forge::dash-mantine-components==0.11.1
+conda-forge::matplotlib
+conda-forge::seaborn
+conda-forge::dash-bootstrap-components
+conda-forge::dash-leaflet
+conda-forge::sqlalchemy 
+conda-forge::datetime 
+conda-forge::pymysql
+conda-forge::requests
+conda-forge::openpyxl
+conda-forge::conda-forge
+conda-forge::conda config --set channel_priority strict
+conda-forge::conda install zstandard
+conda-forge::dash-mantine-components==0.11.1
+
+conda-forge::dash-iconify==0.1.2
+conda-forge::dash-iconify==0.1.2
+conda-forge::dash-millify==0.1.1
+conda-forge::dash-extensions==0.1.8

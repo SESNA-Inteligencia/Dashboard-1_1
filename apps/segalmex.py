@@ -58,18 +58,18 @@ def get_info2(feature=None):
     #monto_apoyo_ent = base_entidad[base_entidad['NOM_ENT']==feature["properties"]["name"]]['MONTO_APOYO_TOTALsum'].sum()
     
     if not feature:
-        return [
-            dbc.Col(html.Img(src='../assets/Nacional.png', height="80px")),
-            dbc.Col(dbc.NavbarBrand("Nacional", class_name="ms-1")),
-        ]
+        return html.Center([
+            dbc.Col(html.Img(src='../assets/Nacional.png', height="90px")),
+            dbc.Col(html.H1("Nacional")),
+        ])
     #[
     #        dmc.Center(html.H4("{}".format("Nacional"))),
     #        dmc.Center(html.Img(id='image', src='../assets/Nacional.png', width="65", height="65"))]
     # valores a nivel estatal
-    return [
-            dbc.Col(html.Img(id='image', src='../assets/'+ str(feature["properties"]["name"]) +'.png', width="65", height="65")),
-            dbc.Col(html.H4("{}".format(feature["properties"]["name"]))),
-        ]
+    return html.Center([
+            dbc.Col(html.Img(id='image', src='../assets/'+ str(feature["properties"]["name"]) +'.png', width="65", height="90")),
+            dbc.Col(html.H1("{}".format(feature["properties"]["name"]))),
+        ])
     
 #import plotly.io as pio
 #pio.renderers.default = 'firefox'
@@ -92,8 +92,6 @@ root = "C:/Users/jcmartinez/Desktop/Dashboard3"
 #repo_est_url = ""
 estados_json = open(root + '/datasets/estadosMexico.json')
 mx_est_geo = json.load(estados_json)
-
-
 
 # diccionario nombre columnas {base: new}
 names = {
@@ -555,7 +553,7 @@ content1 = html.Div([
             )
         ]),
         # Barra de control
-    ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem', 'marginRight': '2rem','marginTop': '0rem'}
+    ], className="twelve columns", style={'backgroundColor': '#F4F6F6', 'marginLeft': '2rem', 'marginRight': '2rem','marginBottom': '4rem'}
     )
 # backgroundColor': '#F4F6F6'
 #############################################################
@@ -599,7 +597,7 @@ content2 = html.Div([
                 ), 
         ]),
         
-    ], className="twelve columns", style={'backgroundColor': '#F2F4F4', 'marginLeft': '0rem','marginRight': '0rem','marginTop': '0rem'}
+    ], className="twelve columns", style={'backgroundColor': '#F2F4F4', 'marginLeft': '0rem','marginRight': '0rem','marginTop': '0rem','marginBottom': '4rem'}
 
     )
 
@@ -754,17 +752,13 @@ layout = dbc.Container([
                 ]
         ),
         # Indicador de estado
-        dbc.Row(
-            get_info2()
-            , 
-            id="info2" ,                    
-            align="center",
-            className="g-0"),
+        dbc.Row([
+            #dbc.Col("", style={'marginLeft':'8px'}),
+            dbc.Col(get_info2(), id="info2", md=4),
+            #dbc.Col("", style={'marginRight':'8px'})
+            ], style={'backgroundColor': '#F4F6F6','marginLeft':'2px','marginRight':'2px', 'marginBottom':'4px', 'backgroundColor': '#F4F6F6'}),
 
-        dbc.Row([html.Div([html.Div(get_info())], 
-                     id="info")], align="center", style={'marginTop':'4px','marginBottom':'4px'}),
-    
-        # third row: graficos
+            # third row: graficos
         dbc.Row([
                 dbc.Col(content2, className="col-12 col-md-12", style={'backgroundColor': '#F4F6F6', 'marginTop': '1rem', 'marginLeft':'2rem', 'marginRight':'2rem'}),
                 #dbc.Col(sidebar_vol_right, width=3, className='bg-light')
@@ -1047,34 +1041,15 @@ tab2_mapa_content = html.Div([
         html.Iframe(id='map', srcDoc=open('PieMap.html', 'r').read(), style={"height": "1200px", "width": "900px"})
     ], style={'height': '100vh', 'width': '100vh'})
 
-# Función para encabezados
-def get_info(feature=None):
-    # Valores por defecto a nivel nacional 
-    #header = [html.H4("Beneficiarios")]
-    #monto_apoyo_ent = base_entidad[base_entidad['NOM_ENT']==feature["properties"]["name"]]['MONTO_APOYO_TOTALsum'].sum()
-    
-    if not feature:
-        return [
-            dmc.Center(html.H4("{}".format("Nacional"))),
-            dmc.Center(html.Img(id='image', src='../assets/Nacional.png', width="65", height="65"))]
-        # valores a nivel estatal
-    return [
-            dmc.Center(html.H4("{}".format(feature["properties"]["name"]))),
-            #html.Br(),
-            #html.B("Estado"), ": ",
-            #html.A("{}".format(feature["properties"]["name"])),
-            dmc.Center(html.Img(id='image', src='../assets/'+ str(feature["properties"]["name"]) +'.png', width="65", height="65")),
-          ]
-    
-    
 
-
-
+    
 
 # declaración de parámetros para color y leyendas        
 classes = [0, 1000,3000,5000,10000, 100000, 1000000, 3000000]
 colorscale = ['#D5F5E3', '#ABEBC6', '#82E0AA', '#58D68D', '#2ECC71', '#239B56', '#1D8348', '#0B5345']
-style = dict(weight=2, opacity=1, color='#ECF0F1', dashArray='3', fillOpacity=0.7)
+style = dict(weight=1, opacity=0.9, color='#2e4053', dashArray='1', fillOpacity=1)
+# estilo centros de acopio
+style2 = dict(weight=1, opacity=0.9, color='#2e4053', dashArray='1', fillOpacity=1)
 # Create colorbar.
 ctg = ["{}+".format(millify(cls), classes[i + 1]) for i, cls in enumerate(classes[:-1])] + ["{}+".format(millify(classes[-1]))]
 colorbar = dlx.categorical_colorbar(categories=ctg, colorscale=colorscale, width=300, height=30, position="bottomleft")
@@ -1118,7 +1093,7 @@ def info_hover(feature):
               #State('producto', 'value'),
               #State('anio', 'value'))
 def info_hover(feature):
-    return get_info(feature)
+    return get_info2(feature)
 
 
 @app.callback(
@@ -1171,8 +1146,8 @@ def actualizar_mapa2(clicks, margin_sel, benef_sel,capas_sel, producto_sel, anio
                             options=dict(style=style_handle),  # how to style each polygon
                             zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
                             zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
-                            hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='7')),  # style applied on hover
-                            hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp="white"),
+                            hoverStyle=arrow_function(dict(weight=4, color='white', dashArray='2')),  # style applied on hover
+                            hideout=dict(colorscale=colorscale, classes=classes, style=style2, colorProp="#2e4053"),
                             id="states"),  
                 benef_option,
                 dl.Pane([dl.Circle(center=[lat, lon], radius=6, color='red', children=[
@@ -1194,8 +1169,8 @@ def actualizar_mapa2(clicks, margin_sel, benef_sel,capas_sel, producto_sel, anio
                             options=dict(style=style_handle),  # how to style each polygon
                             zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
                             zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
-                            hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='7')),  # style applied on hover
                             hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp=f'{anio_sel}-{producto_sel}'),
+                            hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='2')),  # style applied on hover
                             id="states"),  
                 benef_option,           #dl.GeoJSON(url="https://gist.githubusercontent.com/mcwhittemore/1f81416ff74dd64decc6/raw/f34bddb3bf276a32b073ba79d0dd625a5735eedc/usa-state-capitals.geojson", id="capitals"),  # geojson resource (faster than in-memory)
                 #dl.GeoJSON(url="https://raw.githubusercontent.com/SESNA-Inteligencia/Dashboard-1_1/master/datasets/estadosMexico.json", id="states",
@@ -1213,7 +1188,7 @@ def actualizar_mapa2(clicks, margin_sel, benef_sel,capas_sel, producto_sel, anio
                             options=dict(style=style_handle),  # how to style each polygon
                             zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
                             zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
-                            hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='7')),  # style applied on hover
+                            hoverStyle=arrow_function(dict(weight=4, color='#154360', dashArray='2')),  # style applied on hover
                             hideout=dict(colorscale=colorscale, classes=classes, style=style, colorProp=f'{anio_sel}-{producto_sel}'),
                             id="states"),  
                 benef_option,

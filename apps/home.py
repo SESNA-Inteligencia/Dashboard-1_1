@@ -17,7 +17,7 @@ layout = dbc.Container([
             dbc.Carousel(
                 items=[
                     {"key": "1", "src": "../assets/logo.svg", "header": "With header ","caption": "SESNA"},
-                    {"key": "2", "src": "../assets/principal.jpg", "header": "With header ","caption": "SESNA"},
+                    {"key": "2", "src": "../assets/logo.svg", "header": "With header ","caption": "SESNA"},
                     {"key": "3", "src": "../assets/logo.svg", "header": "With header ","caption": "SESNA"},
                 ],
                 controls=True,

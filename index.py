@@ -104,7 +104,7 @@ app.layout = html.Div([
         html.Br(),
         html.Br(),
         html.Br(),
-    ], className="text-center", style={'color':'white', 'backgroundColor':'#566573'}),
+    ], className="text-center", style={'color':'white', 'backgroundColor':'#566573'}), #566573
 
 ])
 

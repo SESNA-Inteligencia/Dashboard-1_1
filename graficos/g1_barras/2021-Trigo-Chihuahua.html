@@ -16,9 +16,9 @@
     am5.ready(function() {
     
     // Create root element
-    // https://www.amcharts.com/docs/v5/getting-started/#Root_element
     var root = am5.Root.new("chartdiv");
-    root._logo.dispose();
+    // elimina el logo inferios
+    root._logo.dispose(); 
     
     // Set themes
     // https://www.amcharts.com/docs/v5/concepts/themes/
@@ -65,7 +65,7 @@
       tooltip: am5.Tooltip.new(root, {})
     }));
 
-    // x label
+    // Ajuste de etiquetas del eje X
     xAxis.get("renderer").labels.template.setAll({
   	oversizedBehavior: "truncate",
  	maxWidth: 90,
@@ -88,6 +88,8 @@
       xAxis: xAxis,
       yAxis: yAxis,
       valueYField: "value",
+      fill: am5.color('#4e203a'),  // colorbar
+      stroke: am5.color('#4e203a'), // colorbar
       sequencedInterpolation: true,
       categoryXField: "country",
       tooltip: am5.Tooltip.new(root, {
@@ -95,15 +97,20 @@
       })
     }));
     
-    series.columns.template.setAll({ cornerRadiusTL: 5, cornerRadiusTR: 5, strokeOpacity: 0 });
-    series.columns.template.adapters.add("fill", function(fill, target) {
-      return chart.get("colors").getIndex(series.columns.indexOf(target));
+    // radio de borde de cada barra
+    series.columns.template.setAll({ cornerRadiusTL: 1, cornerRadiusTR: 1, strokeOpacity: 0 });
+    // separación de entre barras
+    series.columns.template.setAll({
+  	width: am5.percent(96) 
     });
     
-    series.columns.template.adapters.add("stroke", function(stroke, target) {
-      return chart.get("colors").getIndex(series.columns.indexOf(target));
+    // hover states
+    series.columns.template.set("interactive", true);
+
+    series.columns.template.states.create("hover", {
+      fill: am5.color("#2a3240"),
+      stroke: am5.color("#2a3240")
     });
-    
     
     // Set data
     

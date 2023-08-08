@@ -287,11 +287,11 @@ sidebar_right = html.Div([
                     #     radius='xl',
                     #     mr=5,
                     # ),
-                    sx={'marginLegft': '3rem', 'marginRight': '1.5rem'},
+                    sx={'marginLegft': '1rem', 'marginRight': '2rem'},
                     size='xl',
-                    radius="sl",
-                    color="blue",
-                    variant="dot",
+                    radius="ms",
+                    color="indigo",
+                    variant="outline",
                     ml=60,
                 ),
                 dmc.Badge(  
@@ -302,13 +302,13 @@ sidebar_right = html.Div([
                     #     radius='xl',
                     #     ml=5,
                     # ),
-                    sx={'marginLegft': '1.5rem', 'marginRight': '3rem'},
+                    sx={'marginLegft': '2rem', 'marginRight': '1rem'},
                     size="xl",
-                    radius="sl",
-                    color="blue",
-                    variant="dot",
+                    radius="ms",
+                    color="indigo",
+                    variant="outline",
                 ), 
-                ], style={'marginBottom':'1rem', 'marginLegft': '2rem', 'marginRight': '2rem'}), 
+                ], style={'marginBottom':'1rem', 'marginLegft': '1rem', 'marginRight': '1rem'}), 
                 ),
                 html.Hr(),
                 dmc.Text("Beneficiarios"),
@@ -399,7 +399,10 @@ sidebar_right = html.Div([
             # ], className='col-12'),
             html.Div([
                 dmc.TransferList(id="transfer-list-simple",
-                                 value=list_capas_marginacion),
+                                 value=list_capas_marginacion,
+                                searchPlaceholder=['Agregar...', 'Remover...'],
+                                nothingFound=['Cannot find item to add', 'Cannot find item to remove'],
+                                placeholder=['No item left to add', 'No item left ro remove']),
             ]),    
         ]),
                     
@@ -641,12 +644,11 @@ layout = dbc.Container([
                 className="g-0 m-0 p-0",
             ),
             
-        
-        ], style={'background-image': 'url(/assets/maiz-mexico.jpg)','background-size': '1450px 650px','backgroundColor':'#E5E8E8', 'm':'0px', 'padding':'0px', 'height': '100%'}),    
-        
+        ], style={'opacity':'0.95','background-blend-mode':'overlay','background-image': 'url(/assets/maiz-mexico.jpg)','background-size': '1450px 650px','backgroundColor': '#2a3240', 'm':'0px', 'padding':'0px', 'height': '100%'}),    
+        # 'background-image': 'url(/assets/maiz-mexico.jpg)'
         # horizontal line
         #html.Hr(),
-       
+        # colorNaranja : '#ea290b'
         html.Div([
             dbc.Row([
                 dbc.Col([
@@ -1047,9 +1049,6 @@ def resumen_volumen_incentivado_promedio(clicks, feature, sel_producto, sel_anio
 #         html.Iframe(id='map', srcDoc=open('PieMap.html', 'r').read(), style={"height": "1200px", "width": "900px"})
 #     ], style={'height': '100vh', 'width': '100vh'})
 
-
-    
-
 # declaración de parámetros para color y leyendas        
 classes = [0, 1000,3000,5000,10000, 100000, 1000000, 3000000]
 colorscale = ['#fef9e7','#D5F5E3', '#ABEBC6', '#82E0AA', '#58D68D', '#2ECC71', '#239B56', '#1D8348'] # '#0B5345'
@@ -1368,7 +1367,8 @@ def actualizar_mapa2(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
         def __init__(self, background_style):
             self.base_layer = [dl.TileLayer(url=background_style), 
                                 colorbar, 
-                                info]
+                                info,
+                                base]
         # function 
         def add(self, features):
             # add layers
@@ -1462,7 +1462,7 @@ def actualizar_plot_r3c1(clicks, feature, producto_sel, anio_sel):
     
     
     if feature == None:
-        return open(root + f"/graficos/g1_barras/2020-Maíz-Veracruz de Ignacio de la Llave.html", 'r', encoding = 'utf-8').read()
+        return open(root + f"/graficos/g1_barras/{str(anio_sel)}-{str(producto_sel)}-{'Nacional'}.html", 'r', encoding = 'utf-8').read()
         #html.Iframe(id='plot2-r3c1',src=file, style={"height": "350px", "width": "1300px"})
     else:
         entidad = feature["properties"]["name"]
@@ -1508,7 +1508,7 @@ def actualizar_plot_r3c2(clicks, feature, producto_sel, anio_sel):
     
     
     if feature == None:
-        return open(root + f"/graficos/g1_barras/2020-Maíz-Veracruz de Ignacio de la Llave.html", 'r', encoding = 'utf-8').read()
+        return open(root + f"/graficos/g1_barras/{str(anio_sel)}-{str(producto_sel)}-{'Nacional'}.html", 'r', encoding = 'utf-8').read()
         #html.Iframe(id='plot2-r3c1',src=file, style={"height": "350px", "width": "1300px"})
     else:
         entidad = feature["properties"]["name"]
@@ -1574,7 +1574,7 @@ def actualizar_plot_r2(clicks, feature, producto_sel, anio_sel):
     
     
     if feature == None:
-        return open(root + f"/graficos/g1_barras/2020-Maíz-Veracruz de Ignacio de la Llave.html", 'r', encoding = 'utf-8').read()
+        return open(root + f"/graficos/g1_barras/{str(anio_sel)}-{str(producto_sel)}-{'Nacional'}.html", 'r', encoding = 'utf-8').read()
         #html.Iframe(id='plot2-r3c1',src=file, style={"height": "350px", "width": "1300px"})
     else:
         entidad = feature["properties"]["name"]

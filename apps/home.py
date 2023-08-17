@@ -104,7 +104,7 @@ layout = dbc.Container([
             
     ], className="col-12 col-md-7 mb-0 p-3 text-black rounded-0 text-center", style={'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'}),
   
-    # fourd row : bottom
+    # four row : bottom
     dbc.Row([
             dbc.Col(html.Div([
                 dbc.Button("Ver", 
@@ -128,9 +128,7 @@ layout = dbc.Container([
     ]),
     
 
-    html.Br(),
-    html.Br(),
-    html.Br(),
+  
      
 
 ])

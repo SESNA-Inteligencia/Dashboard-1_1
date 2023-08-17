@@ -87,15 +87,15 @@ app.layout = html.Div([
     html.Footer([
         html.Br(),
         html.Br(),
-   
+            html.Center(
                 dbc.Row(
                     [
                         dbc.Col(html.Img(src="assets/Logotipo_blanco.png",height="40px"), style = {'textAlign':'right'} ),
-                        dbc.Col(dbc.NavbarBrand("Secretaría Ejecutiva del Sistema Nacional Anticorrupción", style={'color':'white', 'font-size': '22px', 'textAlign':'left'})),
+                        dbc.Col(dbc.NavbarBrand("Secretaría Ejecutiva del Sistema Nacional Anticorrupción", style={'color':'white', 'font-size': '24px', 'textAlign':'left'})),
                     ],
-                     style={"width": "70%"},
+                     style={"width": "60%"},
                      align="center",
-                ),
+                ),),
                 # en el href se marca a donde dirige cuando se da click en estas partes
                 #href="/home",
                 #style={"textDecoration": "none"},
@@ -117,7 +117,7 @@ def display_page(pathname):
 
     if pathname == '/segalmex':
         return segalmex.layout
-    elif pathname == '/page2':
+    elif pathname == '/segalmex':
         return segalmex.layout
     elif pathname == '/page3':
         return segalmex.layout

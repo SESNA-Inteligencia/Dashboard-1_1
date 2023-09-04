@@ -16,21 +16,22 @@ layout = dbc.Container([
         dbc.Col(
             dbc.Carousel(
                 items=[
-                    {"key": "1", "src": "../assets/logo.svg", "header": "With header ","caption": "SESNA"},
-                    {"key": "2", "src": "../assets/logo.svg", "header": "With header ","caption": "SESNA"},
-                    {"key": "3", "src": "../assets/logo.svg", "header": "With header ","caption": "SESNA"},
+                    {"key": "1", "src": "../assets/logo.svg", "header": "With header ","caption": "SESNA", "img_style":{"width":"100%","height":"750px" }},
+                    {"key": "2", "src": "../assets/logo.svg", "header": "With header ","caption": "SESNA", "img_style":{"width":"100%","height":"750px" }},
+                    {"key": "3", "src": "../assets/logo.svg", "header": "With header ","caption": "SESNA", "img_style":{"width":"100%","height":"750px" }},
                 ],
                 controls=True,
                 indicators=False,
                 interval=2000,
                 ride="carousel",
-            ), className="mb-5 mt-5", style={'color':'black'},
+                className="carousel", style={'backgroundColor':'white'},
+            ), 
             #html.Img(src="../assets/logo.svg", style={
             #                                            "width": "100%",
             #                                            "margin-bottom": "10px",
             #                                        })
         )
-    ]),
+    ], className="col-12 m-0 p-0 w-100%"),
     dbc.Row([
             dbc.Col(html.Div([
                 dmc.Text("Programas sociales", color='black', weight=500, align='center', style={"fontSize": 50}),
@@ -122,13 +123,5 @@ layout = dbc.Container([
                 ]),
             md=6), 
         ], justify='center', className="col-12 col-md-7 mb-4 p-3 text-black rounded-0", style={'marginBottom':'4rem', 'boxShadow': '#e3e3e3 4px 4px 1px', 'backgroundColor':'#FFFFFF'}),
-    
-    
-    
     ]),
-    
-
-  
-     
-
-])
+],className="col-12"  , style={'padding':'0rem', 'margin':'0rem'})

@@ -25,6 +25,7 @@ dropdown = dbc.DropdownMenu(
     nav = True,
     in_navbar = True,
     label = "Menú",
+    style={'fontSize':'20px'}
 )
 
 # Se inicializa barra de navegación
@@ -54,9 +55,8 @@ navbar = dbc.Navbar(
                 id="navbar-collapse",
                 is_open=False,
                 navbar=True,
-            ),
-            
-        ]
+            ),  
+        ], style={'height':'4rem'}
     ),
     color="dark",
     dark=True,

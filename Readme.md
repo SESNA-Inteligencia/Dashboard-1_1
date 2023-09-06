@@ -128,7 +128,7 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     pip install dash-millify==0.1.1
     conda install -c conda-forge dash-extensions==0.1.13rc1
 
-**Observación:** Si alguna dependencia no se puede inatlar mediante 'conda install -c conda-forge' probar con 'pip install' seguido de la dependencia
+**Observación:** Si alguna dependencia no se puede inatalar mediante 'conda install -c conda-forge' probar con 'pip install' seguido de la dependencia
     
   
 

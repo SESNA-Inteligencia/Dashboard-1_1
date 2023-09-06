@@ -107,7 +107,7 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     conda install -c conda-forge dash-table 
     conda install -c conda-forge plotly
     conda install -c conda-forge folium
-    conda install -c conda-forge dash-mantine-components-0.11.1
+    conda install -c conda-forge dash-mantine-components-0.12.1
     conda install -c conda-forge matplotlib
     conda install -c conda-forge seaborn
     conda install -c conda-forge dash-bootstrap-components
@@ -126,7 +126,9 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     pip install dash-iconify==0.1.2
     conda install -c conda-forge millify==0.1.1
     pip install dash-millify==0.1.1
-    conda install -c conda-forge dash-extensions==0.1.8
+    conda install -c conda-forge dash-extensions==0.1.13rc1
+
+**Observación:** Si alguna dependencia no se puede inatlar mediante 'conda install -c conda-forge' probar con 'pip install' seguido de la dependencia
     
   
 

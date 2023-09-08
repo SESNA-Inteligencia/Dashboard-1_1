@@ -884,9 +884,59 @@ ro_2021_leche = html.Div([
                 # ]),
             ], className="col-10", style={'marginTop':'4rem','marginBottom':'2rem','paddingLeft':'0rem', 'paddingRight':'0rem'}),
 
+#####################################################################
 
-
-
+def resumen_reglas_operacion(Anio, Producto):
+    '''
+    Función para retornar el resumen de las reglas de operación
+        dados el año y el tipo de producto
+        
+    Input : 
+        Anio     : (int) Año correspondiente a las reglas de operación
+                   2019, 2020, 2021
+        Producto : (str) Producto considerado; Maíz, Frijol, Trigo,
+                   Arroz, y leche.
+    Outputs:
+        Div : Texto html con el resumen de las reglas de operación  
+    '''
+    
+    #############         Año 2019          ###################
+    if Anio == '2019' and Producto == 'Maíz':
+        result = ro_2019_maiz
+    elif Anio == '2019' and Producto == 'Frijol':
+        result = ro_2019_frijol
+    elif Anio == '2019' and Producto == 'Trigo':
+        result = ro_2019_trigo
+    elif Anio == '2019' and Producto == 'Arroz':
+        result = ro_2019_arroz
+    elif Anio == '2019' and Producto == 'Leche':
+        result = ro_2019_leche
+    #############         Año 2020          ###################
+    elif Anio == '2020' and Producto == 'Maíz':
+        result = ro_2020_maiz
+    elif Anio == '2020' and Producto == 'Frijol':
+        result = ro_2020_frijol
+    elif Anio == '2020' and Producto == 'Trigo':
+        result = ro_2020_trigo
+    elif Anio == '2020' and Producto == 'Arroz':
+        result = ro_2020_arroz
+    elif Anio == '2020' and Producto == 'Leche':
+        result = ro_2020_leche
+    #############         Año 2020          ###################
+    elif Anio == '2021' and Producto == 'Maíz':
+        result = ro_2021_maiz
+    elif Anio == '2021' and Producto == 'Frijol':
+        result = ro_2021_frijol
+    elif Anio == '2021' and Producto == 'Trigo':
+        result = ro_2021_trigo
+    elif Anio == '2021' and Producto == 'Arroz':
+        result = ro_2021_arroz
+    elif Anio == '2021' and Producto == 'Leche':
+        result = ro_2021_leche
+    else:
+        result = "No information"
+    
+    return result
 
 
 

@@ -104,6 +104,12 @@ root = "C:/Users/jcmartinez/Desktop/Dashboard3"
 json.load(open(root +'/datasets/sample.json'))
 data2 = json.load(open(root +'/datasets/sample3.json'))
 
+# base completa
+# base_2019 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2019.xlsx')
+# base_2020 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2020.xlsx')
+# base_2021 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2021.xlsx')
+
+
 # bases Beneficiarios estado
 base_entidad = pd.read_excel(root + '/datasets/base_entidad.xlsx')
 base_entidad_tprod = pd.read_excel(root + '/datasets/base_entidad_tprod.xlsx')
@@ -116,7 +122,7 @@ base_municipios_tprod = pd.read_excel(root + '/datasets/base_municipio_tprod2.xl
 centros_entidad = pd.read_excel(root + '/datasets/centros_entidad.xlsx')
 centros_municipio = pd.read_excel(root + '/datasets/centros_municipio2.xlsx')
 # base productores
-base_productores = pd.read_excel(root + '/datasets/TotalProductores.xlsx')
+base_productores = pd.read_excel(root + '/datasets/TotalProductores2.xlsx')
 
 # sample maps P
 # blue style
@@ -150,10 +156,8 @@ list_states = base_entidad['NOM_ENT'].unique()
 list_layers = ['Centros de Acopio','Volumen Producción','Productores','All']
 list_beneficiarios_opciones = ['Monto del Apoyo', 'Número de Beneficiarios']
 
-
 list_capas_marginacion = initial_values = [
-    [
-        # capas
+    [   # capas
         #{"value": "Beneficiarios", "label": "Beneficiarios", "group": "Capa"},
         {"value": "Centros de Acopio", "label": "Centros de Acopio", "group": "Capa"},
         {"value": "Productores", "label": "Productores", "group": "Capa"},
@@ -167,26 +171,137 @@ list_capas_marginacion = initial_values = [
         {"value": "Medio", "label": "Medio", "group": "Nivel Marginación"},
         {"value": "Alto", "label": "Alto", "group": "Nivel Marginación"},
         {"value": "Muy alto", "label": "Muy alto", "group": "Nivel Marginación"},
-        {"value": "Sin GM", "label": "Sin GM", "group": "Nivel Marginación"},
+        {"value": "No disponible", "label": "No disponible", "group": "Nivel Marginación"},
     ],
 ]
 
 
 list_criterios = ['Marginación', 'Precio']
 
-#------------------------------------------------------------------------------
-#                        layout
-####################    header
+######################################################################
+####                 Header
+######################################################################
 
-# Filtros principales
-main_filters = html.Div([
-    dmc.SimpleGrid(
-    cols=3,
-    children=[
+# seccion 1 : header
+seccion1 = html.Div([
+    dbc.Row([
+        dbc.Col([#dbc.NavbarBrand("Programa de Precios de Garantía",
+                 #        style={'color':'white', 'font-size': '60px', 'textAlign':'center'}),
+                dmc.Text("Programa de Precios de Garantía a", weight=500,size=30, color='white'),
+                #html.Br(),
+                dmc.Text("Productos Alimentarios Básicos",  weight=600, size=60, color='white')],
+                style = {'textAlign':'center', 'color':'white', 'marginBottom':'5rem', 'marginTop':'6rem'} ),
+    ]),
+    dbc.Row([
+        dbc.Col([], className='col-5'),
+        dbc.Col([], className='col-4'),
+        dbc.Col([
+            dmc.Button("Resumen Ejecutivo",
+                id="open",
+                leftIcon=DashIconify(icon="ant-design:read-outlined"),
+                color="orange",
+                n_clicks=0),
+            ], className='col-3', style={'marginBottom':'2rem'})
+    ]),
+], className="col-12",  style={'opacity':'0.95','background-blend-mode':'overlay','background-image': 'url(/assets/maiz-mexico.jpg)','background-size': '1450px 650px','backgroundColor': '#2a3240', 'm':'0px', 'padding':'0px', 'height': '100%'})
+
+##################################################################
+#                          Introducción
+##################################################################
+seccion2 = html.Div([
+    dbc.Row([
+        dbc.Col([
+            dmc.Paper(
+                children=[
+                    dmc.Text("¿Qué es el Programa Precios de Garantía a Productos Alimentarios Básicos?", size=24, color='white', align="justify"),
+                    html.Br(),
+                    dmc.Text("El Programa de Precios de Garantía a Productos Alimentarios Básicos forma parte de los Programas Prioritarios del Gobierno Federal que buscan brindar una atención integral a las problemáticas vinculadas con la autosuficiencia alimentaria, se encuentra a cargo de la Secretaría de Agricultura y Desarrollo Rural y es operado por uno de sus organismos descentralizados, Seguridad Alimentaria Mexicana (SEGALMEX).", color='white', align="justify"),
+                    html.Br(),
+                    dmc.Text("El objetivo general del Programa Precios de Garantía es complementar el ingreso de los pequeños y medianos productores agropecuarios de granos básicos y leche.", color='white', align="justify")],
+                shadow="xs",
+                style={'backgroundColor':'#2a3240'}
+            ),
+        ], className= 'col-xl-6 col-12',style={'backgroundColor':'#2a3240', 'padding':'2rem'}),
+        #dmc.Divider(orientation="vertical", style={"height": 20}),
+        dbc.Col([
+            dmc.Text("Diagrama general de la dinámica del programa", size=24, color='white', align="center"),
+            dmc.Image(src="/assets/logo10.svg",width='100%', withPlaceholder=True)
+        ], className='col-xl-6 col-12',style={'padding':'2rem'}),
+    ], style={'backgroundColor':'#2a3240'}),
+], style={'marginTop':'5rem','padding':'2rem', 'backgroundColor':'#2a3240'})
+
+
+#####  SECCIÓN : REGLAS DE OPERACIÓN
+seccion3 = html.Div([
+    ####### SECCION : PIE PLOT
+    dmc.Card([
+        dmc.CardSection(
+            dmc.Group(
+                children=[
+                    dmc.Text("Review Pictures", weight=500),
+                    dmc.ActionIcon(
+                        DashIconify(icon="carbon:overflow-menu-horizontal"),
+                        color="gray",
+                        variant="transparent",
+                    ),
+                ],
+                position="apart",
+            ),
+            withBorder=True,
+            inheritPadding=True,
+            py="xs",
+        ),
+        dmc.Text(
+            children=[
+                dmc.Text(
+                    "200+ images uploaded",
+                    color="blue",
+                    style={"display": "inline"},
+                ),
+                " since last visit, review them to select which one should be added to your gallery",
+            ],
+            mt="sm",
+            color="dimmed",
+            size="sm",
+        ),
+        dmc.CardSection(
+            html.Iframe(id='pie-plot1', srcDoc=open(root + "/graficos/piePlot_2020.html", 'r', encoding = 'utf-8').read(), style={"height": "350px", "width": "1200px"}),
+        ),
+    ],
+    withBorder=True,
+    style={'backgroundColor':'white', 'marginTop':'4rem', 'marginBottom':'2rem'}
+    ),
+], className="flip-card-front", style={'marginLeft':'2rem', 'marginRight':'2rem','backgroundColor':'white', 'm':'0px', 'padding':'0px'})
+        
+#################################################################
+#          Filtros principales (año -producto) - Descargas
+#################################################################
+seccion4 = html.Div([
+    dbc.Row([
         # Primera columna : Vacia
-        html.Div(""),
+        dbc.Col([
+            html.Div([
+            dmc.List(
+                icon=dmc.ThemeIcon(
+                    DashIconify(icon="radix-icons:check-circled", width=16),
+                    radius="xl",
+                    color="teal",
+                    size=14,
+                ),
+                size="sm",
+                spacing="sm",
+                children=[
+                    dmc.Text("Instrucciones: ",weight=600, color='black', size=13),
+                    dmc.ListItem(dmc.Text("Seleccione año y producto, después click en actualizar   ", color='black', size=12)),
+                    dmc.ListItem(dmc.Text("Seleccione año y producto, después click en actualizar   ", color='black', size=12)),
+                    
+                ],
+            ),    
+                
+            ], style={'backgroundColor':'#E5E8E8'}),
+        ], className='col-xl-4 col-0', style={'padding':'4rem'}),
         # Segunda columna : Selector AÑO
-        html.Div([
+        dbc.Col([
             dbc.Row([
                 dbc.Col([
                     dmc.Select(
@@ -238,31 +353,34 @@ main_filters = html.Div([
                 ]),
             ], style={'marginBottom':'2rem', 'padding':'0rem'}),
             
-            html.Center(
-                dbc.Row([
-                    
-                    dbc.Col([
+            dbc.Col([
+                html.Center(
+                    dbc.Row([
                         
-                        dmc.Button(
-                            'Actualizar',
-                            id='submit-button',
-                            n_clicks=0,
-                            #children='Actualizar',
-                            color = 'dark'
-                        ),
+                        dbc.Col([
+                            
+                            dmc.Button(
+                                'Actualizar',
+                                id='submit-button',
+                                n_clicks=0,
+                                #children='Actualizar',
+                                color = 'dark'
+                            ),
+                        ]),
                     ]),
-                ]),
-            ),
-        ],className='col-12', style={'paddingTop':'2rem'}),
+                ),
+            ]),
+        ], className='col-xl-4 col-12',  style={'marginBottom':'4rem','paddingTop':'5rem'}),
         # Tercera columna : Selector Producto
-        html.Center(
-            html.Div([
+        
+        dbc.Col([
+            dmc.Center(
                 dbc.Row([
-                dmc.Button("Resumen ...",
-                                id="open",
-                                leftIcon=DashIconify(icon="ant-design:read-outlined"),
-                                color="blue",
-                                n_clicks=0),
+                # dmc.Button("Resumen Ejecutivo",
+                #                 id="open",
+                #                 leftIcon=DashIconify(icon="ant-design:read-outlined"),
+                #                 color="blue",
+                #                 n_clicks=0),
                 # dbc.Button(
                 #         "Resumen Ejecutivo",
                 #         #href= "/Proyecto.pdf",
@@ -276,51 +394,191 @@ main_filters = html.Div([
                     #     openDelay=500,
                     # ),
                     dcc.Download(id="download"), 
-                ], className='col-6', style={'marginBottom':'1rem'}),
-                
-                dbc.Row([
-                    #html.Div([
-                        dmc.Button("Ver Resumen RO",
-                                id="open",
-                                leftIcon=DashIconify(icon="ant-design:read-outlined"),
-                                color="blue",
-                                n_clicks=0),
-                        dbc.Modal([
-                                dbc.ModalHeader(dbc.ModalTitle("Reglas de Operación: Trigo - 2020", style={'color':'#4e203a'}), style={'backgroundColor':'white'} ),
-                                dbc.ModalBody(html.Div(children=[
-                                    ], id='reglas-operacion', style={'paddingLeft':'2.5rem', 'paddingRight':'2.5rem'})
-                                , style={'backgroundColor':'#7c90ab'}),
-                                dbc.ModalFooter(
-                                    dbc.Button(
-                                        "Cerrar", id="close", className="ms-auto", outline=False, color="dark", n_clicks=0
-                                    ), style={'backgroundColor':'white'}
+                ], className='col-xl-6 col-8', style={'marginBottom':'0rem'}),
+            ),
+              
+            
+        ], className='col-xl-4 col-12', style={'marginBottom':'0rem'}),
+        
+        #  
+        dmc.Center(
+        dmc.Group([   
+            html.Div([
+                 dmc.Anchor(
+                    dmc.Button("Carac. PS",
+                            id="open",
+                            variant="subtle",
+                            leftIcon=DashIconify(icon="ant-design:read-outlined"),
+                            color="white",
+                            n_clicks=0), href='#'),
+                    dbc.Modal([
+                            dbc.ModalHeader(dbc.ModalTitle(
+                                dmc.Grid(
+                                    children=[
+                                        dmc.Col(html.Div(dmc.Text("Características de los apoyos : ")), span=8),
+                                        dmc.Col(html.Div(dmc.Text("2020", id="anio_filtro2")), span=2),
+                                        dmc.Col(html.Div("-"), span=1),
+                                        dmc.Col(html.Div(dmc.Text("Frijol", id="producto_filtro2")), span=1),
+                                    ],
+                                    justify="center",
+                                    align="center",
+                                    gutter="xl",
                                 ),
-                            ],
-                            id="modal",
-                            size='xl',
-                            is_open=False,
-                        ),
-                    #],
-                #),
-                ],className='col-6', style={'marginBottom':'1rem'}),
-                # Bottom descarga de información    
-                dbc.Row([
-                    #html.Div([
-                        dmc.Button("Descargar BD",
-                                id="dowload_info",
-                                leftIcon=DashIconify(icon="eos-icons:database"),
-                                color="blue",
-                                n_clicks=0),
-                        
-                    #],
-                #),
-                ], className='col-6', style={'marginBottom':'1rem'}),
-
+                                style={'color':'#4e203a'}), style={'backgroundColor':'white'} ),
+                            dbc.ModalBody(html.Div(children=[
+                                ], id='reglas-operacion', style={'paddingLeft':'2.5rem', 'paddingRight':'2.5rem'})
+                            , style={'backgroundColor':'#2a3240'}),
+                            dbc.ModalFooter(
+                                dbc.Button(
+                                    "Cerrar", id="close", className="ms-auto", outline=False, color="dark", n_clicks=0
+                                ), style={'backgroundColor':'white'}
+                            ),
+                        ],
+                        id="modal",
+                        size='xl',
+                        is_open=False,
+                    ),
             ]),
+            dmc.Divider(orientation="vertical", style={"height": 30}),
+            html.Div([
+                dmc.Anchor(
+                    dmc.Button("Descargar BD",
+                            id="dowload_xlsx",
+                            variant="subtle",
+                            leftIcon=DashIconify(icon="eos-icons:database"),
+                            color="white",
+                            n_clicks=0), href='#'),
+                    dcc.Download(id="download-db-xlsx"),
+            ]),
+            dmc.Divider(orientation="vertical", style={"height": 30}),
+            html.Div([
+                dmc.Button(
+                    "Descripción del Mapa",
+                    id="fade-transition-button",
+                    variant="subtle",
+                    leftIcon=DashIconify(icon="eos-icons:database"),
+                    color="white",
+                    n_clicks=0
+                ),
+            ]),
+        ]), 
         ),
     ]),
-], style={'marginBottom':'4rem', 'paddingTop':'6rem', 'paddingBottom':'6rem', 'backgroundColor':'#F8F9F9'})
+], style={'marginBottom':'0rem', 'paddingTop':'1rem', 'paddingBottom':'1rem', 'backgroundColor':'#F8F9F9'})
 
+##############################################################
+#########           Descripción del mapa
+##############################################################
+
+seccion5 = html.Div([
+    dbc.Fade(
+        html.Div([  
+            dmc.Paper(children=[
+                    dmc.Text("Introducción al Mapa de características relacionadas con la implementación del Programa de Precios de Garantía a Productos Alimentarios Básicos", size=24, color='white'),
+                    dbc.Row([
+                        dbc.Col([
+                            html.Br(),
+                            dmc.Text("El mapa tiene finalidad de comparar a los productores y población objetivo, respecto a las personas beneficiarias del Programa Precios de Garantía a Productos Alimentarios Básicos. Lo anterior con la finalidad de contar con una herramienta de análisis para entender la manera en la que se distribuyeron territorialmente los beneficios del Programa que apoye a la identificación de posibles riesgos de corrupción, así como  los impactos en poblaciones vulnerables.", size=16, color='white', align="justify"),
+                            html.Br(),
+                            dmc.Text("¿Cómo usar el mapa?", size=24, color='white'),
+                            html.Br(),
+                            dmc.Text("El mapa dos opciones para beneficiarios: Monto del apoyo y Número de beneficarios, y dos pestañas a) Capas, y b) Criterios simulados.", size=16, color='white', align="justify"),
+                            html.Br(),
+                            dmc.List(
+                                icon=dmc.ThemeIcon(
+                                    DashIconify(icon="radix-icons:check-circled", width=16),
+                                    radius="xl",
+                                    color="teal",
+                                    size=24,
+                                ),
+                                size="sm",
+                                spacing="sm",
+                                children=[
+                                    dmc.ListItem(dmc.Text("Capas", size=20, color='white')),
+                                    dmc.Text("Muestra diversas variables relacionadas con la población objetivo del Programa que se superponen con el mapa para identificar relaciones geográficas. Tiene dos cuadros de filtros: 1) agregar, y 2) remover. Para agregar un filtro, en la caja de Agregar debe seleccionarse la casilla de la variable y, posteriormente, dar clic en la flecha que está en la esquina superior derecha. Para quitar variables del mapa, se selecciona la característica en el cuadro Remover, y se da clic en la flecha. Las capas que se pueden agregar o remover son:", size=16, color='white', align="justify"),
+                                    dmc.List(
+                                            icon=dmc.ThemeIcon(
+                                            DashIconify(icon="pepicons-pencil:circle", width=8),
+                                            radius="sm",
+                                            color="blue",
+                                            size=12,
+                                        ),
+                                        children=[
+                                        dmc.ListItem(dmc.Text("Centros de acopio", size=16, color='white')),
+                                        dmc.ListItem(dmc.Text("Beneficiarios", size=16, color='white')),
+                                        dmc.ListItem(dmc.Text("Volumen de producción", size=16, color='white')),
+                                        dmc.ListItem(dmc.Text("Productores", size=16, color='white')),]),
+                            ]),
+                        ], className='col-lg-6 col-sm-12 col-12'),
+                        
+                        dbc.Col([
+                            html.Br(),
+                            dmc.List(
+                                icon=dmc.ThemeIcon(
+                                    DashIconify(icon="radix-icons:check-circled", width=16),
+                                    radius="xl",
+                                    color="teal",
+                                    size=24,
+                                ),
+                                size="sm",
+                                spacing="sm",
+                                children=[
+                                    dmc.Text("Además, cada capa se encuentra desagregada, excepto Volumen de producción,  por Nivel de marginación: Muy bajo, bajo, Medio, Alto, y Muy alto", size=16, color='white', align="justify"),
+                                    dmc.Text("Debajo de las cajas de filtros, se encuentran cuatro estadísticas descriptivas relacionadas con el Programa, que son:", size=16, color='white'),
+                                    dmc.List(
+                                            icon=dmc.ThemeIcon(
+                                            DashIconify(icon="pepicons-pencil:circle", width=8),
+                                            radius="sm",
+                                            color="yellow",
+                                            size=12,
+                                        ),
+                                        children=[
+                                        dmc.ListItem(dmc.Text("Centros de acopio : muestra el número de centros de acopio", size=16, color='white')),
+                                        dmc.ListItem(dmc.Text("Pob. Beneficiaria : muestra el número/monto de población beneficiaria", size=16, color='white')),
+                                        dmc.ListItem(dmc.Text("Vol. Incentivado (Total) : Muestra el monto total del volumen incentivado total", size=16, color='white')),
+                                        dmc.ListItem(dmc.Text("Vol. Incentivado (Prom): Muestra el monto promedio del volumen incentivado total", size=16, color='white')),]),
+                                    html.Br(),
+                                    dmc.ListItem(dmc.Text("Escenarios", size=20, color='white')),
+                                    dmc.Text("Muestra escenarios generados con respecto a la distribución del monto total otorgado, por año y producto, considerando los siguientes criterios:", size=16, color='white', align="justify"),
+                                    dmc.List(
+                                            icon=dmc.ThemeIcon(
+                                            DashIconify(icon="pepicons-pencil:circle", width=8),
+                                            radius="sm",
+                                            color="yellow",
+                                            size=12,
+                                        ),
+                                        children=[
+                                        dmc.ListItem(dmc.Text("Marginación: link", size=16, color='white')),
+                                        dmc.ListItem(dmc.Text("Precio: link", size=16, color='white')),]),
+                            ]),
+                        ], className='col-lg-6 col-sm-12 col-12')        
+                        
+    
+                    ]),
+            ],
+            shadow="xs",
+            style={'opacity':'0.7', 'paddingRight':'2rem', 'paddingLeft':'2rem', 'backgroundColor':'#2a3240'}
+            ),
+        # ], ),
+        #dmc.Divider(orientation="vertical", style={"height": 20}),
+        # html.Div([
+        #     dmc.Text("Diagrama general de la dinámica del programa", size=24, color='#2a3240'),
+        #     dmc.Image(src="/assets/logo10.svg",width='100%', withPlaceholder=True)
+        # ]),
+        ], style={'paddingBottom':'2rem', 'paddingTop':'2rem'} ),
+    id="fade-transition",
+    is_in=True,
+    style={"transition": "opacity 2000ms ease"},
+    timeout=2000,
+    ),
+], style={'paddingBottom':'2rem', 'paddingTop':'2rem','opacity':'0.95','background-blend-mode':'overlay','background-image': 'url(/assets/logo6.svg)','background-size': '1450px 450px','backgroundColor': '#2a3240', 'm':'0px', 'padding':'0px', 'height': '100%'} )
+
+
+
+
+##############################################################
+#########                MAPA                         ########
+##############################################################
 
 ####################      sidebar left: Barra de control
 sidebar_right = html.Div([
@@ -460,9 +718,9 @@ sidebar_right = html.Div([
                         withArrow=True,
                         transition="fade",
                         position='right',
-                        color='#4e203a',
+                        color='dark',
                         transitionDuration=300,
-                        label="Muestra datos de beneficiarios, total de productores, centros de acopio, y volumen de producción. ",
+                        label="En esta sección se muestran características de beneficiarios, total de productores, centros de acopio, y volumen de producción. ",
                         children=[
                             dmc.Tab("Capas",
                                 icon=DashIconify(icon="ic:baseline-edit-location-alt"),
@@ -476,33 +734,33 @@ sidebar_right = html.Div([
                         withArrow=True,
                         transition="fade",
                         position='bottom',
-                        color='#4e203a',
+                        color='dark',
                         transitionDuration=300,
-                        label="Muestra distintos escenarios de beneficiarios.",
+                        label="En esta sección se muestran distintos sobre la redistribución de los apoyos otorgados.",
                         children=[
-                            dmc.Tab("Criterios Simulados",
+                            dmc.Tab("Escenarios",
                                 #id="tab-criterios",
                                 icon=DashIconify(icon="ic:round-window"),
                                 value="criterios",
                                 style={'color':'#4e203a'}
                             )
                     ], style={'fontSize':'12px'}),
-                    dmc.Tooltip(
-                        multiline=True,
-                        width=150,
-                        withArrow=True,
-                        transition="fade",
-                        position='left',
-                        color='#4e203a',
-                        transitionDuration=300,
-                        label="Muestra descripción general de la sección.",
-                        children=[
-                            dmc.Tab("Descripción",
-                                icon=DashIconify(icon="carbon:license"),
-                                value="descripcion",
-                                style={'color':'#4e203a'}
-                            )
-                    ], style={'fontSize':'12px'}),
+                    # dmc.Tooltip(
+                    #     multiline=True,
+                    #     width=150,
+                    #     withArrow=True,
+                    #     transition="fade",
+                    #     position='left',
+                    #     color='dark',
+                    #     transitionDuration=300,
+                    #     label="Muestra descripción general de la sección.",
+                    #     children=[
+                    #         dmc.Tab("Descripción",
+                    #             icon=DashIconify(icon="carbon:license"),
+                    #             value="descripcion",
+                    #             style={'color':'#4e203a'}
+                    #         )
+                    # ], style={'fontSize':'12px'}),
                     ]),
                 ],
                 id='capas-criterios',
@@ -710,10 +968,10 @@ sidebar_right = html.Div([
 
         ], style={'paddingLeft':'2rem', 'paddingRight':'2rem', 'marginTop':'0.5rem'}
     )
-#######################    content - Mapa interactivo ##############
-#content_mapa = html.Div(id='mapa')
 
-content_mapa = html.Div([
+
+##################     Mapa interactivo ##############
+seccion6 = html.Div([
         dbc.Row([
             dbc.Col([
                     html.Div([
@@ -785,158 +1043,158 @@ content2 = html.Div([
         dmc.CardSection(
             html.Iframe(id="plot-r1", style={"height": "400px", "width": "1300px"}),
         ),
-        dmc.CardSection(children=[
-                dmc.SimpleGrid(cols=2, children=[
-                    #dbc.Group([
-                        # plot 1
-                        dmc.Group([
-                            dmc.CardSection(
-                                dmc.Group(
-                                    children=[
-                                        dmc.Text("Review Pictures", weight=500),
-                                        dmc.ActionIcon(
-                                            DashIconify(icon="carbon:overflow-menu-horizontal"),
-                                            color="gray",
-                                            variant="transparent",
-                                        ),
-                                    ],
-                                    position="apart",
-                                ),
-                                withBorder=True,
-                                inheritPadding=True,
-                                py="xs",
-                            ),
-                            dmc.Text(
-                                children=[
-                                    dmc.Text(
-                                        "200+ images uploaded",
-                                        color="blue",
-                                        style={"display": "inline"},
-                                    ),
-                                    " since last visit, review them to select which one should be added to your gallery",
-                                ],
-                                mt="sm",
-                                color="dimmed",
-                                size="sm",
-                            ),
-                            dmc.CardSection(
-                                html.Iframe(id="plot-r2", style={"height": "400px", "width": "800px"}),
-                            ),
-                        ]),
-                        # plot 2
-                        dmc.Group([
-                            dmc.CardSection(
-                                dmc.Group(
-                                    children=[
-                                        dmc.Text("Review Pictures", weight=500),
-                                        dmc.ActionIcon(
-                                            DashIconify(icon="carbon:overflow-menu-horizontal"),
-                                            color="gray",
-                                            variant="transparent",
-                                        ),
-                                    ],
-                                    position="apart",
-                                ),
-                                withBorder=True,
-                                inheritPadding=True,
-                                py="xs",
-                            ),
-                            dmc.Text(
-                                children=[
-                                    dmc.Text(
-                                        "200+ images uploaded",
-                                        color="blue",
-                                        style={"display": "inline"},
-                                    ),
-                                    " since last visit, review them to select which one should be added to your gallery",
-                                ],
-                                mt="sm",
-                                color="dimmed",
-                                size="sm",
-                            ),
-                            dmc.CardSection(
-                                html.Iframe(id="plot-r3", style={"height": "400px", "width": "800px"}),
-                            ),
-                        ]),
-                        #plot3
-                        # dmc.Group([
-                        #     dmc.CardSection(
-                        #         dmc.Group(
-                        #             children=[
-                        #                 dmc.Text("Review Pictures", weight=500),
-                        #                 dmc.ActionIcon(
-                        #                     DashIconify(icon="carbon:overflow-menu-horizontal"),
-                        #                     color="gray",
-                        #                     variant="transparent",
-                        #                 ),
-                        #             ],
-                        #             position="apart",
-                        #         ),
-                        #         withBorder=True,
-                        #         inheritPadding=True,
-                        #         py="xs",
-                        #     ),
-                        #     dmc.Text(
-                        #         children=[
-                        #             dmc.Text(
-                        #                 "200+ images uploaded",
-                        #                 color="blue",
-                        #                 style={"display": "inline"},
-                        #             ),
-                        #             " since last visit, review them to select which one should be added to your gallery",
-                        #         ],
-                        #         mt="sm",
-                        #         color="dimmed",
-                        #         size="sm",
-                        #     ),
-                        #     dmc.CardSection(
-                        #         html.Iframe(id="plot-r4", style={"height": "400px", "width": "400px"}),
-                        #     ),
-                        # ]),
+        # dmc.CardSection(children=[
+        #         dmc.SimpleGrid(cols=2, children=[
+        #             #dbc.Group([
+        #                 # plot 1
+        #                 dmc.Group([
+        #                     dmc.CardSection(
+        #                         dmc.Group(
+        #                             children=[
+        #                                 dmc.Text("Review Pictures", weight=500),
+        #                                 dmc.ActionIcon(
+        #                                     DashIconify(icon="carbon:overflow-menu-horizontal"),
+        #                                     color="gray",
+        #                                     variant="transparent",
+        #                                 ),
+        #                             ],
+        #                             position="apart",
+        #                         ),
+        #                         withBorder=True,
+        #                         inheritPadding=True,
+        #                         py="xs",
+        #                     ),
+        #                     dmc.Text(
+        #                         children=[
+        #                             dmc.Text(
+        #                                 "200+ images uploaded",
+        #                                 color="blue",
+        #                                 style={"display": "inline"},
+        #                             ),
+        #                             " since last visit, review them to select which one should be added to your gallery",
+        #                         ],
+        #                         mt="sm",
+        #                         color="dimmed",
+        #                         size="sm",
+        #                     ),
+        #                     dmc.CardSection(
+        #                         html.Iframe(id="plot-r2", style={"height": "400px", "width": "800px"}),
+        #                     ),
+        #                 ]),
+        #                 # plot 2
+        #                 dmc.Group([
+        #                     dmc.CardSection(
+        #                         dmc.Group(
+        #                             children=[
+        #                                 dmc.Text("Review Pictures", weight=500),
+        #                                 dmc.ActionIcon(
+        #                                     DashIconify(icon="carbon:overflow-menu-horizontal"),
+        #                                     color="gray",
+        #                                     variant="transparent",
+        #                                 ),
+        #                             ],
+        #                             position="apart",
+        #                         ),
+        #                         withBorder=True,
+        #                         inheritPadding=True,
+        #                         py="xs",
+        #                     ),
+        #                     dmc.Text(
+        #                         children=[
+        #                             dmc.Text(
+        #                                 "200+ images uploaded",
+        #                                 color="blue",
+        #                                 style={"display": "inline"},
+        #                             ),
+        #                             " since last visit, review them to select which one should be added to your gallery",
+        #                         ],
+        #                         mt="sm",
+        #                         color="dimmed",
+        #                         size="sm",
+        #                     ),
+        #                     dmc.CardSection(
+        #                         html.Iframe(id="plot-r3", style={"height": "400px", "width": "800px"}),
+        #                     ),
+        #                 ]),
+        #                 #plot3
+        #                 # dmc.Group([
+        #                 #     dmc.CardSection(
+        #                 #         dmc.Group(
+        #                 #             children=[
+        #                 #                 dmc.Text("Review Pictures", weight=500),
+        #                 #                 dmc.ActionIcon(
+        #                 #                     DashIconify(icon="carbon:overflow-menu-horizontal"),
+        #                 #                     color="gray",
+        #                 #                     variant="transparent",
+        #                 #                 ),
+        #                 #             ],
+        #                 #             position="apart",
+        #                 #         ),
+        #                 #         withBorder=True,
+        #                 #         inheritPadding=True,
+        #                 #         py="xs",
+        #                 #     ),
+        #                 #     dmc.Text(
+        #                 #         children=[
+        #                 #             dmc.Text(
+        #                 #                 "200+ images uploaded",
+        #                 #                 color="blue",
+        #                 #                 style={"display": "inline"},
+        #                 #             ),
+        #                 #             " since last visit, review them to select which one should be added to your gallery",
+        #                 #         ],
+        #                 #         mt="sm",
+        #                 #         color="dimmed",
+        #                 #         size="sm",
+        #                 #     ),
+        #                 #     dmc.CardSection(
+        #                 #         html.Iframe(id="plot-r4", style={"height": "400px", "width": "400px"}),
+        #                 #     ),
+        #                 # ]),
 
-                    #], className='col-12'),
-                    # html.Iframe(id="plot-r2", style={"height": "300px", "width": "400px"}),
-                    # html.Iframe(id="plot-r3", style={"height": "300px", "width": "400px"}),
-                    #html.Iframe(id="plot-r4", style={"height": "300px", "width": "400px"}),
-                ]),
-            ],
-            withBorder=True,
-            inheritPadding=True,
-            mt="sm",
-            pb="md",
-        ),
-        dmc.CardSection(
-            dmc.Group(
-                children=[
-                    dmc.Text("Review Pictures", weight=500),
-                    dmc.ActionIcon(
-                        DashIconify(icon="carbon:overflow-menu-horizontal"),
-                        color="gray",
-                        variant="transparent",
-                    ),
-                ],
-                position="apart",
-            ),
-            withBorder=True,
-            inheritPadding=True,
-            py="xs",
-        ),
-        dmc.Text(
-            children=[
-                dmc.Text(
-                    "200+ images uploaded",
-                    color="blue",
-                    style={"display": "inline"},
-                ),
-                " since last visit, review them to select which one should be added to your gallery",
-            ],
-            mt="sm",
-            color="dimmed",
-            size="sm",
-        ),
-        dmc.CardSection(
-            html.Iframe(id="plot-r5", style={"height": "600px", "width": "1300px"}),
-        ),
+        #             #], className='col-12'),
+        #             # html.Iframe(id="plot-r2", style={"height": "300px", "width": "400px"}),
+        #             # html.Iframe(id="plot-r3", style={"height": "300px", "width": "400px"}),
+        #             #html.Iframe(id="plot-r4", style={"height": "300px", "width": "400px"}),
+        #         ]),
+        #     ],
+        #     withBorder=True,
+        #     inheritPadding=True,
+        #     mt="sm",
+        #     pb="md",
+        # ),
+        # dmc.CardSection(
+        #     dmc.Group(
+        #         children=[
+        #             dmc.Text("Review Pictures", weight=500),
+        #             dmc.ActionIcon(
+        #                 DashIconify(icon="carbon:overflow-menu-horizontal"),
+        #                 color="gray",
+        #                 variant="transparent",
+        #             ),
+        #         ],
+        #         position="apart",
+        #     ),
+        #     withBorder=True,
+        #     inheritPadding=True,
+        #     py="xs",
+        # ),
+        # dmc.Text(
+        #     children=[
+        #         dmc.Text(
+        #             "200+ images uploaded",
+        #             color="blue",
+        #             style={"display": "inline"},
+        #         ),
+        #         " since last visit, review them to select which one should be added to your gallery",
+        #     ],
+        #     mt="sm",
+        #     color="dimmed",
+        #     size="sm",
+        # ),
+        # dmc.CardSection(
+        #     html.Iframe(id="plot-r5", style={"height": "600px", "width": "1300px"}),
+        # ),
     ],
     withBorder=True,
     shadow="sm",
@@ -947,139 +1205,23 @@ content2 = html.Div([
 ],style={"paddin": '0rem', 'marginLeft':'2rem', 'marginRight':'2rem'})
 
 
-seccion2 = html.Div([
-    
-    dmc.SimpleGrid(
-    cols=2, children=[
-        html.Div([
-            
-            html.Div([
-                dmc.Paper(
-                    children=[
-                        dmc.Card(dmc.Text("¿Qué es el Programa Precios de Garantía a Productos Alimentarios Básicos?", size=24, color='#2a3240')),
-                        html.Br(),
-                        dmc.Text("El Programa de Precios de Garantía a Productos Alimentarios Básicos forma parte de los Programas Prioritarios del Gobierno Federal que buscan brindar una atención integral a las problemáticas vinculadas con la autosuficiencia alimentaria, se encuentra a cargo de la Secretaría de Agricultura y Desarrollo Rural y es operado por uno de sus organismos descentralizado, Seguridad Alimentaria Mexicana (SEGALMEX)."),
-                        html.Br(),
-                        dmc.Text("El objetivo general del Programa Precios de Garantía es complementar el ingreso de los pequeños y medianos productores agropecuarios de granos básicos y leche.")],
-                    shadow="xs",
-                )
-            ]),
-        ]),
-        #dmc.Divider(orientation="vertical", style={"height": 20}),
-        html.Div([
-            dmc.Text("Diagrama general de la dinámica del programa", size=24, color='#2a3240'),
-            dmc.Image(src="/assets/logo10.svg",width='100%', withPlaceholder=True)
-        ]),
-    ]),
-], style={'padding':'2rem'})
 
 # original 'backgroundColor': '#f2f2f2'
 ########################### layout  SEGALMEX
 layout = dbc.Container([
       
-        ###  SECCIÓN : BARRA PRINCIPAL
-        html.Div([
-            dbc.Row([
-                dbc.Col([dbc.NavbarBrand("Programa de Precios de Garantía",
-                             style={'color':'white', 'font-size': '60px', 'textAlign':'center'}),
-                        html.Br(),
-                        dbc.NavbarBrand("a Productos Alimentarios Básicos",
-                             style={'color':'white', 'font-size': '60px', 'textAlign':'center'})],
-                        className="ml-5",  style = {'textAlign':'center', 'color':'white', 'marginBottom':'3rem', 'marginTop':'6rem'} ),
-                ],className="col-12"),
-        ], style={'opacity':'0.95','background-blend-mode':'overlay','background-image': 'url(/assets/maiz-mexico.jpg)','background-size': '1450px 650px','backgroundColor': '#2a3240', 'm':'0px', 'padding':'0px', 'height': '100%'}),
-
+        #  header
+        seccion1,
         # Introduccion
         seccion2,
-        # html.Div([
-        #              dbc.Col([dbc.NavbarBrand("Programa de Precios de Garantía",
-        #                      style={'color':'white', 'font-size': '60px', 'textAlign':'center'}),
-        #                 html.Br(),
-        #                 dbc.NavbarBrand("a Productos Alimentarios Básicos",
-        #                      style={'color':'white', 'font-size': '60px', 'textAlign':'center'})],
-        #                 className="ml-5",  style = {'textAlign':'center', 'color':'white', 'marginBottom':'3rem', 'marginTop':'6rem'} ),
-                
-        # ], style={'width':'100%','height':'5rem','opacity':'0.95','background-blend-mode':'overlay','background-image': 'url(/assets/logo6.svg)','background-size': '1450px 650px','backgroundColor': '#2a3240', 'm':'0px', 'padding':'0px', 'height': '100%'}),
-
-        #####  SECCIÓN : REGLAS DE OPERACIÓN
-        html.Div([
-            
-            ####### SECCION : PIE PLOT
-            dmc.Card([
-                dmc.CardSection(
-                    dmc.Group(
-                        children=[
-                            dmc.Text("Review Pictures", weight=500),
-                            dmc.ActionIcon(
-                                DashIconify(icon="carbon:overflow-menu-horizontal"),
-                                color="gray",
-                                variant="transparent",
-                            ),
-                        ],
-                        position="apart",
-                    ),
-                    withBorder=True,
-                    inheritPadding=True,
-                    py="xs",
-                ),
-                dmc.Text(
-                    children=[
-                        dmc.Text(
-                            "200+ images uploaded",
-                            color="blue",
-                            style={"display": "inline"},
-                        ),
-                        " since last visit, review them to select which one should be added to your gallery",
-                    ],
-                    mt="sm",
-                    color="dimmed",
-                    size="sm",
-                ),
-                dmc.CardSection(
-                    html.Iframe(id='pie-plot1', srcDoc=open(root + "/graficos/piePlot_2020.html", 'r', encoding = 'utf-8').read(), style={"height": "350px", "width": "1200px"}),
-                ),
-
-            ],
-            withBorder=True,
-            style={'backgroundColor':'white', 'marginTop':'4rem', 'marginBottom':'2rem'}
-            ),
-        ], className="flip-card-front", style={'marginLeft':'2rem', 'marginRight':'2rem','backgroundColor':'white', 'm':'0px', 'padding':'0px'}),
-        
-        # SECCIÓN : FILTROS GENERALES
-        # html.Div([
-        #     html.Br(),
-        #     html.Br(),
-        #     dbc.Row([
-        #         dbc.Col([
-        #             #dmc.Tooltip(
-        #                 dbc.Button(
-        #                     "Resumen Ejecutivo",
-        #                     #href= "/Proyecto.pdf",
-        #                     download="Proyecto.pdf",
-        #                     external_link=False,
-        #                     color="dark",
-        #                     id="btn",
-        #                 ),
-                        
-        #             #     label="Click para descargar el resumen",
-        #             #     openDelay=500,
-        #             # ),
-        #             dcc.Download(id="download"),
-        #         ],  style = {'textAlign':'right', 'paddingRight':'2rem'}),
-        #     ], className="mt-0", ),
-        #     # Resumen Reglas de Operación
-            
-        #     dbc.Row([
-        #         dbc.Col(main_filters, style={'textAlign': 'center'})
-        #     ], style={'paddingRight':'3rem','marginTop':'4rem', 'paddingLeft':'2rem','marginBottom':'4rem'}),
-
-        # ], style={'textAlign':'center','backgroundColor':'#F2F3F4','marginRight':'0rem', 'marginTop':'0rem', 'marginBottom':'2rem'}),
-
-        #####  SECCIÓN : Filtros principales
-        
-        main_filters,
-        #####  SECTION: MAPA
-        content_mapa,
+        # Resumen: Pie plot
+        seccion3,
+        # Filtros principales : Año - producto
+        seccion5,
+        # Introduccion
+        seccion4,
+        # Mapa
+        seccion6,
 
         #####  SECCIÓN:  BARRA INDICADOR ESTADOS
         dmc.Card([
@@ -1097,10 +1239,9 @@ layout = dbc.Container([
         ),
 
         dbc.Row(html.Hr(), style={'paddingLeft':'2rem', 'paddingRight':'2rem', 'marginBottom':'4rem'}),
-
+        
         #### SECCIÓN : GRAFICOS
         content2,
-
         # final break
         dbc.Row([
             dbc.Col([
@@ -1109,8 +1250,6 @@ layout = dbc.Container([
             ]),
         ]),
 
-     
-    
     ], className="twelve columns", style={'backgroundColor': 'white', 'marginTop': '0rem', 'padding':'0rem'},
     fluid=True
     )
@@ -1143,6 +1282,7 @@ def get_state(clicks, feature):
 
 #########      CALL : Regresa año  ################
 @app.callback(# 'click_feature
+        Output('anio_filtro2', 'children'),
         Output('anio_filtro1', 'children'),
         Output('anio_filtro', 'children'),
         Input('submit-button', 'n_clicks'),
@@ -1152,10 +1292,11 @@ def get_state(clicks, feature):
 def anio(clicks, sel_producto, sel_anio):
 
 
-    return sel_anio, sel_anio
+    return sel_anio, sel_anio, sel_anio
 
 #########      CALL : Regresa producto  ################
 @app.callback(# 'click_feature
+        Output('producto_filtro2', 'children'),
         Output('producto_filtro1', 'children'),
         Output('producto_filtro', 'children'),
         Input('submit-button', 'n_clicks'),
@@ -1164,7 +1305,7 @@ def anio(clicks, sel_producto, sel_anio):
     )
 def producto(clicks, sel_producto, sel_anio):
 
-    return sel_producto, sel_producto
+    return sel_producto, sel_producto, sel_producto
 
 #########   CALL : Modal Reglas de operación  ################
 @app.callback(
@@ -1193,8 +1334,6 @@ def summary_reglas_operacion(clicks, producto_sel, anio_sel):
     return result
 
 
-
-
 #########      CALL : Pie Plot  ################
 @app.callback(# 'click_feature
         Output('pie-plot1', 'srcDoc'),
@@ -1212,8 +1351,6 @@ def pie_plo1(clicks, sel_producto, sel_anio):
 # def input_triggers_spinner(value):
 #     time.sleep(2)
 #     return value
-
-
 
 #########    CALL : Indicador estado (MAPA)  ################
 @app.callback(# 'click_feature
@@ -1236,7 +1373,17 @@ def get_state(clicks, feature):
             dmc.Center(html.Img(id='image', src='../assets/'+ str(feature["properties"]["name"]) +'.png', width="65", height="65")),
           ]
 
-
+#########  Fade transsition : sección 5
+@app.callback(
+    Output("fade-transition", "is_in"),
+    [Input("fade-transition-button", "n_clicks")],
+    [State("fade-transition", "is_in")],
+)
+def toggle_fade(n, is_in):
+    if not n:
+        # Button has never been clicked
+        return True
+    return not is_in
 
 #########      CALL : Cuenta centros de acopio  ################
 @app.callback(# 'click_feature
@@ -1532,20 +1679,20 @@ tab1_capas_criterios = html.Div([
         placeholder=['No item left to add', 'No item left ro remove'],
         style={'fontSize':'10px','marginBottom':'0.5rem'}
     ),
-    # Tablero resumen
+    ############### Tablero resumen
     dmc.Card([
         #dmc.CardSection([
             dmc.SimpleGrid(cols=2,children=[
                 # card1 : centros de acopio
                 dmc.Tooltip(
                         multiline=True,
-                        width=150,
+                        width=200,
                         withArrow=True,
                         transition="fade",
                         position='bottom',
-                        color='#4e203a',
+                        color='dark',
                         transitionDuration=300,
-                        label="Seleccione la opción 'centros de acopio'.",
+                        label="Centros de acopio: canales establecidos en el programa para la entrega de los productos a cambio del incentivo.",
                         children=[
                             dmc.Card([
                                 dbc.Row([
@@ -1572,13 +1719,13 @@ tab1_capas_criterios = html.Div([
                 # card2 : Beneficiarios
                 dmc.Tooltip(
                         multiline=True,
-                        width=150,
+                        width=200,
                         withArrow=True,
                         transition="fade",
-                        color='#4e203a',
+                        color='dark',
                         position='bottom',
                         transitionDuration=300,
-                        label="Seleccione la opción 'Beneficiarios'.",
+                        label="Población beneficiaria: personas que han recibido el incentivo del programa.",
                         children=[
                             dmc.Card([
                                 dbc.Row([
@@ -1605,18 +1752,18 @@ tab1_capas_criterios = html.Div([
                 # Card 3 : Monto de apoyos
                 dmc.Tooltip(
                         multiline=True,
-                        width=150,
+                        width=200,
                         withArrow=True,
                         transition="fade",
                         position='top',
-                        color='#4e203a',
+                        color='dark',
                         transitionDuration=300,
-                        label="Seleccione la opción 'Beneficiarios'.",
+                        label="Volumen incentivado total: Volumen de producción total incentivado (En toneladas, excepto para leche en litros).",
                         children=[
                             dmc.Card([
                                 dbc.Row([
                                     dbc.Col([
-                                        html.Img(id='image', src='../assets/dollar.svg', width="65", height="65"),
+                                        DashIconify(icon="emojione-monotone:balance-scale", width="60", height="60"),
                                     ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
                                     dbc.Col([
                                         dbc.Row([html.Center(html.Div([
@@ -1634,22 +1781,22 @@ tab1_capas_criterios = html.Div([
                             shadow="sm",
                             radius="md",
                             style={"width": 180, "padding":'0rem', 'backgroundColor': '#F4F6F6'},),
-                ], style={'fontSize':'12px'}),
+                ], style={'fontSize':'11px'}),
                 # Card 4: Vol incentivado promedio
                 dmc.Tooltip(
                         multiline=True,
-                        width=150,
+                        width=200,
                         withArrow=True,
                         transition="fade",
                         position='top',
-                        color='#4e203a',
+                        color='dark',
                         transitionDuration=300,
-                        label="Seleccione la opción 'Beneficiarios'.",
+                        label="Volumen incentivado promedio: Volumen de producción promedio (En toneladas, excepto para leche en litros).",
                         children=[
                             dmc.Card([
                                 dbc.Row([
                                     dbc.Col([
-                                        html.Img(id='image', src='../assets/porcentaje.png', width="65", height="65"),
+                                        DashIconify(icon="emojione-monotone:balance-scale", width="60", height="60"),
                                     ],className="card col-3 border-0 bg-transparent", style={'marginTop':'0em', 'textAlign': 'left'}),
                                     dbc.Col([
                                         dbc.Row([html.Center(html.Div([
@@ -1667,7 +1814,7 @@ tab1_capas_criterios = html.Div([
                             shadow="sm",
                             radius="md",
                             style={"width": 180, "padding":'0rem', 'backgroundColor': '#F4F6F6'},)
-                ], style={'fontSize':'12px'}),
+                ], style={'fontSize':'11px'}),
             ],style={"width": 360, "height": 160}
         ),
     ], style={'marginLeft':'0rem', 'paddingLeft':'0rem'}),
@@ -1690,14 +1837,14 @@ tab2_capas_criterios = html.Div([
                 style={"width": '100%'}
             ),
             # selector adicional
-            dmc.Select(
-                label='Otro selector',
-                id='criterios2',
-                value= ['Criterio de Marginación'],
-                data=list_criterios,
-                nothingFound="No options found",
-                style={"width": '100%'}
-            ),
+            # dmc.Select(
+            #     label='Otro selector',
+            #     id='criterios2',
+            #     value= ['Criterio de Marginación'],
+            #     data=list_criterios,
+            #     nothingFound="No options found",
+            #     style={"width": '100%'}
+            # ),
         ], style={'marginBottom':'4rem'}),
         
         dmc.Center([
@@ -1719,12 +1866,33 @@ tab2_capas_criterios = html.Div([
 
 
 
-######### CALL : Regresa PDF de sección criterios simulados  ################
+######### CALL : Download PDF  ################
 @app.callback(Output("download", "data"),
-              [Input("btn_metodo_pdf", "n_clicks")],
+              Input("btn_metodo_pdf", "n_clicks"),
               prevent_initial_call=True)
 def func(n_clicks):
     return dcc.send_file("C:/Users/jcmartinez/Desktop/Dashboard3/Proyecto.pdf")
+
+########    Download xlsx
+# @app.callback(
+#     Output("download-db-xlsx", "data"),
+#     Input("dowload_xlsx", "n_clicks"),
+#     State('producto', 'value'),
+#     State('anio', 'value'),
+#     prevent_initial_call=True,
+# )
+# def download_xlsx(click_db, producto_sel, anio_sel):
+#     base2019 = base_2019.copy()
+#     base2020 = base_2020.copy()
+#     base2021 = base_2021.copy()
+#     if anio_sel == '2019':
+#         base = base2019[base2019['Producto']==producto_sel]
+#     elif anio_sel == '2020':
+#         base = base2020[base2020['Producto']==producto_sel]
+#     elif anio_sel == '2021':
+#         base = base2021[base2021['Producto']==producto_sel]
+    
+#     return dcc.send_data_frame(base.to_excel, f"{anio_sel}-{producto_sel}.xlsx", sheet_name=f"{anio_sel}-{producto_sel}")
 
 #########  CALL : Regresa opciones capas / criterios  ################
 @app.callback(Output("content-capas-criterios", "children"),
@@ -1753,14 +1921,14 @@ def switch_tab(active):
 #########  CALL : Regresa actualización del MAPA  ################
 # declaración de parámetros para color y leyendas
 classes = [0, 1000,3000,5000,10000, 100000, 1000000, 3000000]
-colorscale = ['#fef9e7','#D5F5E3', '#ABEBC6', '#82E0AA', '#58D68D', '#2ECC71', '#239B56', '#1D8348'] # '#0B5345'
+colorscale = ['#ffffe5','#f7fcb9', '#d9f0a3', '#addd8e', '#78c679', '#41ab5d', '#238443', '#005a32'] # '#0B5345'
 #
-style2 = dict(weight=1, opacity=0.9, fillColor='white', color='grey', dashArray='1', fillOpacity=0.9)
+style2 = dict(weight=1, opacity=0.9, fillColor='#EBF5FB', color='grey', dashArray='1', fillOpacity=0.9)
 # fillOpacity : transparencia de color de relleno
-style = dict(weight=1, opacity=0.9, color='white', dashArray='1', fillOpacity=0.9)
+style = dict(weight=1, opacity=0.9, color='#EBF5FB', dashArray='1', fillOpacity=0.9)
 # estilo centros de acopio
 #  color: color de fondo
-style0 = dict(weight=1, opacity=0.9 ,color='white', dashArray='1', fillOpacity=0.9)
+style0 = dict(weight=1, opacity=0.9 ,color='#EBF5FB', dashArray='1', fillOpacity=0.9)
 # Create colorbar.
 ctg = ["{}+".format(millify(cls), classes[i + 1]) for i, cls in enumerate(classes[:-1])] + ["{}+".format(millify(classes[-1]))]
 colorbar = dlx.categorical_colorbar(categories=ctg, colorscale=colorscale, width=300, height=30, position="bottomleft")
@@ -1800,8 +1968,6 @@ def info_hover(feature):
 #               #State('anio', 'value'))
 # def regresa_nacional(click):
 #     return click
-
-
 
 @app.callback(Output("info2", "children"),
               Input("states", "click_feature"))
@@ -2004,12 +2170,12 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
     base = dl.GeoJSON(data=data2,  # url to geojson file  #283747
                     options=dict(style=style_handle),  # how to style each polygon
                     zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
-                    zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
+                    zoomToBoundsOnClick=False,  # when true, zooms to bounds of feature (e.g. polygon) on click
                     # color : color del perimetro del hover
                     # dashArray : tipo de linea 
                     # #154360
                     hideout=dict(colorscale=colorscale, classes=classes, style=style2, colorProp=2),
-                    hoverStyle=arrow_function(dict(weight=4, fillColor='#000080', color='#000080',opacity=0.1, fillOpacity=0.9, dashArray='2')), # color de fondo
+                    hoverStyle=arrow_function(dict(weight=4, fillColor='#041962', color='#041962',opacity=0.1, fillOpacity=0.9, dashArray='2')), # color de fondo
                     id='states')
 
     # opción de beneficiarios
@@ -2029,12 +2195,12 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
     beneficiarios = benef_choice(benef_sel)
 
     # Centro de acopio
-    centros = dl.Pane([dl.Circle(center=[lat, lon], radius=2, color='red', children=[
+    centros = dl.Pane([dl.Marker(position=[lat, lon], icon=dict(iconUrl='../assets/centrosAcopio.png',iconSize=[12, 16]), children=[
                                     dl.Popup("Municipio: {}".format(mun))
                                     ]) for lat, lon, mun in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'], centros['NOM_MUN'])])
 
     # Productores
-    productores = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=np.log(radio), color='black', children=[
+    productores = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=np.log(radio), color='#E12726', children=[
         dl.Popup("Municipio: {}".format(mun))
         ]) for lat, lon, mun, radio in zip(productores_filter['LAT_DECIMAL'],productores_filter['LON_DECIMAL'], productores_filter['NOM_MUN'], productores_filter['TotalProductores'])])
 
@@ -2053,7 +2219,7 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
         volumen_produccion = dl.GeoJSON(data=data2,  # url to geojson file
                                     options=dict(style=style_handle),  # how to style each polygon
                                     zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
-                                    zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
+                                    zoomToBoundsOnClick=False,  # when true, zooms to bounds of feature (e.g. polygon) on click
                                     hideout=dict(colorscale=colorscale, classes=classes, style=estilo, colorProp=colorprop), #2e4053
                                     hoverStyle=arrow_function(dict(weight=4, fillColor='#000080', color='#000080',opacity=0.1, fillOpacity=0.9, dashArray='1')),  # style applied on hover
                                     id='states')
@@ -2089,10 +2255,10 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
             return self.base_layer
     # background style del mapa
     children_layer = Map(background_style=style0).add(capas_sel)
-
+    # dl.LayersControl([dmc.Text('Muy Bajo')])
     tab2_mapa_content = html.Div([
         dl.Map(center=[22.76, -102.58], zoom=5, children=children_layer
-           ,style={'width': '100%', 'height': '100vh', 'margin': "auto", "display": "block"}, id="map"),
+           , style={'width': '100%', 'height': '100vh', 'margin': "auto", "display": "block"}, id="map"),
         #html.Div(id="state"), html.Div(id="info2")
     ])
 
@@ -2162,7 +2328,6 @@ def actualizar_mapa2(clicks, criterios_sel, producto_sel, anio_sel):
 
 
     # # opción centros de acopio y de producción
-    
     benef_filter = benef_filter[~benef_filter['LAT_DECIMALmean'].isna()]
     beneficiarios = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=(radio),fillOpacity=1,fillColor='blue', color='blue', children=[
                 dl.Popup("Municipio: {}".format(mun))
@@ -2187,9 +2352,9 @@ def actualizar_mapa2(clicks, criterios_sel, producto_sel, anio_sel):
             dl.GeoJSON(data=data2,  # url to geojson file
                                     options=dict(style=style_handle),  # how to style each polygon
                                     zoomToBounds=True,  # when true, zooms to bounds when data changes (e.g. on load)
-                                    zoomToBoundsOnClick=True,  # when true, zooms to bounds of feature (e.g. polygon) on click
+                                    zoomToBoundsOnClick=False,  # when true, zooms to bounds of feature (e.g. polygon) on click
                                     hideout=dict(colorscale=colorscale, classes=classes, style=style2, colorProp=2), #2e4053
-                                    hoverStyle=arrow_function(dict(weight=4, fillColor='#000080', color='#000080',opacity=0.1, fillOpacity=1, dashArray='1')),  # style applied on hover
+                                    hoverStyle=arrow_function(dict(weight=4, fillColor='#041962', color='#041962',opacity=0.1, fillOpacity=1, dashArray='1')),  # style applied on hover
                                     id='states'),
             # dl.GeoJSON(data=data2,  # url to geojson file  #283747
             #                 options=dict(style=style_handle),  # how to style each polygon

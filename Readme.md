@@ -100,7 +100,8 @@ Una vez que el directorio de la consola se encuentre dentro de la carpeta ejecut
       `conda env list`   # despliega lista de ambientes virtuales  
 
 Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dependencias en línea de comandos con el ambiente virtual activado:
- 
+
+
     conda install -c conda-forge pandas 
     conda install -c conda-forge numpy 
     conda install -c conda-forge dash 
@@ -141,3 +142,40 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
      (dashboard) C:\Users\jcmartinez\Desktop\Dashboard_v2>python index.py 
  
      En el ejemplo anterior, la carpeta que contiene 
+
+# Fuentes de consulta
+
+[icons](https://icon-sets.iconify.design/ic/baseline-edit-location-alt/)
+
+
+
+# Proceso para ingreso a servidor
+
+
+1.- Generar llaves públicas y privadas
+
+- Abrir `cdm` 
+- Ingresar el siguiente comando `ssh-keygen`
+- Ingresar un nombre de archivo después de 
+`Enter file in which to save the key (C:\Users\jcmartinez/.ssh/id_rsa):` 
+- Después ingresar cualquier palabra (o enter):
+`Enter passphrase (empty for no passphrase):`
+- Nuevamente escribir la palabra anterior(o enter) 
+`Enter same passphrase again:` 
+- Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado
+
+     The key's randomart image is:
+     +---[RSA 3072]----+
+     |     +.o .       |
+     |    . + o        |
+     | . .     . .     |
+     |  o      .o.o    |
+     |   ..   S..o.o   |
+     |o E  o...+  ..o  |
+     |.o  . =++.   =+. |
+     |     o.++ +.= o=o|
+     |      .o +.=oo+B=|
+     +----[SHA256]-----+
+
+- La llave pública comienza con:
+ `ssh-rsa ... `

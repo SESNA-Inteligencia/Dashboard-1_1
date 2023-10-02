@@ -78,7 +78,7 @@ El proyecto está estructurado de la siguiente manera:
 Una vez que el directorio de la consola se encuentre dentro de la carpeta ejecutar los siguientes comandos, uno a la vez,  en consola (cmd para windown o bien en terminal de linux) 
  
 1.- `conda update conda`, y enter
- 
+      
      Nota:
      Sólo si la consola devuelve 
      `ModuleNotFoundError: No module named 'conda'`
@@ -164,20 +164,19 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 `Enter same passphrase again:` 
 - Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado
 
-     
-    .
-    The key's randomart image is:
-     +---[RSA 3072]----+
-     |     +.o .       |
-     |    . + o        |
-     | . .     . .     |
-     |  o      .o.o    |
-     |   ..   S..o.o   |
-     |o E  o...+  ..o  |
-     |.o  . =++.   =+. |
-     |     o.++ +.= o=o|
-     |      .o +.=oo+B=|
-     +----[SHA256]-----+
+          
+     The key's randomart image is:
+      +---[RSA 3072]----+
+      |     +.o .       |
+      |    . + o        |
+      | . .     . .     |
+      |  o      .o.o    |
+      |   ..   S..o.o   |
+      |o E  o...+  ..o  |
+      |.o  . =++.   =+. |
+      |     o.++ +.= o=o|
+      |      .o +.=oo+B=|
+      +----[SHA256]-----+
 
 
 

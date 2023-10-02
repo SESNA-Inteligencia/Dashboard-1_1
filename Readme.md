@@ -12,6 +12,7 @@
 - Activar el ambiente virtual (PENDIENTE) <break> 
 - Ejecutar index: 'python index.py' <break> 
 
+
  
 # Estructura del Proyecto
 
@@ -174,6 +175,11 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 
 - La llave pública comienza con:
  `ssh-rsa ... `
+
+- Abrir el cmd en windows posicionarse en la carpeta de la llave pública (en mi caso tiene el nombre keys.ppk) e ingresar el siguiente comando (el local no se pone pormotivos de seguridad, habrá que sustituirlo):
+
+  `ssh -i .\keys.ppk ubuntu@localhost`
+
 
 
 # Acceder al ambiente virtual

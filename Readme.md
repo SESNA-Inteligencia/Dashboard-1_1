@@ -162,7 +162,9 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
     
 
     `The key's randomart image is:`
+  
     `+---[RSA 3072]----+`
+  
     |     +.o .       |
     |    . + o        |
     | . .     . .     |

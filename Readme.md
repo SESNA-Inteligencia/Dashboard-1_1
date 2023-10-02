@@ -17,7 +17,7 @@
 
 El proyecto está estructurado de la siguiente manera:
  
-
+    
     .
     ├── apps  
     |   ├── home.py  

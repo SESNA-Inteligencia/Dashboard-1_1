@@ -136,7 +136,6 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 4.- `python index.py` y enter (cuando aparezca (dashboard) al inicio de la línea de comandos se ejcuta el index), p.e.
  
      (dashboard) C:\Users\jcmartinez\Desktop\Dashboard_v2>python index.py 
- 
      En el ejemplo anterior, la carpeta que contiene 
 
 # Fuentes de consulta

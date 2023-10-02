@@ -17,7 +17,6 @@
 
 El proyecto está estructurado de la siguiente manera:
  
-    
     .
     ├── apps  
     |   ├── home.py  
@@ -160,23 +159,20 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 `Enter same passphrase again:` 
 - Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado <break> 
 
-     (dashboard) C:\Users\jcmartinez\Desktop\Dashboard_v2>python index.py 
- 
-     En el ejemplo anterior, la carpeta que contiene 
+    
 
-
-     The key's randomart image is:
-     +---[RSA 3072]----+
-     |     +.o .       |
-     |    . + o        |
-     | . .     . .     |
-     |  o      .o.o    |
-     |   ..   S..o.o   |
-     |o E  o...+  ..o  |
-     |.o  . =++.   =+. |
-     |     o.++ +.= o=o|
-     |      .o +.=oo+B=|
-     +----[SHA256]-----+
+    | The key's randomart image is:
+    | +---[RSA 3072]----+
+    |     +.o .       |
+    |    . + o        |
+    | . .     . .     |
+    |  o      .o.o    |
+    |   ..   S..o.o   |
+    |o E  o...+  ..o  |
+    |.o  . =++.   =+. |
+    |     o.++ +.= o=o|
+    |      .o +.=oo+B=|
+    +----[SHA256]-----+
 
 
 

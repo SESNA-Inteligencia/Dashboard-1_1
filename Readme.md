@@ -162,6 +162,7 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 - Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado 
 
 
+
     The key's randomart image is:
     
     +---[RSA 3072]----+

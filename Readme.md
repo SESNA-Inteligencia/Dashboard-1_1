@@ -165,16 +165,27 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
   The key's randomart image is:
   
   +---[RSA 3072]----+
+  
   |     +.o .       |
+
   |    . + o        |
+
   | . .     . .     |
+
   |  o      .o.o    |
+
   |   ..   S..o.o   |
+
   |o E  o...+  ..o  |
+
   |.o  . =++.   =+. |
+
   |     o.++ +.= o=o|
+
   |      .o +.=oo+B=|
+
   +----[SHA256]-----+
+
 
  
 - La llave pública comienza con:

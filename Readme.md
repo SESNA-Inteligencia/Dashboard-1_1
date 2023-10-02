@@ -17,7 +17,6 @@
 
 El proyecto está estructurado de la siguiente manera:
  
-     
     .
     ├── apps  
     |   ├── home.py  
@@ -78,7 +77,7 @@ El proyecto está estructurado de la siguiente manera:
 Una vez que el directorio de la consola se encuentre dentro de la carpeta ejecutar los siguientes comandos, uno a la vez,  en consola (cmd para windown o bien en terminal de linux) 
  
 1.- `conda update conda`, y enter
- 
+      
      Nota:
      Sólo si la consola devuelve 
      `ModuleNotFoundError: No module named 'conda'`
@@ -95,12 +94,10 @@ Una vez que el directorio de la consola se encuentre dentro de la carpeta ejecut
 2.- `conda create -n dashboard python=3.11.3`, y enter # crea el ambien virtual con nombre dashboard (se puede elegir cualquier otro nombre) 
  
 3.- `conda activate dashboard` y enter (activa el ambiente virtual) <break> 
- 
       `conda deactivate` # desactiva ambiente virtual 
       `conda env list`   # despliega lista de ambientes virtuales  
 
 Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dependencias en línea de comandos con el ambiente virtual activado:
-
 
     conda install -c conda-forge pandas 
     conda install -c conda-forge numpy 
@@ -121,8 +118,7 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     conda config --add channels conda-forge
     conda config --set channel_priority strict
     conda install zstandard
-    pip install dash-mantine-components==0.11.1
-
+    
     conda install -c conda-forge dash-iconify==0.1.2
     pip install dash-iconify==0.1.2
     conda install -c conda-forge millify==0.1.1
@@ -138,9 +134,8 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
 Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desplegar el proyecto.
  
 4.- `python index.py` y enter (cuando aparezca (dashboard) al inicio de la línea de comandos se ejcuta el index), p.e.
- 
+
      (dashboard) C:\Users\jcmartinez\Desktop\Dashboard_v2>python index.py 
- 
      En el ejemplo anterior, la carpeta que contiene 
 
 # Fuentes de consulta
@@ -150,7 +145,6 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 
 
 # Proceso para ingreso a servidor
-
 
 1.- Generar llaves públicas y privadas
 
@@ -162,20 +156,21 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 `Enter passphrase (empty for no passphrase):`
 - Nuevamente escribir la palabra anterior(o enter) 
 `Enter same passphrase again:` 
-- Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado
+- Una vez que aparezcan las siguientes líneas de código, las llaves ya se habrán generado <break>
+  
+      The key's randomart image is:
+      +---[RSA 3072]----+
+      |     +.o .       |
+      |    . + o        |
+      | . .     . .     |
+      |  o      .o.o    |
+      |   ..   S..o.o   |
+      |o E  o...+  ..o  |
+      |.o  . =++.   =+. |
+      |     o.++ +.= o=o|
+      |      .o +.=oo+B=|
+      +----[SHA256]-----+
 
-     The key's randomart image is:
-     +---[RSA 3072]----+
-     |     +.o .       |
-     |    . + o        |
-     | . .     . .     |
-     |  o      .o.o    |
-     |   ..   S..o.o   |
-     |o E  o...+  ..o  |
-     |.o  . =++.   =+. |
-     |     o.++ +.= o=o|
-     |      .o +.=oo+B=|
-     +----[SHA256]-----+
 
 - La llave pública comienza con:
  `ssh-rsa ... `

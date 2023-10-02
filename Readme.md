@@ -95,7 +95,6 @@ Una vez que el directorio de la consola se encuentre dentro de la carpeta ejecut
 2.- `conda create -n dashboard python=3.11.3`, y enter # crea el ambien virtual con nombre dashboard (se puede elegir cualquier otro nombre) 
  
 3.- `conda activate dashboard` y enter (activa el ambiente virtual) <break> 
- 
       `conda deactivate` # desactiva ambiente virtual 
       `conda env list`   # despliega lista de ambientes virtuales  
 
@@ -159,32 +158,21 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 `Enter passphrase (empty for no passphrase):`
 - Nuevamente escribir la palabra anterior(o enter) 
 `Enter same passphrase again:` 
-- Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado 
+- Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado <break> 
 
 
-
-    The key's randomart image is:
+     The key's randomart image is:
     
     +---[RSA 3072]----+
-    
     |     +.o .       |
-  
     |    . + o        |
-  
     | . .     . .     |
-  
     |  o      .o.o    |
-  
     |   ..   S..o.o   |
-  
     |o E  o...+  ..o  |
-  
     |.o  . =++.   =+. |
-  
     |     o.++ +.= o=o|
-  
     |      .o +.=oo+B=|
-  
     +----[SHA256]-----+
 
 

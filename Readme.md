@@ -102,7 +102,7 @@ Una vez que el directorio de la consola se encuentre dentro de la carpeta ejecut
 Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dependencias en línea de comandos con el ambiente virtual activado:
 
 
-    [conda install -c conda-forge pandas 
+    conda install -c conda-forge pandas 
     conda install -c conda-forge numpy 
     conda install -c conda-forge dash 
     conda install -c conda-forge dash-table 
@@ -121,7 +121,7 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     conda config --add channels conda-forge
     conda config --set channel_priority strict
     conda install zstandard
-    ]: #
+    
     conda install -c conda-forge dash-iconify==0.1.2
     pip install dash-iconify==0.1.2
     conda install -c conda-forge millify==0.1.1
@@ -163,7 +163,7 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 `Enter same passphrase again:` 
 - Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado:
 
-    conda install -c conda-forge pandas 
+    [conda install -c conda-forge pandas 
     conda install -c conda-forge numpy 
     conda install -c conda-forge dash
     conda install -c conda-forge dash-table 
@@ -182,7 +182,7 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
     conda config --add channels conda-forge
     conda config --set channel_priority strict
     conda install zstandard
-
+    ]: #
   
                
     The key's randomart image is:

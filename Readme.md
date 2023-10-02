@@ -166,7 +166,7 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 
     conda install -c conda-forge pandas 
     conda install -c conda-forge numpy 
-    conda install -c conda-forge dash 
+    conda install -c conda-forge dash
     conda install -c conda-forge dash-table 
     conda install -c conda-forge plotly
     conda install -c conda-forge folium

@@ -160,7 +160,7 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 `Enter passphrase (empty for no passphrase):`
 - Nuevamente escribir la palabra anterior(o enter) 
 `Enter same passphrase again:` 
-- Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado:
+- Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado <br> 
 
   
   The key's randomart image is:
@@ -177,7 +177,5 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
   |      .o +.=oo+B=|
   +----[SHA256]-----+
  
-
-
 - La llave pública comienza con:
  `ssh-rsa ... `

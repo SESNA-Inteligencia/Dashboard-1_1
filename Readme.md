@@ -162,6 +162,9 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 `Enter same passphrase again:` 
 - Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado:
 
+   -- hit
+
+
    The key's randomart image is:
    +---[RSA 3072]----+
    |     +.o .       |

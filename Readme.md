@@ -163,26 +163,10 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 `Enter same passphrase again:` 
 - Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado:
 
-    <!--conda install -c conda-forge pandas 
-    conda install -c conda-forge numpy 
-    conda install -c conda-forge dash
-    conda install -c conda-forge dash-table 
-    conda install -c conda-forge plotly
-    conda install -c conda-forge folium
-    conda install -c conda-forge dash-mantine-components-0.12.1
-    conda install -c conda-forge matplotlib
-    conda install -c conda-forge seaborn
-    conda install -c conda-forge dash-bootstrap-components
-    conda install -c conda-forge dash-leaflet
-    conda install -c conda-forge sqlalchemy 
-    conda install -c conda-forge datetime 
-    conda install -c conda-forge pymysql
-    conda install -c conda-forge requests
-    conda install -c conda-forge openpyxl
-    conda config --add channels conda-forge
-    conda config --set channel_priority strict
-    conda install zstandard
-    ]: #
+
+     (dashboard) C:\Users\jcmartinez\Desktop\Dashboard_v2>python index.py 
+ 
+     En el ejemplo anterior, la carpeta que contiene 
   
                
     The key's randomart image is:

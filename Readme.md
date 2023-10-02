@@ -190,6 +190,8 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 
  `python index.py`
 
+Si no hay error alguno debe moatrar:
+
       Dash is running on http://127.0.0.1:8050/
       
        * Serving Flask app 'app'

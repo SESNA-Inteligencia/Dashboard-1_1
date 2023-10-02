@@ -175,6 +175,11 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
      +----[SHA256]-----+
 
 
+
+     (dashboard) C:\Users\jcmartinez\Desktop\Dashboard_v2>python index.py 
+ 
+     En el ejemplo anterior, la carpeta que contiene 
+
  
 - La llave pública comienza con:
  `ssh-rsa ... `

@@ -101,7 +101,6 @@ Una vez que el directorio de la consola se encuentre dentro de la carpeta ejecut
 
 Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dependencias en línea de comandos con el ambiente virtual activado:
 
-
     conda install -c conda-forge pandas 
     conda install -c conda-forge numpy 
     conda install -c conda-forge dash 

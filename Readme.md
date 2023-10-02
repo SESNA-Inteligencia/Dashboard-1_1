@@ -163,7 +163,7 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 `Enter same passphrase again:` 
 - Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado:
 
-    [conda install -c conda-forge pandas 
+    <!--conda install -c conda-forge pandas 
     conda install -c conda-forge numpy 
     conda install -c conda-forge dash
     conda install -c conda-forge dash-table 
@@ -197,7 +197,7 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
     |     o.++ +.= o=o|
     |      .o +.=oo+B=|
     +----[SHA256]-----+
-
+    -->
 
 
 - La llave pública comienza con:

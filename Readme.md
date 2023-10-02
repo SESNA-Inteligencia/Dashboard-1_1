@@ -182,11 +182,11 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 
   `ubuntu@sesna-mex-proyectosria01:~/Desktop/ProyectoDash/Dashboard-1_1$`
 
-activar el ambiente virtual:
+- activar el ambiente virtual:
 
  `source /bin/activate`
 
- escribir :
+ - ejecutar el archivo index.py :
 
  `python index.py`
 

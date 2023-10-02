@@ -15,26 +15,26 @@ from app import app
 list_ramos = ['uno', 'dos', 'tres']
 # change to app.layout if running as single page app instead
 layout = dbc.Container([
-    html.Div([
-        dbc.Carousel(
-                items=[
-                    {"key": "1", "src": "../assets/logo.svg", "header": "With header ","caption": "SESNA", "img_style":{"width":"100%","height":"550px" }},
-                    {"key": "2", "src": "../assets/logo4.svg", "header": "With header ","caption": "SESNA", "img_style":{"width":"100%","height":"550px" }},
-                    {"key": "3", "src": "../assets/logo9.svg", "header": "With header ","caption": "SESNA", "img_style":{"width":"100%","height":"550px" }},
-                ],
-                controls=True,
-                indicators=False,
-                interval=2000,
-                ride="carousel",
-                className="carousel", style={'backgroundColor':'white'},
-        ),     
-    ], style={'marginBottom':'6rem'}),
+    # html.Div([
+    #     dbc.Carousel(
+    #             items=[
+    #                 {"key": "1", "src": "../assets/logo.svg", "header": "With header ","caption": "SESNA", "img_style":{"width":"100%","height":"550px" }},
+    #                 {"key": "2", "src": "../assets/logo4.svg", "header": "With header ","caption": "SESNA", "img_style":{"width":"100%","height":"550px" }},
+    #                 {"key": "3", "src": "../assets/logo9.svg", "header": "With header ","caption": "SESNA", "img_style":{"width":"100%","height":"550px" }},
+    #             ],
+    #             controls=True,
+    #             indicators=False,
+    #             interval=2000,
+    #             ride="carousel",
+    #             className="carousel", style={'backgroundColor':'white'},
+    #     ),     
+    # ], style={'marginBottom':'6rem'}),
     
     # Introduccion
     html.Center(
         html.Div(children=[
-            dmc.Image(src="/assets/logo7.svg",width='100%', withPlaceholder=True)
-        ], style={"width": '15%',  "height":'15%'},
+            dmc.Image(src="/assets/logo.svg",width='100%', withPlaceholder=True)
+        ], style={"width": '15%',  "height":'15%', 'marginTop':'4rem', 'marginBottom':'2rem'},
         ),
     ),
     
@@ -66,11 +66,11 @@ layout = dbc.Container([
                                         clearable=True,
                                         #style={"width": 600}  
                                         ),       
-                            className="col-8 col-md-8 mt-4", style={'paddingLeft':'3rem', 'paddingRight':'3rem'}
+                            className="col-8 col-md-8 col-12 mt-4", style={'paddingLeft':'3rem', 'paddingRight':'3rem'}
                             ),   
                             dbc.Col(
                                 dmc.Text("Ramo", color='black', weight=500, align='left', style={"fontSize": 20}),
-                            className="col-4 col-md-4 mt-4"), 
+                            className="col-4 col-md-4 col-12 mt-4"), 
                             #dbc.Col(md=2),
                             #dbc.Col(html.Div([
                             #        dbc.Button("", color="dark",

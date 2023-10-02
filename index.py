@@ -7,6 +7,7 @@
 import dash
 # Se utiliza la librería dash bootstrap
 import dash_bootstrap_components as dbc
+import dash_mantine_components as dmc
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from app import app
@@ -25,41 +26,49 @@ dropdown = dbc.DropdownMenu(
     nav = True,
     in_navbar = True,
     label = "Menú",
-    style={'fontSize':'20px'}
+    style={'fontSize':'18px', 'padding':'0rem'}
 )
 
 # Se inicializa barra de navegación
 navbar = dbc.Navbar(
-    dbc.Container(
-        [
+    dbc.Container([
             # el logo y el nombre se ponen dentro de un hipervínculo que redirige a la página de inicio
-            html.A(
-                dbc.Row(
-                    [
-                        dbc.Col(html.Img(src="assets/Logotipo_blanco.png", height="30px")),
-                        dbc.Col(dbc.NavbarBrand("Secretaría Ejecutiva del Sistema Nacional Anticorrupción", class_name="ms-1")),
-                    ],
-                    align="center",
-                    className="g-0",
-                ),
-                # en el href se marca a donde dirige cuando se da click en estas partes
-                href="/home",
-                style={"textDecoration": "none"},
-            ),
-            dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
-            # Aquí se incluhe el componente dropdown que ya se había hecho con anterioridad
-            dbc.Collapse(
-                 dbc.Nav(
-                    [dropdown], className="ms-auto", navbar=True
-                ),
-                id="navbar-collapse",
-                is_open=False,
-                navbar=True,
-            ),  
-        ], style={'height':'4rem'}
+            dbc.Row([
+                dbc.Col(
+                    html.Img(src="assets/Logotipo_blanco.png", height="40px"), 
+                className='col-2', style={'paddingRight':'2rem', 'text-align':'right'}),
+               
+                dbc.Col([
+                    html.A(
+                        
+                        dmc.Text("Secretaría Ejecutiva del Sistema Nacional Anticorrupción", size=20, color='white'),
+                            
+                        # en el href se marca a donde dirige cuando se da click en estas partes
+                        href="/home",
+                        style={"textDecoration": "none"},
+                    ),  
+                ], className='col-9', style={'paddingLeft':'1rem','paddingBottom':'1rem', 'text-align':'left'}),
+                dbc.Col([
+                    dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
+                    # Aquí se incluhe el componente dropdown que ya se había hecho con anterioridad
+                    dbc.Collapse(
+                        dbc.Nav(
+                            [dropdown], navbar=True
+                        ),
+                        id="navbar-collapse",
+                        is_open=False,
+                        navbar=True,
+                    ),  
+                ], className='col-1', align="right", style={'paddingRight':'1rem'}),
+            ], className='col-12'),
+            
+            
+        ], style={'height':'5rem'}
     ),
     color="dark",
     dark=True,
+    fixed='relative',
+    className='col-lg-12 col-12',
 )
 
 
@@ -87,24 +96,33 @@ app.layout = html.Div([
     html.Footer([
         html.Br(),
         html.Br(),
-            html.Center(
-                dbc.Row(
-                    [
-                        dbc.Col(html.Img(src="assets/Logotipo_blanco.png",height="40px"), style = {'textAlign':'right'} ),
-                        dbc.Col(dbc.NavbarBrand("Secretaría Ejecutiva del Sistema Nacional Anticorrupción", style={'color':'white', 'font-size': '24px', 'textAlign':'left'})),
-                    ],
-                     style={"width": "60%"},
-                     align="center",
-                ),),
-                # en el href se marca a donde dirige cuando se da click en estas partes
+        html.Center(
+            dbc.Row([
+                dbc.Col(
+                    html.Img(src="assets/Logotipo_blanco.png", height="40px"), 
+                className='col-4', style={'text-align':'right'}),
+                
+                dbc.Col([
+                    html.A(
+                        
+                        dmc.Text("Secretaría Ejecutiva del Sistema Nacional Anticorrupción", size=20, color='white'),
+                            
+                        # en el href se marca a donde dirige cuando se da click en estas partes
+                        href="/home",
+                        style={"textDecoration": "none"},
+                    ),  
+                ], className='col-8', style={'paddingLeft':'0rem', 'text-align':'left'}),
+                
+                #     dbc.Col(html.Img(src="assets/Logotipo_blanco.png",height="40px"), style = {'textAlign':'right'} ),
+                #     dbc.Col(dbc.NavbarBrand("Secretaría Ejecutiva del Sistema Nacional Anticorrupción", style={'color':'white', 'font-size': '24px', 'textAlign':'left'})),
+            ], className='col-10', style={'paddingLeft':'0rem','paddingBottom':'6rem'}),
+            ),
+            # en el href se marca a donde dirige cuando se da click en estas partes
                 #href="/home",
                 #style={"textDecoration": "none"},
         #    ),
-        html.Br(),
-        html.Br(),
-        html.Br(),
-        html.Br(),
-    ], className="text-center", style={'color':'white', 'backgroundColor':'#566573'}), #566573
+
+    ], className="col-12", style={'color':'white', 'backgroundColor':'#566573'}), #566573
 
 ])
 

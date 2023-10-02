@@ -121,7 +121,6 @@ Cuando se va a ejecutar por primera vez, es necesario instalar las siguintes dep
     conda config --add channels conda-forge
     conda config --set channel_priority strict
     conda install zstandard
-    pip install dash-mantine-components==0.11.1
 
     conda install -c conda-forge dash-iconify==0.1.2
     pip install dash-iconify==0.1.2
@@ -164,6 +163,28 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 `Enter same passphrase again:` 
 - Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado
 
+
+    conda install -c conda-forge pandas 
+    conda install -c conda-forge numpy 
+    conda install -c conda-forge dash 
+    conda install -c conda-forge dash-table 
+    conda install -c conda-forge plotly
+    conda install -c conda-forge folium
+    conda install -c conda-forge dash-mantine-components-0.12.1
+    conda install -c conda-forge matplotlib
+    conda install -c conda-forge seaborn
+    conda install -c conda-forge dash-bootstrap-components
+    conda install -c conda-forge dash-leaflet
+    conda install -c conda-forge sqlalchemy 
+    conda install -c conda-forge datetime 
+    conda install -c conda-forge pymysql
+    conda install -c conda-forge requests
+    conda install -c conda-forge openpyxl
+    conda config --add channels conda-forge
+    conda config --set channel_priority strict
+    conda install zstandard
+
+  
                
     The key's randomart image is:
     +---[RSA 3072]----+

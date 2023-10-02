@@ -161,7 +161,9 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 `Enter passphrase (empty for no passphrase):`
 - Nuevamente escribir la palabra anterior(o enter) 
 `Enter same passphrase again:` 
-- Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado
+- Una vez que aparezca la siguiente imagen, las llaves ya se habrán generado:
+
+
 
 
     conda install -c conda-forge pandas 

@@ -179,3 +179,32 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 
 - La llave pública comienza con:
  `ssh-rsa ... `
+
+
+
+conda install -c conda-forge pandas 
+conda install -c conda-forge numpy 
+conda install -c conda-forge dash 
+conda install -c conda-forge dash-table 
+conda install -c conda-forge plotly
+conda install -c conda-forge folium
+conda install -c conda-forge dash-mantine-components-0.12.1
+conda install -c conda-forge matplotlib
+conda install -c conda-forge seaborn
+conda install -c conda-forge dash-bootstrap-components
+conda install -c conda-forge dash-leaflet
+conda install -c conda-forge sqlalchemy 
+conda install -c conda-forge datetime 
+conda install -c conda-forge pymysql
+conda install -c conda-forge requests
+conda install -c conda-forge openpyxl
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+conda install zstandard
+
+conda install -c conda-forge dash-iconify==0.1.2
+pip install dash-iconify==0.1.2
+conda install -c conda-forge millify==0.1.1
+pip install dash-millify==0.1.1
+conda install -c conda-forge dash-extensions==0.1.13rc1
+conda install -c conda-forge dash-lazy-load==1.3.1

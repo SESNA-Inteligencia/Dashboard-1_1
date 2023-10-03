@@ -180,6 +180,90 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 
   `ssh -i .\keys.ppk ubuntu@localhost`
 
+# Descargar archivos del dashboard
+
+- Antes que otra cosa ingresar al servidor
+- Crear una  carpeta, p.e. `Desktop` e ingresar a ella:
+  - cd home
+  - mkdir Desktop (mkdir crea carpeta)
+  - cd Desktop
+     
+- sudo apt update
+- sudo apt install git
+- git --version
+
+- git init
+- git clone `https://github.com/SESNA-Inteligencia/Dashboard-1_1.git`
+
+Si haz seguido los pasos correctamente hasta aquí, en la carpeta `Desktop` se debe haber descargatos los archivos del repositorio remoto `GitHub`.
+
+
+# Instalar Python 3.11.3 en Ubuntu 18.04
+
+Ingresar a la carpeta de archivos temporales (tmp) e ingresar los comandos siguientes:
+
+- sudo apt update
+- sudo apt install build-essential software-properties-common libssl-dev libffi-dev python3-dev libgdbm-dev libc6-dev libbz2-dev libsqlite3-dev tk-dev libffi-dev zlib1g-dev -y
+- sudo add-apt-repository ppa:deadsnakes/ppa
+- wget https://www.python.org/ftp/python/3.11.3/Python-3.11.3.tgz
+- md5dsum Python-3.11.3.tgz 
+- tar  -xvf Python-3.11.3.tgz (extrae el archivo .tar)
+-  cd Python-3.11.3/ (ingresar a la carpeta)
+-  sudo ./configure --enable-optimizations (se revisan todas las dependencias e instala python3)
+-  sudo make altinstall (instala binarios)
+- python3.11 --version (verifica la versión instalada)
+
+
+Ligas útiles:
+
+[How to Install Python 3 on Ubuntu 18.04](https://phoenixnap.com/kb/how-to-install-python-3-ubuntu)
+[Install Python3 From Source](https://www.cherryservers.com/blog/install-python-on-ubuntu)
+
+
+# Crear ambiente virtual en servidor
+
+Una vez instalado python creamos en la ruta `Desktop/Dashboard-1_1` el ambiente virtual, siguiendo los siguientes pasos:
+
+- sudo pip install --upgrade pip
+- sudo apt install python3-virtualenv (instala ambiente virtual)
+- sudo python3 -m venv dashboard2 (crea ambiente virtual)
+- source dashboard2/bin/activate (se activa el ambiente virtual)
+
+Si el ambien virtual se activo de manera correcta deberá aparecer al inicio de la linea de comando en consola el nombre del ambiente virtual entre paréntesis:
+
+      `(dashboard2) ubuntu@sesna-mex-proyectosria01:~/Desktop/ProyectoDash/Dashboard-1_1$ git clone https://github.com/SESNA-Inteligencia/Dashboard-1_1.git`
+
+Una vez creado instalamos todas las dependencias (con el ambiente virtual activado) mediante:
+
+    sudo pip install --upgrade pip
+    
+    pip install pandas 
+    pip install numpy 
+    pip install dash 
+    pip install dash-table 
+    pip install plotly
+    pip install folium
+    pip install dash-mantine-components
+    pip install matplotlib
+    pip install seaborn
+    pip install dash-bootstrap-components
+    pip install dash-leaflet
+    pip install sqlalchemy 
+    pip install datetime 
+    pip install pymysql
+    pip install requests
+    pip install openpyxl
+    pip install dash-iconify
+    pip install millify
+    pip install dash-extensions
+    pip install dash-lazy-load
+
+
+Ligas útiles:
+
+[Change the Python3 default version in Ubuntu
+](https://unix.stackexchange.com/questions/410579/change-the-python3-default-version-in-ubuntu)
+[Switch Python Version in Ubuntu](https://tecadmin.net/how-to-switch-python-version-in-ubuntu-debian/)
 
 
 # Acceder al ambiente virtual
@@ -190,13 +274,13 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 
 - activar el ambiente virtual:
 
- `source /bin/activate`
+ `source dashboard2/bin/activate` (dashboard2 es el nombre del ambiente virtual)
 
  - ejecutar el archivo index.py :
 
  `python index.py`
 
-Si no hay error alguno debe moatrar:
+Si no hay error alguno se debe mostrar:
 
       Dash is running on http://127.0.0.1:8050/
       
@@ -205,3 +289,6 @@ Si no hay error alguno debe moatrar:
       WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
        * Running on http://127.0.0.1:8050
       Press CTRL+C to quit
+
+
+Listo!!!

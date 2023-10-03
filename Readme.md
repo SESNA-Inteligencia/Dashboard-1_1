@@ -182,7 +182,7 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 
 # Descargar archivos del dashboard
 
-- Antes que otra cosa ingresar al servidor
+- Primero hay que ingresar al servidor
 - Crear una  carpeta, p.e. `Desktop` e ingresar a ella:
   - cd home
   - mkdir Desktop (mkdir crea carpeta)
@@ -195,8 +195,21 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 - git init
 - git clone `https://github.com/SESNA-Inteligencia/Dashboard-1_1.git`
 
-Si haz seguido los pasos correctamente hasta aquí, en la carpeta `Desktop` se debe haber descargatos los archivos del repositorio remoto `GitHub`.
+Si haz seguido los pasos correctamente hasta aquí, en la carpeta `Desktop` se deben haber descargado todos los archivos del repositorio remoto `GitHub` en la carpeta `/Dashboard-1_1`.
 
+- Finalmente ingresar a la carpeta `/Dashboard-1_1`
+- obtener la ruta de la carpeta con el siguiente comando en consola:
+   `(dashboard2) ubuntu@sesna-mex-proyectosria01:~/Desktop/ProyectoDash/Dashboard-1_1$ pwd`
+  `/home/ubuntu/Desktop/ProyectoDash/Dashboard-1_1`
+  
+- Copiar la ruta  `/home/ubuntu/Desktop/ProyectoDash/Dashboard-1_1` (ctr + c)
+- Acceder a la carpeta apps : `cd/apps`
+- abrir el archivo segalmex.py : `vim segalmex.py` (vim permite abrir cualquier archivo y modificarlo si no lo reconoce ingresar sudo apt install vim)
+- cambiar el root
+  - ctr + i : para editar el archivo
+  - click derecho (mouse) + pegar (ruta del directorio)
+  - ctr + c (para cambiar opciones de vim)
+  - :wq! (guardar cqambios y salir)  
 
 # Instalar Python 3.11.3 en Ubuntu 18.04
 

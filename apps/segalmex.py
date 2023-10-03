@@ -94,21 +94,18 @@ def get_info2(feature=None):
 #engine = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}".format(host=hostname, db=dbname[0], user=uname, pw=pwd))
 #base = pd.read_sql(sql="select * from", con = engine, index_col="Date", parse_dates=True)
 
-# introducir directorio de la carpeta
+# root local 
 root = "C:/Users/jcmartinez/Desktop/Dashboard3"
-
-# urls
-#repo_est_url = ""
-#estados_json = open(root + '/datasets/estadosMexico.json')
-#mx_est_geo = json.load(estados_json)
+# root server
+#root = "/home/ubuntu/Desktop/ProyectoDash/Dashboard-1_1"
 
 json.load(open(root +'/datasets/sample.json'))
 data2 = json.load(open(root +'/datasets/sample3.json'))
 
 # base completa
-# base_2019 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2019.xlsx')
-# base_2020 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2020.xlsx')
-# base_2021 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2021.xlsx')
+base_2019 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2019.xlsx')
+base_2020 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2020.xlsx')
+base_2021 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2021.xlsx')
 
 
 # bases Beneficiarios estado
@@ -128,23 +125,13 @@ base_productores = pd.read_excel(root + '/datasets/TotalProductores2.xlsx')
 base_resumen = pd.read_excel(root + '/datasets/resumen_montos.xlsx')
 
 
-
-# sample maps P
 # blue style
 style = "https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
 # grey style
 style1 = 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png'
 # black style
 style3 = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
-# base centros de acopio
-#df_centros = pd.read_excel(root + '/datasets/base_centros_inegi.xlsx')
-#df_centros = df_centros
 
-# base producción agrícola
-#df_produccion = pd.read_excel(root + '/datasets/base_prodAgricola_con_claves_inegi.xlsx')
-#df_produccion = df_produccion.dropna()
-# georeferenciación de base producción - estados
-#df_prod_est = pd.read_csv(root + '/datasets/produccion_estados.csv')
 
 # opciones
 list_year = ['2019', '2020', '2021']
@@ -2133,25 +2120,25 @@ tab2_capas_criterios = html.Div([
 #     return dcc.send_file("C:/Users/jcmartinez/Desktop/Dashboard3/Proyecto.pdf")
 
 ########    Download xlsx
-# @app.callback(
-#     Output("download-db-xlsx", "data"),
-#     Input("dowload_xlsx", "n_clicks"),
-#     State('producto', 'value'),
-#     State('anio', 'value'),
-#     prevent_initial_call=True,
-# )
-# def download_xlsx(click_db, producto_sel, anio_sel):
-#     base2019 = base_2019.copy()
-#     base2020 = base_2020.copy()
-#     base2021 = base_2021.copy()
-#     if anio_sel == '2019':
-#         base = base2019[base2019['Producto']==producto_sel]
-#     elif anio_sel == '2020':
-#         base = base2020[base2020['Producto']==producto_sel]
-#     elif anio_sel == '2021':
-#         base = base2021[base2021['Producto']==producto_sel]
+@app.callback(
+    Output("download-db-xlsx", "data"),
+    Input("dowload_xlsx", "n_clicks"),
+    State('producto', 'value'),
+    State('anio', 'value'),
+    prevent_initial_call=True,
+)
+def download_xlsx(click_db, producto_sel, anio_sel):
+    base2019 = base_2019.copy()
+    base2020 = base_2020.copy()
+    base2021 = base_2021.copy()
+    if anio_sel == '2019':
+        base = base2019[base2019['Producto']==producto_sel]
+    elif anio_sel == '2020':
+        base = base2020[base2020['Producto']==producto_sel]
+    elif anio_sel == '2021':
+        base = base2021[base2021['Producto']==producto_sel]
     
-#     return dcc.send_data_frame(base.to_excel, f"{anio_sel}-{producto_sel}.xlsx", sheet_name=f"{anio_sel}-{producto_sel}")
+    return dcc.send_data_frame(base.to_excel, f"{anio_sel}-{producto_sel}.xlsx", sheet_name=f"{anio_sel}-{producto_sel}")
 
 #########  CALL : Regresa opciones capas / criterios  ################
 @app.callback(Output("content-capas-criterios", "children"),

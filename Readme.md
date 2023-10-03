@@ -209,7 +209,7 @@ Si haz seguido los pasos correctamente hasta aquí, en la carpeta `Desktop` se d
   - ctr + i : para editar el archivo
   - click derecho (mouse) + pegar (ruta del directorio)
   - ctr + c (para cambiar opciones de vim)
-  - :wq! (guardar cqambios y salir)  
+  - :wq! (guardar cambios y salir)  
 
 # Instalar Python 3.11.3 en Ubuntu 18.04
 

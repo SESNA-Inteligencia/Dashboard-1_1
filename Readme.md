@@ -229,8 +229,8 @@ Ingresar a la carpeta de archivos temporales (tmp) e ingresar los comandos sigui
 
 Ligas útiles:
 
-[How to Install Python 3 on Ubuntu 18.04](https://phoenixnap.com/kb/how-to-install-python-3-ubuntu)
-[Install Python3 From Source](https://www.cherryservers.com/blog/install-python-on-ubuntu)
+- [How to Install Python 3 on Ubuntu 18.04](https://phoenixnap.com/kb/how-to-install-python-3-ubuntu)
+- [Install Python3 From Source](https://www.cherryservers.com/blog/install-python-on-ubuntu)
 
 
 # Crear ambiente virtual en servidor
@@ -274,9 +274,9 @@ Una vez creado instalamos todas las dependencias (con el ambiente virtual activa
 
 Ligas útiles:
 
-[Change the Python3 default version in Ubuntu
+- [Change the Python3 default version in Ubuntu
 ](https://unix.stackexchange.com/questions/410579/change-the-python3-default-version-in-ubuntu)
-[Switch Python Version in Ubuntu](https://tecadmin.net/how-to-switch-python-version-in-ubuntu-debian/)
+- [Switch Python Version in Ubuntu](https://tecadmin.net/how-to-switch-python-version-in-ubuntu-debian/)
 
 
 # Acceder al ambiente virtual

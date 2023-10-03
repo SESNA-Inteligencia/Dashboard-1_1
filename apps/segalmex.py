@@ -10,7 +10,7 @@ import dash_mantine_components as dmc
 from flask import Flask, render_template
 import numpy as np
 import pandas as pd
-from millify import millify
+from millify import millify, prettify
 from datetime import datetime, timedelta
 import plotly.express as px
 import plotly.graph_objects as go
@@ -238,22 +238,23 @@ seccion2 = html.Div([
 
 #####  SECCIÓN : REGLAS DE OPERACIÓN
 seccion3 = html.Div([
-    dmc.Text("Recursos ejercidos en el Programa, por tipo de producto y año fiscal", size=35, weight=500, color='#4e203a', align="center", style={'paddingBottom':'2rem'}),
+    dmc.Text("Recursos ejercidos en el Programa,", size=55, weight=600, color='#4e203a', align="center", style={'paddingBottom':'0rem'}),
+    dmc.Text("por tipo de producto y año fiscal", size=45, weight=500, color='#4e203a', align="center", style={'marginBottom':'2rem'}),
     dmc.Tabs([  
         dmc.TabsList([
             dmc.Tab("2019", value="2019"),
             dmc.Tab("2020", value="2020"),
             dmc.Tab("2021", value="2021"),
-        ], style={'padding':'1rem','backgroundColor':' #f4f6f6'}),
+        ], style={'padding':'0.5rem','Color':'white','backgroundColor':'white'}),
     ],
     id="tabs-example",
     orientation='horizontal',
-    color="blue",        
+    color="#4e203a",        
     value="2019"
     ),
     
     html.Div(id="section3-content", className='col-12', style={'marginTop':'2rem','marginBottom':'2rem', 'paddingLeft':'2rem', 'paddingRight':'2rem'}), 
-], className='col-12', style={'paddingTop':'2rem','paddingBottom':'2rem','backgroundColor':'#F8F9F9'})
+], className='col-12', style={'paddingTop':'2rem','paddingBottom':'2rem','backgroundColor':'white'})
 
 
 ####   SECCIÓN : GRáfico resumen
@@ -295,8 +296,8 @@ def plot_section3(base, anio):
             b=0,
             t=60,
             pad=0),
-            plot_bgcolor='#F8F9F9',
-            paper_bgcolor="#F8F9F9",
+            plot_bgcolor='white',
+            paper_bgcolor="white",
             )
 
 
@@ -345,10 +346,10 @@ def render_content(active):
     if active == "2019":
         result = dbc.Row([
                     dbc.Col([
-                        dmc.Text("En el año 2019, se destinó un aproximado de $ 8 billones al programa de Precios de Garantía a Productos Alimentarios Básicos, cuyos destinatarios serían los productores de cinco productos: maíz, trigo, frijol, leche y arroz. Para el caso de maíz se destinó un monto de $ 4 billones, lo que representó aproximadamente el 53.1% del total y, en segundo lugar, la cantidad de $2 billones (28.4% del total) fue designada a los productores de trigo.", size=18, color='grey', align="justify"),
+                        dmc.Text("En el año 2019, se destinó un aproximado de $ 8 billones al programa de Precios de Garantía a Productos Alimentarios Básicos, cuyos destinatarios serían los productores de cinco productos: maíz, trigo, frijol, leche y arroz. Para el caso de maíz se destinó un monto de $ 4 billones, lo que representó aproximadamente el 53.1% del total y, en segundo lugar, la cantidad de $2 billones (28.4% del total) fue designada a los productores de trigo.", size=18, color='#797D7F', align="justify"),
                         dmc.Space(h=20),
-                        dmc.Text("Los productores de frijol y leche recibieron un monto de $ 695 millones (8.6%) y $ 534 millones (6.6%), respectivamente. Por último, a los productores de arroz se destinó $ 260 millones, equivalente a 3.2% del monto total.", size=18, color='grey', align="justify"),
-                    ], className='col-lg-6 col-12', style={'padding':'1rem'}),
+                        dmc.Text("Los productores de frijol y leche recibieron un monto de $ 695 millones (8.6%) y $ 534 millones (6.6%), respectivamente. Por último, a los productores de arroz se destinó $ 260 millones, equivalente a 3.2% del monto total.", size=18, color='#797D7F', align="justify"),
+                    ], className='card col-lg-6 col-12', style={'padding':'2rem', 'backgroundColor':'#fdfefe', 'border-radius': '5px', 'border-right': '2px solid #f8f9f9', 'border-left': '1px solid #f8f9f9', 'border-top': '1px solid #f8f9f9', 'border-bottom': '2px solid #f8f9f9'}),
                     dbc.Col([
                         html.Div([
                             dcc.Graph(figure=monto_active)    
@@ -361,7 +362,7 @@ def render_content(active):
                         dmc.Text("En el año 2020, se destinó un aproximado de $ 9.5 billones al programa de Precios de Garantía a Productos Alimentarios Básicos, lo que representa un aumento del 18.2% en comparación con el monto destinado en 2019. Los productores de maíz recibieron $ 6.7 billones del total del monto de 2020 (70.9% del total).", size=18, color='grey', align="justify"),
                         dmc.Space(h=20),
                         dmc.Text("Por su parte, a los productores de trigo se destinó $1 billón (13.3% de total), para el caso de los productores de leche, se destinó un monto de $ 1 billón, correspondiente al 10.9% del total. En cuarto lugar, se encuentra el arroz, producto que recibió en 2020 $ 353 millones (3.7% del monto total del año respectivo). Finalmente, el frijol recibió un monto de apoyo de $ 117 millones, es decir, un 1.23% del monto total destinado al programa en 2020.", size=18, color='grey', align="justify"),
-                    ], className='col-lg-6 col-12', style={'padding':'1rem'}),
+                    ], className='card col-lg-6 col-12', style={'padding':'2rem', 'backgroundColor':'#fdfefe', 'border-radius': '5px', 'border-right': '2px solid #f8f9f9', 'border-left': '1px solid #f8f9f9', 'border-top': '1px solid #f8f9f9', 'border-bottom': '2px solid #f8f9f9'}),
                    dbc.Col([
                         html.Div([
                             dcc.Graph(figure=monto_active)    
@@ -374,7 +375,7 @@ def render_content(active):
                         dmc.Text("En el año 2021, se destinó un aproximado de $ 6.8 billones al Programa Precios de Garantía a Productos Alimentarios Básicos lo que representa una disminución del 27.7% en comparación con el monto destinado en 2020. Para el caso de maíz se otorgaron $4 billones, lo que representó aproximadamente el 60.4% del total.", size=18, color='grey', align="justify"),
                         dmc.Space(h=20),
                         dmc.Text("Respecto al frijol, se destinó $1.6 billones, lo que representa el 22.9% del total del monto destinado en 2021 al programa. Los productores de leche recibieron $ 523 millones, correspondiente al 7.5% del total. En cuarto lugar, se encuentra el trigo, producto que recibió en 2021 $ 424 millones (6.1% del monto total del año respectivo). Finalmente, el arroz recibió un monto de apoyo de $ 202 millones, es decir, un 2.9% del monto total destinado al programa en 2020.", size=18, color='grey', align="justify"),
-                    ], className='col-lg-6 col-12', style={'padding':'1rem'}),
+                    ], className='card col-lg-6 col-12', style={'padding':'2rem', 'backgroundColor':'#fdfefe', 'border-radius': '5px', 'border-right': '2px solid #f8f9f9', 'border-left': '1px solid #f8f9f9', 'border-top': '1px solid #f8f9f9', 'border-bottom': '2px solid #f8f9f9'}),
                     
                     dbc.Col([
                         html.Div([
@@ -576,13 +577,13 @@ seccion4 = html.Div([
         dmc.Center(
         dmc.Group([   
             html.Div([
-                 dmc.Anchor(
+                 #dmc.Anchor(
                     dmc.Button("Carac. Prog. Sociales",
                             id="open",
                             variant="subtle",
                             leftIcon=DashIconify(icon="ant-design:read-outlined"),
                             color="white",
-                            n_clicks=0), href='#'),
+                            n_clicks=0), #, href='#'),
                     dbc.Modal([
                             dbc.ModalHeader(dbc.ModalTitle(
                                 dmc.Grid(
@@ -2526,7 +2527,7 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
                     dmc.Space(h=4),
                     dmc.Text(['Grado de marginación: ', gmargina]),
                     dmc.Text(['No. Beneficiarios: ', numbenef]),
-                    dmc.Text(['Monto total del apoyo: ', monto]),
+                    dmc.Text(['Monto total del apoyo: ', f'$ {prettify(monto)}']),
                 ])
                 
                 ])
@@ -2571,7 +2572,7 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
                     dmc.Text(['Municipio: ', mun]),
                     dmc.Space(h=4),
                     dmc.Text(['Grado de marginación: ', gmargina]),
-                    dmc.Text(['No. Productores(Estimado): ', numprod]),
+                    dmc.Text(['No. Productores (Estimado): ', prettify(numprod)]),
 
                 ])
                 
@@ -2584,13 +2585,13 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
             benef_option = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=(radio),fillOpacity=1,fillColor=color, color=color, children=[
                 #dl.Popup("Municipio: {}".format(mun))
                 dl.Tooltip(f"Beneficiario(s): {mun}-{ent}"),
-                dl.Popup(beneficiarios_popup(ent, mun, gmargina, numbenef,f'$ {monto}'))
+                dl.Popup(beneficiarios_popup(ent, mun, gmargina, numbenef, monto))
                 ]) for ent, mun, lat, lon, radio, color, gmargina, numbenef, monto in zip(benef_filter['NOM_ENT'], benef_filter['NOM_MUN'], benef_filter['LAT_DECIMALmean'], benef_filter['LON_DECIMALmean'], benef_filter['NUM_BENEFradio'], benef_filter['GMMcolor'], benef_filter['GM_2020'], benef_filter['NUM_BENEFsize'], benef_filter['MONTO_APOYO_TOTALsum'])])
         else:
             benef_option = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=(radio), color=color, children=[
                 #dl.Popup("Municipio: {}".format(mun))
                 dl.Tooltip(f"Beneficiario(s): {mun}-{ent}"),
-                dl.Popup(beneficiarios_popup(ent, mun, gmargina, numbenef, f'$ {monto}'))
+                dl.Popup(beneficiarios_popup(ent, mun, gmargina, numbenef, monto))
                 ]) for ent, mun, lat, lon, radio, color, gmargina, numbenef, monto in zip(benef_filter['NOM_ENT'], benef_filter['NOM_MUN'], benef_filter['LAT_DECIMALmean'], benef_filter['LON_DECIMALmean'], benef_filter['MONTO_APOYO_TOTALradio'], benef_filter['GMMcolor'], benef_filter['GM_2020'], benef_filter['NUM_BENEFsize'], benef_filter['MONTO_APOYO_TOTALsum'])])
 
         return benef_option

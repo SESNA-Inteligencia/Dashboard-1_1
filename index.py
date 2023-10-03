@@ -20,8 +20,8 @@ dropdown = dbc.DropdownMenu(
     children=[
         #dbc.DropdownMenuItem("Home", href="/home"),
         dbc.DropdownMenuItem("SEGALMEX", href="/segalmex"),
-        dbc.DropdownMenuItem("LICONSA", href="/page2"),
-        dbc.DropdownMenuItem("DICONSA", href="/page3"),
+        # dbc.DropdownMenuItem("LICONSA", href="/page2"),
+        # dbc.DropdownMenuItem("DICONSA", href="/page3"),
     ],
     nav = True,
     in_navbar = True,
@@ -44,7 +44,8 @@ navbar = dbc.Navbar(
                         dmc.Text("Secretaría Ejecutiva del Sistema Nacional Anticorrupción", size=20, color='white'),
                             
                         # en el href se marca a donde dirige cuando se da click en estas partes
-                        href="/home",
+                        # href="/home",
+                        href="/segalmex",
                         style={"textDecoration": "none"},
                     ),  
                 ], className='col-9', style={'paddingLeft':'1rem','paddingBottom':'1rem', 'text-align':'left'}),
@@ -61,7 +62,6 @@ navbar = dbc.Navbar(
                     ),  
                 ], className='col-1', align="right", style={'paddingRight':'1rem'}),
             ], className='col-12'),
-            
             
         ], style={'height':'5rem'}
     ),
@@ -108,7 +108,8 @@ app.layout = html.Div([
                         dmc.Text("Secretaría Ejecutiva del Sistema Nacional Anticorrupción", size=20, color='white'),
                             
                         # en el href se marca a donde dirige cuando se da click en estas partes
-                        href="/home",
+                        #href="/home",
+                        href="/segalmex",
                         style={"textDecoration": "none"},
                     ),  
                 ], className='col-8', style={'paddingLeft':'0rem', 'text-align':'left'}),
@@ -137,11 +138,12 @@ def display_page(pathname):
         return segalmex.layout
     elif pathname == '/segalmex':
         return segalmex.layout
-    elif pathname == '/page3':
+    elif pathname == '/segalmex':
         return segalmex.layout
 
     else:
-        return home.layout
+        #return home.layout
+        return segalmex.layout
 
 #HOST = '10.14.10.145'
 #PORT = 8000

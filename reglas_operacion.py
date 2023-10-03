@@ -107,7 +107,7 @@ ro_2019_maiz = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5551718&fecha=01/03/2019#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """Aviso por el que se da a conocer la Modificación al Acuerdo por el que se emiten los Lineamientos de Operación del Programa de Precios de Garantía a Productos Alimentarios Básicos, disponible en: """
@@ -115,7 +115,7 @@ ro_2019_maiz = html.Div(
                                                 href='https://www.gob.mx/agricultura/documentos/convocatorias-avisos-y-documentos-del-programa-de-precios-de-garantia-a-productos-alimentarios-basicos-2019', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),
                                 ],),
                             ],),
@@ -217,7 +217,7 @@ ro_2019_frijol = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5551718&fecha=01/03/2019#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """Aviso por el que se da a conocer la Modificación al Acuerdo por el que se emiten los Lineamientos de Operación del Programa de Precios de Garantía a Productos Alimentarios Básicos, disponible en: """
@@ -225,7 +225,7 @@ ro_2019_frijol = html.Div(
                                                 href='https://www.gob.mx/agricultura/documentos/convocatorias-avisos-y-documentos-del-programa-de-precios-de-garantia-a-productos-alimentarios-basicos-2019', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),                            
                                     
                                 ],),
@@ -326,7 +326,7 @@ ro_2019_trigo = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5551718&fecha=01/03/2019#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """Aviso por el que se da a conocer la Modificación al Acuerdo por el que se emiten los Lineamientos de Operación del Programa de Precios de Garantía a Productos Alimentarios Básicos, disponible en: """
@@ -334,7 +334,7 @@ ro_2019_trigo = html.Div(
                                                 href='https://www.gob.mx/agricultura/documentos/convocatorias-avisos-y-documentos-del-programa-de-precios-de-garantia-a-productos-alimentarios-basicos-2019', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),                            
                                     
                                 ],),
@@ -436,7 +436,7 @@ ro_2019_arroz = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5551718&fecha=01/03/2019#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """Aviso por el que se da a conocer la Modificación al Acuerdo por el que se emiten los Lineamientos de Operación del Programa de Precios de Garantía a Productos Alimentarios Básicos, disponible en: """
@@ -444,7 +444,7 @@ ro_2019_arroz = html.Div(
                                                 href='https://www.gob.mx/agricultura/documentos/convocatorias-avisos-y-documentos-del-programa-de-precios-de-garantia-a-productos-alimentarios-basicos-2019', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),             
                                     
                                 ],),
@@ -495,8 +495,8 @@ ro_2019_leche = html.Div(
                                         dmc.Table(
                                         [html.Thead(html.Tr([
                                                     html.Th("Precio de garantía ($) ", style={'color':'white'}),
-                                                    html.Th("Volumen máximo (Ton) ", style={'color':'white'}),])),
-                                        html.Tbody([html.Tr([html.Td("8.20/Ltr"), html.Td("15 Lts/vaca")])])],
+                                                    html.Th("Volumen máximo (Ltrs) ", style={'color':'white'}),])),
+                                        html.Tbody([html.Tr([html.Td("8.20/Ltr"), html.Td("15 Ltrs/vaca")])])],
                                         striped=False,
                                         highlightOnHover=False,
                                         withBorder=True,
@@ -552,7 +552,7 @@ ro_2019_leche = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5551718&fecha=01/03/2019#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """Aviso por el que se da a conocer la Modificación al Acuerdo por el que se emiten los Lineamientos de Operación del Programa de Precios de Garantía a Productos Alimentarios Básicos, disponible en: """
@@ -560,7 +560,7 @@ ro_2019_leche = html.Div(
                                                 href='https://www.gob.mx/agricultura/documentos/convocatorias-avisos-y-documentos-del-programa-de-precios-de-garantia-a-productos-alimentarios-basicos-2019', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),   
                                 ],),
                             ],),
@@ -675,7 +675,7 @@ ro_2020_maiz = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5587270&fecha=24/02/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """PRIMER Acuerdo Modificatorio de las Reglas de Operación del Programa de precios de garantía a productos alimentarios básicos a cargo seguridad alimentaria Mexicana, SEGALMEX, sectorizada en la Secretaría de Agricultura y Desarrollo Rural (SADER), para el ejercicio fiscal 2020. Disponible en: """
@@ -683,7 +683,7 @@ ro_2020_maiz = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5591535&fecha=13/04/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),                                          html.Br(),
                                     
                                 ],),
@@ -786,7 +786,7 @@ ro_2020_frijol = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5587270&fecha=24/02/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """PRIMER Acuerdo Modificatorio de las Reglas de Operación del Programa de precios de garantía a productos alimentarios básicos a cargo seguridad alimentaria Mexicana, SEGALMEX, sectorizada en la Secretaría de Agricultura y Desarrollo Rural (SADER), para el ejercicio fiscal 2020. Disponible en: """
@@ -794,7 +794,7 @@ ro_2020_frijol = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5591535&fecha=13/04/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),                              
                             
                                     
@@ -903,7 +903,7 @@ ro_2020_trigo = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5587270&fecha=24/02/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """PRIMER Acuerdo Modificatorio de las Reglas de Operación del Programa de precios de garantía a productos alimentarios básicos a cargo seguridad alimentaria Mexicana, SEGALMEX, sectorizada en la Secretaría de Agricultura y Desarrollo Rural (SADER), para el ejercicio fiscal 2020. Disponible en: """
@@ -911,7 +911,7 @@ ro_2020_trigo = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5591535&fecha=13/04/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),                             
                                   html.Br(),
                                     
@@ -1002,7 +1002,7 @@ ro_2020_arroz = html.Div(
                                                 [html.Thead(html.Tr([
                                                             html.Th("Precio de garantía ($) ", style={'color':'white'}),
                                                             html.Th("Volumen máximo (Ton) ", style={'color':'white'}),])),
-                                                html.Tbody([html.Tr([html.Td("8.20/Ltr"), html.Td("25 Ltr/vaca")])])],
+                                                html.Tbody([html.Tr([html.Td("6,120"), html.Td("120 Ton")])])],
                                                 striped=False,
                                                 highlightOnHover=False,
                                                 withBorder=True,
@@ -1021,7 +1021,7 @@ ro_2020_arroz = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5587270&fecha=24/02/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """PRIMER Acuerdo Modificatorio de las Reglas de Operación del Programa de precios de garantía a productos alimentarios básicos a cargo seguridad alimentaria Mexicana, SEGALMEX, sectorizada en la Secretaría de Agricultura y Desarrollo Rural (SADER), para el ejercicio fiscal 2020. Disponible en: """
@@ -1029,7 +1029,7 @@ ro_2020_arroz = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5591535&fecha=13/04/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),                              
                                   html.Br(),
                                     
@@ -1079,7 +1079,7 @@ ro_2020_leche = html.Div(
                                         dmc.Table(
                                         [html.Thead(html.Tr([
                                                     html.Th("Precio de garantía ($) ", style={'color':'white'}),
-                                                    html.Th("Volumen máximo (Ton) ", style={'color':'white'}),])),
+                                                    html.Th("Volumen máximo (Ltrs) ", style={'color':'white'}),])),
                                         html.Tbody([html.Tr([html.Td("8.20/Ltr"), html.Td("25 Ltrs/vaca")])])],
                                         striped=False,
                                         highlightOnHover=False,
@@ -1136,7 +1136,7 @@ ro_2020_leche = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5587270&fecha=24/02/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """PRIMER Acuerdo Modificatorio de las Reglas de Operación del Programa de precios de garantía a productos alimentarios básicos a cargo seguridad alimentaria Mexicana, SEGALMEX, sectorizada en la Secretaría de Agricultura y Desarrollo Rural (SADER), para el ejercicio fiscal 2020. Disponible en: """
@@ -1144,7 +1144,7 @@ ro_2020_leche = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5591535&fecha=13/04/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),                             
                                 ],),
                             ],),
@@ -1255,7 +1255,7 @@ ro_2021_maiz = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5609037&fecha=28/12/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """PRIMER Acuerdo Modificatorio al similar por el que se dan a conocer las Reglas de Operación del Programa de Precios de Garantía a Productos Alimentarios Básicos, a cargo de Seguridad Alimentaria Mexicana, SEGALMEX, sectorizada en la Secretaría de Agricultura y Desarrollo Rural, para el ejercicio fiscal 2021, publicado el 28 de diciembre de 2020. Disponible en: """
@@ -1263,7 +1263,7 @@ ro_2021_maiz = html.Div(
                                                 href='https://www.dof.gob.mx/nota_detalle.php?codigo=5633514&fecha=22/10/2021#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),   
                                   html.Br(),
                                     
@@ -1368,7 +1368,7 @@ ro_2021_frijol = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5609037&fecha=28/12/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """PRIMER Acuerdo Modificatorio al similar por el que se dan a conocer las Reglas de Operación del Programa de Precios de Garantía a Productos Alimentarios Básicos, a cargo de Seguridad Alimentaria Mexicana, SEGALMEX, sectorizada en la Secretaría de Agricultura y Desarrollo Rural, para el ejercicio fiscal 2021, publicado el 28 de diciembre de 2020. Disponible en: """
@@ -1376,7 +1376,7 @@ ro_2021_frijol = html.Div(
                                                 href='https://www.dof.gob.mx/nota_detalle.php?codigo=5633514&fecha=22/10/2021#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),   
                             
                                     
@@ -1505,7 +1505,7 @@ ro_2021_trigo = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5609037&fecha=28/12/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """PRIMER Acuerdo Modificatorio al similar por el que se dan a conocer las Reglas de Operación del Programa de Precios de Garantía a Productos Alimentarios Básicos, a cargo de Seguridad Alimentaria Mexicana, SEGALMEX, sectorizada en la Secretaría de Agricultura y Desarrollo Rural, para el ejercicio fiscal 2021, publicado el 28 de diciembre de 2020. Disponible en: """
@@ -1513,7 +1513,7 @@ ro_2021_trigo = html.Div(
                                                 href='https://www.dof.gob.mx/nota_detalle.php?codigo=5633514&fecha=22/10/2021#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),   
                                     
                                     html.Br(),
@@ -1562,17 +1562,27 @@ ro_2021_arroz = html.Div(
                                             # table
                                             html.Center(
                                                 dmc.Table(
-                                                [html.Thead(html.Tr([html.Th(""),
-                                                            html.Th("Incentivo para alcanzar el Precio de Garantía", style={'color':'white'})])),
-                                                html.Tbody([html.Tr([html.Td("Precio de Garantía"), html.Td("Hasta 120 toneladas por productor elegible, recibirán el incentivo completo, equivalente a la diferencia entre el precio de garantía y un precio de mercado de referencia que establecerá SEGALMEX.")]),
-                                                            html.Tr([html.Td("Incentivo por productividad"), html.Td("Hasta 180 toneladas adicionales a las primeras 120 por productor, recibirán el 50% del incentivo completo.")]),
-                                                            html.Tr([html.Td("Precio de mercado de referencia"), html.Td("El precio de mercado de referencia será definido en dos categorías (para arroz grueso y para el largo), y para las diferentes regiones productoras. Su cálculo se determinará considerando los precios del arroz en el Mercado de Físicos de la Bolsa de Comercio de Chicago (CBOT), el promedio del tipo de cambio, y los precios sugeridos por la industria molinera y los productores, en el seno del Consejo Mexicano del Arroz y del Sistema Producto Arroz.")])])],
+                                                [#html.Thead(html.Tr([html.Th(""),
+                                                 #           html.Th("", style={'color':'white'})])),
+                                                html.Tbody([html.Tr([html.Td("Tipo de apoyo"), html.Td("Toneladas"), html.Td("Incentivo que recibe el productor")]),
+                                                            html.Tr([html.Td("Básico"), html.Td("Hasta 120"), html.Td("100%")]),
+                                                            html.Tr([html.Td("A La Productividad"), html.Td("120.1 A 300"), html.Td("50%")])])],
                                                 highlightOnHover=False,
                                                 withBorder=True,
                                                 horizontalSpacing=4,
                                                 withColumnBorders=True, 
-                                                style={'padding':'1rem','width':'80%','color':'white' }),
-                                            ),        
+                                                style={'padding':'1rem','width':'80%','color':'white', 'marginBottom':'1rem'}),
+                                                
+                                                ),
+                                            html.Center(
+                                                dmc.Table(
+                                                    [html.Tbody([html.Tr([html.Td("Precio de referencia"), html.Td("El precio de referencia será definido en dos categorías (para arroz grueso y para el largo), por ciclo agrícola (O.I. / P.V.) y para las diferentes regiones productoras. Su cálculo se determinará considerando los precios del arroz en el Mercado de Físicos de la Bolsa de Comercio de Chicago (CBOT), el promedio del tipo de cambio, los precios prevalecientes en el mercado nacional y los precios sugeridos y concertados entre la industria arrocera y los productores.")])])],
+                                                    highlightOnHover=False,
+                                                    withBorder=True,
+                                                    horizontalSpacing=4,
+                                                    withColumnBorders=True, 
+                                                    style={'padding':'1rem','width':'80%','color':'white' }),
+                                            ),
                                               
                                         ]),
                                     ),
@@ -1604,7 +1614,7 @@ ro_2021_arroz = html.Div(
                                                 [html.Thead(html.Tr([
                                                             html.Th("Precio de garantía ($) ", style={'color':'white'}),
                                                             html.Th("Volumen máximo (Ton) ", style={'color':'white'}),])),
-                                                html.Tbody([html.Tr([html.Td("8.20/Ltr"), html.Td("25 Ltr/vaca")])])],
+                                                html.Tbody([html.Tr([html.Td("6,120"), html.Td("120 Ton")])])],
                                                 striped=False,
                                                 highlightOnHover=False,
                                                 withBorder=True,
@@ -1623,7 +1633,7 @@ ro_2021_arroz = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5609037&fecha=28/12/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """PRIMER Acuerdo Modificatorio al similar por el que se dan a conocer las Reglas de Operación del Programa de Precios de Garantía a Productos Alimentarios Básicos, a cargo de Seguridad Alimentaria Mexicana, SEGALMEX, sectorizada en la Secretaría de Agricultura y Desarrollo Rural, para el ejercicio fiscal 2021, publicado el 28 de diciembre de 2020. Disponible en: """
@@ -1631,7 +1641,7 @@ ro_2021_arroz = html.Div(
                                                 href='https://www.dof.gob.mx/nota_detalle.php?codigo=5633514&fecha=22/10/2021#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),   
                                   html.Br(),
                                     
@@ -1669,10 +1679,10 @@ ro_2021_leche = html.Div(
                                         dmc.ListItem(dmc.Text("Pequeños productores: de 1 a 35 vacas", color='white', style={"fontSize": 18, 'padding':'1rem'})),
                                         dmc.ListItem(dmc.Text("Medianos productos: de 36 a 100 vacas", color='white', style={"fontSize": 18, 'padding':'1rem'})),
                                     ], style={'marginBottom':'1rem'}),
-                                     dmc.Text(
-                                        """*LICONSA podrá comprar leche fluida a productores que rebasen el límite de vacas antes señalado, en tal caso, lo hará a precio de mercado."""
-                                    , color='white', style={"fontSize": 12, 'marginBottom':'2rem'}),
-                                    # dmc.Text(
+                                    #  dmc.Text(
+                                    #     """*LICONSA podrá comprar leche fluida a productores que rebasen el límite de vacas antes señalado, en tal caso, lo hará a precio de mercado."""
+                                    # , color='white', style={"fontSize": 12, 'marginBottom':'2rem'}),
+                                    # # dmc.Text(
                                     #     """La totalidad de los productores de arroz con la limitante del volumen máximo por productor."""
                                     # , color='white',  style={"fontSize": 18, 'padding':'1rem'}),
                                     # html.Br(),
@@ -1681,7 +1691,7 @@ ro_2021_leche = html.Div(
                                         dmc.Table(
                                         [html.Thead(html.Tr([
                                                     html.Th("Precio de garantía ($) ", style={'color':'white'}),
-                                                    html.Th("Volumen máximo (Ton) ", style={'color':'white'}),])),
+                                                    html.Th("Volumen máximo (Ltrs) ", style={'color':'white'}),])),
                                         html.Tbody([html.Tr([html.Td("8.20/Ltr"), html.Td("25 Ltrs/vaca")])])],
                                         striped=False,
                                         highlightOnHover=False,
@@ -1738,7 +1748,7 @@ ro_2021_leche = html.Div(
                                                 href='https://dof.gob.mx/nota_detalle.php?codigo=5609037&fecha=28/12/2020#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),
                                         
                                         dmc.Text([
                                                 """PRIMER Acuerdo Modificatorio al similar por el que se dan a conocer las Reglas de Operación del Programa de Precios de Garantía a Productos Alimentarios Básicos, a cargo de Seguridad Alimentaria Mexicana, SEGALMEX, sectorizada en la Secretaría de Agricultura y Desarrollo Rural, para el ejercicio fiscal 2021, publicado el 28 de diciembre de 2020. Disponible en: """
@@ -1746,7 +1756,7 @@ ro_2021_leche = html.Div(
                                                 href='https://www.dof.gob.mx/nota_detalle.php?codigo=5633514&fecha=22/10/2021#gsc.tab=0', 
                                                 target="_blank", 
                                                 style={'color':'#07B8F1'}),
-                                            ], color='white', align="justify", style={"fontSize": 18, 'padding':'1rem'}),           
+                                            ], color='white', align="justify", style={"fontSize": 12, 'padding':'1rem'}),           
                                     ], style={'paddingLeft':'1rem'}),   
                     
                                 ],),

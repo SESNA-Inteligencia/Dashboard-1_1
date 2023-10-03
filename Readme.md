@@ -141,7 +141,9 @@ Una vez instaladas todas las dependencias ejecutamos el paso siguiente para desp
 
 # Fuentes de consulta
 
-[icons](https://icon-sets.iconify.design/ic/baseline-edit-location-alt/)
+- [Thousands of icons, one unified framework.](https://icon-sets.iconify.design/ic/baseline-edit-location-alt/): Para descargar amplia gama de íconos, y
+- [dash-mantine-components](https://www.dash-mantine-components.com/): Componentes para el dashboard
+- [dash-bootstrap-components](https://dash-bootstrap-components.opensource.faculty.ai/): Componentes para el dashboard
 
 
 

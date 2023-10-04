@@ -240,11 +240,15 @@ Ligas útiles:
 Una vez instalado python creamos en la ruta `Desktop/Dashboard-1_1` el ambiente virtual, siguiendo los siguientes pasos:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 - sudo pip install --upgrade pip
 - sudo apt install python3-virtualenv (instala ambiente virtual)
 =======
 - virtualenv dashboard2 -p python3 (instala ambiente virtual)
 >>>>>>> Dashboard1.1
+=======
+- virtualenv dashboard2 -p python3 (instala ambiente virtual)
+>>>>>>> acf22e9dd6b0624cbaa9d018ead4c5db05659b5c
 - sudo python3 -m venv dashboard2 (crea ambiente virtual)
 - source dashboard2/bin/activate (se activa el ambiente virtual)
 
@@ -255,10 +259,14 @@ Si el ambien virtual se activo de manera correcta deberá aparecer al inicio de 
 Una vez creado instalamos todas las dependencias (con el ambiente virtual activado) mediante:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     sudo pip install --upgrade pip
 =======
     pip install --upgrade pip
 >>>>>>> Dashboard1.1
+=======
+    pip install --upgrade pip
+>>>>>>> acf22e9dd6b0624cbaa9d018ead4c5db05659b5c
     
     pip install pandas 
     pip install numpy 

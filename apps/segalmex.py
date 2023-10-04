@@ -2538,7 +2538,7 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
                     dmc.Text(['Grado de marginación: ', gmargina]),
                     dmc.Text(['No. Centros: ', numcentros]),
 
-                ])
+                ]),
                 
                 ])
             return result     
@@ -2589,8 +2589,8 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
     # Centro de acopio
     centros = dl.Pane([dl.Marker(position=[lat, lon], icon=dict(iconUrl='../assets/centrosAcopio.png',iconSize=[12, 16]), children=[
                                     dl.Tooltip(f"Centro(s) de acopio: {mun}-{ent}"),
-                                    dl.Popup(centros_popup(ent, mun,gmargina,numcentros))
-                                    ]) for lat, lon,ent, mun, gmargina, numcentros in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'], centros['NOM_ENT'], centros['NOM_MUN'], centros['GM_2020'], centros['NUM_CENTROS'])])
+                                    dl.Popup(centros_popup(ent, mun, gmargina, numcentros))
+                                    ]) for lat, lon,ent, mun, gmargina, numcentros in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'], centros['NOM_ENT'], centros['NOM_MUN'], centros['GM_2020'], centros['NUM_CENTROS'])], name="upper")
 
     # Productores
     productores = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=np.log(numprod), color='#E12726', children=[
@@ -2634,7 +2634,7 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
     # class MAP
     class Map():
         # constructor
-        def __init__(self, background_style):
+        def __inti__(self, background_style):
             self.base_layer = [#dl.TileLayer(url=background_style),
                                 dl.EasyButton(icon="fa fa-home fa-fw", id="btn_nacional"),
                                 #html.Button("Zoom in", id="zoom_in"),
@@ -2662,7 +2662,7 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
             
             return self.base_layer
     # background style del mapa
-    children_layer = Map(background_style=style0).add(capas_sel)
+    children_layer = Map(background_style=style).add(features=capas_sel)
     # dl.LayersControl([dmc.Text('Muy Bajo')])
     tab2_mapa_content = html.Div([
         dl.Map(center=[22.76, -102.58], zoom=5, children=children_layer
@@ -2759,14 +2759,14 @@ def actualizar_mapa2(clicks, criterios_sel, benef_sel, producto_sel, anio_sel):
     # ópción para agregar beneficarios observados
     benef_filter = benef_filter[~benef_filter['LAT_DECIMALmean'].isna()]
     beneficiarios = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=radio,dashArray=1, fillOpacity=0, color='#1a5276', children=[
-                dl.Popup("Municipio: {}".format(mun))
+        dl.Popup(f"Municipio: {mun}"),
                 ]) for mun, lat, lon, radio in zip(benef_filter['NOM_MUN'], benef_filter['LAT_DECIMALmean'], benef_filter['LON_DECIMALmean'], benef_filter['NUM_BENEFradio'])])
     
     # opción para agregar criterio del precio y marginación 
     if criterios_sel == 'Marginación':
         productores_filter = productores_filter[~productores_filter['Escenario1'].isna()]
         productores = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=np.log(radio), fillOpacity=0, color='#ee2a16', children=[
-            dl.Popup("Municipio: {}".format(mun))
+            dl.Popup(f"Municipio: {mun}")
             ]) for lat, lon, mun, radio in zip(productores_filter['LAT_DECIMAL'],productores_filter['LON_DECIMAL'], productores_filter['NOM_MUN'], productores_filter['TotalProductores'])])
     else:
         productores_filter = productores_filter[~productores_filter['Escenario2'].isna()]

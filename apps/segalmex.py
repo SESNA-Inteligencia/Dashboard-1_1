@@ -94,18 +94,21 @@ def get_info2(feature=None):
 #engine = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}".format(host=hostname, db=dbname[0], user=uname, pw=pwd))
 #base = pd.read_sql(sql="select * from", con = engine, index_col="Date", parse_dates=True)
 
-# root local 
+# introducir directorio de la carpeta
 root = "C:/Users/jcmartinez/Desktop/Dashboard3"
-# root server
-#root = "/home/ubuntu/Desktop/ProyectoDash/Dashboard-1_1"
+
+# urls
+#repo_est_url = ""
+#estados_json = open(root + '/datasets/estadosMexico.json')
+#mx_est_geo = json.load(estados_json)
 
 json.load(open(root +'/datasets/sample.json'))
 data2 = json.load(open(root +'/datasets/sample3.json'))
 
 # base completa
-base_2019 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2019.xlsx')
-base_2020 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2020.xlsx')
-base_2021 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2021.xlsx')
+# base_2019 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2019.xlsx')
+# base_2020 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2020.xlsx')
+# base_2021 = pd.read_excel(root + '/datasets/PBeneficiarios_data_2021.xlsx')
 
 
 # bases Beneficiarios estado
@@ -125,13 +128,23 @@ base_productores = pd.read_excel(root + '/datasets/TotalProductores2.xlsx')
 base_resumen = pd.read_excel(root + '/datasets/resumen_montos.xlsx')
 
 
+
+# sample maps P
 # blue style
 style = "https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
 # grey style
 style1 = 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png'
 # black style
 style3 = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
+# base centros de acopio
+#df_centros = pd.read_excel(root + '/datasets/base_centros_inegi.xlsx')
+#df_centros = df_centros
 
+# base producción agrícola
+#df_produccion = pd.read_excel(root + '/datasets/base_prodAgricola_con_claves_inegi.xlsx')
+#df_produccion = df_produccion.dropna()
+# georeferenciación de base producción - estados
+#df_prod_est = pd.read_csv(root + '/datasets/produccion_estados.csv')
 
 # opciones
 list_year = ['2019', '2020', '2021']
@@ -2120,25 +2133,25 @@ tab2_capas_criterios = html.Div([
 #     return dcc.send_file("C:/Users/jcmartinez/Desktop/Dashboard3/Proyecto.pdf")
 
 ########    Download xlsx
-@app.callback(
-    Output("download-db-xlsx", "data"),
-    Input("dowload_xlsx", "n_clicks"),
-    State('producto', 'value'),
-    State('anio', 'value'),
-    prevent_initial_call=True,
-)
-def download_xlsx(click_db, producto_sel, anio_sel):
-    base2019 = base_2019.copy()
-    base2020 = base_2020.copy()
-    base2021 = base_2021.copy()
-    if anio_sel == '2019':
-        base = base2019[base2019['Producto']==producto_sel]
-    elif anio_sel == '2020':
-        base = base2020[base2020['Producto']==producto_sel]
-    elif anio_sel == '2021':
-        base = base2021[base2021['Producto']==producto_sel]
+# @app.callback(
+#     Output("download-db-xlsx", "data"),
+#     Input("dowload_xlsx", "n_clicks"),
+#     State('producto', 'value'),
+#     State('anio', 'value'),
+#     prevent_initial_call=True,
+# )
+# def download_xlsx(click_db, producto_sel, anio_sel):
+#     base2019 = base_2019.copy()
+#     base2020 = base_2020.copy()
+#     base2021 = base_2021.copy()
+#     if anio_sel == '2019':
+#         base = base2019[base2019['Producto']==producto_sel]
+#     elif anio_sel == '2020':
+#         base = base2020[base2020['Producto']==producto_sel]
+#     elif anio_sel == '2021':
+#         base = base2021[base2021['Producto']==producto_sel]
     
-    return dcc.send_data_frame(base.to_excel, f"{anio_sel}-{producto_sel}.xlsx", sheet_name=f"{anio_sel}-{producto_sel}")
+#     return dcc.send_data_frame(base.to_excel, f"{anio_sel}-{producto_sel}.xlsx", sheet_name=f"{anio_sel}-{producto_sel}")
 
 #########  CALL : Regresa opciones capas / criterios  ################
 @app.callback(Output("content-capas-criterios", "children"),
@@ -2538,7 +2551,7 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
                     dmc.Text(['Grado de marginación: ', gmargina]),
                     dmc.Text(['No. Centros: ', numcentros]),
 
-                ]),
+                ])
                 
                 ])
             return result     
@@ -2589,8 +2602,8 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
     # Centro de acopio
     centros = dl.Pane([dl.Marker(position=[lat, lon], icon=dict(iconUrl='../assets/centrosAcopio.png',iconSize=[12, 16]), children=[
                                     dl.Tooltip(f"Centro(s) de acopio: {mun}-{ent}"),
-                                    dl.Popup(centros_popup(ent, mun, gmargina, numcentros))
-                                    ]) for lat, lon,ent, mun, gmargina, numcentros in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'], centros['NOM_ENT'], centros['NOM_MUN'], centros['GM_2020'], centros['NUM_CENTROS'])], name="upper")
+                                    dl.Popup(centros_popup(ent, mun,gmargina,numcentros))
+                                    ]) for lat, lon,ent, mun, gmargina, numcentros in zip(centros['LAT_DECIMAL'],centros['LON_DECIMAL'], centros['NOM_ENT'], centros['NOM_MUN'], centros['GM_2020'], centros['NUM_CENTROS'])])
 
     # Productores
     productores = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=np.log(numprod), color='#E12726', children=[
@@ -2634,7 +2647,7 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
     # class MAP
     class Map():
         # constructor
-        def __inti__(self, background_style):
+        def __init__(self, background_style):
             self.base_layer = [#dl.TileLayer(url=background_style),
                                 dl.EasyButton(icon="fa fa-home fa-fw", id="btn_nacional"),
                                 #html.Button("Zoom in", id="zoom_in"),
@@ -2662,7 +2675,7 @@ def actualizar_mapa1(clicks, benef_sel, transfer_sel, producto_sel, anio_sel):
             
             return self.base_layer
     # background style del mapa
-    children_layer = Map(background_style=style).add(features=capas_sel)
+    children_layer = Map(background_style=style0).add(capas_sel)
     # dl.LayersControl([dmc.Text('Muy Bajo')])
     tab2_mapa_content = html.Div([
         dl.Map(center=[22.76, -102.58], zoom=5, children=children_layer
@@ -2759,14 +2772,14 @@ def actualizar_mapa2(clicks, criterios_sel, benef_sel, producto_sel, anio_sel):
     # ópción para agregar beneficarios observados
     benef_filter = benef_filter[~benef_filter['LAT_DECIMALmean'].isna()]
     beneficiarios = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=radio,dashArray=1, fillOpacity=0, color='#1a5276', children=[
-        dl.Popup(f"Municipio: {mun}"),
+                dl.Popup("Municipio: {}".format(mun))
                 ]) for mun, lat, lon, radio in zip(benef_filter['NOM_MUN'], benef_filter['LAT_DECIMALmean'], benef_filter['LON_DECIMALmean'], benef_filter['NUM_BENEFradio'])])
     
     # opción para agregar criterio del precio y marginación 
     if criterios_sel == 'Marginación':
         productores_filter = productores_filter[~productores_filter['Escenario1'].isna()]
         productores = dl.Pane([dl.CircleMarker(center=[lat, lon], radius=np.log(radio), fillOpacity=0, color='#ee2a16', children=[
-            dl.Popup(f"Municipio: {mun}")
+            dl.Popup("Municipio: {}".format(mun))
             ]) for lat, lon, mun, radio in zip(productores_filter['LAT_DECIMAL'],productores_filter['LON_DECIMAL'], productores_filter['NOM_MUN'], productores_filter['TotalProductores'])])
     else:
         productores_filter = productores_filter[~productores_filter['Escenario2'].isna()]

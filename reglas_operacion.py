@@ -1801,7 +1801,7 @@ def resumen_reglas_operacion(Anio, Producto):
         result = ro_2020_arroz
     elif Anio == '2020' and Producto == 'Leche':
         result = ro_2020_leche
-    #############         Año 2020          ###################
+    #############         Año 2021          ###################
     elif Anio == '2021' and Producto == 'Maíz':
         result = ro_2021_maiz
     elif Anio == '2021' and Producto == 'Frijol':

@@ -3,6 +3,7 @@
 # 📁 **Proyecto : Dashboard - SESNA**
 
 
+![Mapa](./mapa.png)
 
 # Ejecución del proyecto
 

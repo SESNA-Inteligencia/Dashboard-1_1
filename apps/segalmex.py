@@ -53,13 +53,14 @@ def get_info(feature=None):
             html.H4("{}".format("Nacional")),
             dmc.Center(html.Img(id='image', src='../assets/entidades/Nacional.png', width="65", height="65"))]
         # valores a nivel estatal
-    return [
-            html.H4("{}".format(feature["properties"]["name"])),
-            #html.Br(),
-            #html.B("Estado"), ": ",
-            #html.A("{}".format(feature["properties"]["name"])),
-            dmc.Center(html.Img(id='image', src='../assets/entidades/'+ str(feature["properties"]["name"]) +'.png', width="65", height="65")),
-          ]
+    else:
+        return [
+                html.H4("{}".format(feature["properties"]["name"])),
+                #html.Br(),
+                #html.B("Estado"), ": ",
+                #html.A("{}".format(feature["properties"]["name"])),
+                dmc.Center(html.Img(id='image', src='../assets/entidades/'+ str(feature["properties"]["name"]) +'.png', width="65", height="65")),
+            ]     
 
 def get_info2(feature=None):
     # Valores por defecto a nivel nacional
@@ -75,10 +76,11 @@ def get_info2(feature=None):
     #        dmc.Center(html.H4("{}".format("Nacional"))),
     #        dmc.Center(html.Img(id='image', src='../assets/Nacional.png', width="65", height="65"))]
     # valores a nivel estatal
-    return html.Center([
-            dbc.Col(html.Img(id='image', src='../assets/entidades/'+ str(feature["properties"]["name"]) +'.png', width="65", height="90")),
-            dbc.Col(html.H1("{}".format(feature["properties"]["name"]))),
-        ])
+    else:
+        return html.Center([
+                dbc.Col(html.Img(id='image', src='../assets/entidades/'+ str(feature["properties"]["name"]) +'.png', width="65", height="90")),
+                dbc.Col(html.H1("{}".format(feature["properties"]["name"]))),
+            ])  
 
 #import plotly.io as pio
 #pio.renderers.default = 'firefox'
